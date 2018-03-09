@@ -1,6 +1,6 @@
 import React from 'react';
 import loginLogo from './login.svg';
-import {japlcejAPI, IS_LOGGEDIN_URL, LOGIN_URL, USER_RANK_INFO} from './config.js';
+import {japlcejAPI, routesURLs} from './config.js';
 
 class Avatar extends React.Component {
   render() {
@@ -50,11 +50,11 @@ class UserInfo extends React.Component {
   constructor(props) {
 		super(props);	
 		
-		var myUser = { pseudo : null ,
+		var myUser = { pseudo : this.props.pseudo ,
 			lastSession : this.props.lastSession , 
 			avatarUrl : (this.props.avatarUrl == null)?loginLogo :  this.props.avatarUrl ,
 			rank:  null,
-			nbPoints : 0
+			nbPoints : null
 			};
 	    
 	    this.firstTimeRender = false;
@@ -65,9 +65,14 @@ class UserInfo extends React.Component {
 		this.retrieveRankingUserInfo = this.retrieveRankingUserInfo.bind(this);
 	}
   
+  updateUserWithRankingUserInfo(userInfoJson) {
+
+  }
+  
   retrieveRankingUserInfo () {
+	var _that = this;
 	if (this.state.userInfo == null || this.state.userInfo.pseudo == null) {
-		fetch(japlcejAPI + USER_RANK_INFO, {
+		fetch(japlcejAPI + routesURLs.USER_RANK_INFO, {
 			 method: "GET",
 			 headers: {
 				'Content-Type': 'application/json',
@@ -83,16 +88,19 @@ class UserInfo extends React.Component {
 		.catch(error => {console.error('Retrieve UserInfo Error:', error);
 		 })
 		.then(userInfoJson => {
-			var avatarUrl= this.props.avatarUrl;
-			var pseudo = this.props.pseudo;
-			var lastSession = this.props.lastSession
+			var avatarUrl= _that.props.avatarUrl;
+			var pseudo = _that.props.pseudo;
+			var lastSession = _that.props.lastSession;
 			console.log("UserInfo : retrieveUserInfo : data" : userInfoJson);
 			if (userInfoJson == null) {return ;}
-			else { this.setState({userInfo : {rank : userInfoJson.rank, 
-					nbPoints : userInfoJson.nbPoints, 
-					avatarUrl : avatarUrl, 
-					pseudo : pseudo,
-					lastSession : lastSession}});
+			else { 
+				var myCurrentUser = _that.state.userInfo;
+					myCurrentUser.rank = userInfoJson.rank;
+					myCurrentUser.nbPoints = userInfoJson.nbPoints; 
+					myCurrentUser.avatarUrl = avatarUrl;
+					myCurrentUser.pseudo = pseudo;
+					myCurrentUser.lastSession = lastSession;
+				this.setState({userInfo : myCurrentUser});
 			}
 		});
 	}
@@ -105,8 +113,8 @@ class UserInfo extends React.Component {
 		  console.log("let's call retrieveRankingUserInfo : firstTimeRender " + this.firstTimeRender) ;
 		  this.retrieveRankingUserInfo();
 	  }	  
-	  	  
-    return (
+	if (this.state.userInfo.pseudo != null) {  	  
+		return (
 			<div id="userInfo">
 				<WelcomeMessage pseudo={this.state.userInfo.pseudo} userLastSession={this.state.userInfo.lastSession} />
 				<div className="UserInfo">
@@ -115,6 +123,8 @@ class UserInfo extends React.Component {
 				</div>
 			</div>
 	);
+	}
+	else return null;
   }
 }
 

@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {japlcejAPI, IS_LOGGEDIN_URL, LOGIN_URL} from './config.js';
+import {japlcejAPI, routesURLs} from './config.js';
 import AppMessage from './AppMessage.js';
 
 class ModalLogin extends React.Component {
@@ -47,7 +47,7 @@ class ModalLogin extends React.Component {
 	  event.preventDefault();
 	  
 	  //console.log("Submit login form bien reçu!");
-	  fetch(japlcejAPI + LOGIN_URL, 
+	  fetch(japlcejAPI + routesURLs.LOGIN_URL, 
 			{method: "POST",
 			 headers: {
 				'Content-Type': 'application/json',

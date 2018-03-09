@@ -1,5 +1,5 @@
 import React from 'react';
-import {japlcejAPI, GET_CHARACTER_URL} from './config.js';
+import {japlcejAPI, routesURLs} from './config.js';
 
 class GuessCharacterGameCurrentResult extends React.Component {
 	constructor(props) {
@@ -112,7 +112,7 @@ class GuessCharacterGame extends React.Component {
 	
 	auSuivant() {
 		 //fetch new Caracter to guess
-		 fetch(japlcejAPI + GET_CHARACTER_URL, 
+		 fetch(japlcejAPI + routesURLs.GET_CHARACTER_URL, 
 			{method: "GET",
 			 headers: {
 				'Content-Type': 'application/json',
@@ -126,7 +126,7 @@ class GuessCharacterGame extends React.Component {
 						this.setState({currentCharacter : response.json()	});
 						this.setState({lastResultIsFalse : undefined});
 			})
-		.catch(error => console.error('Error: when attempting to fetch new chinese character : URL :' + GET_CHARACTER_URL + " : ", error))
+		.catch(error => console.error('Error: when attempting to fetch new chinese character : URL :' + routesURLs.GET_CHARACTER_URL + " : ", error))
 		;
    		 //this.setState({currentCharacter : 'è', currenCharacterPinyin : 'èe'}) ; //caracteres[indexHasard];
 		 
@@ -163,7 +163,7 @@ class GuessCharacterGame extends React.Component {
   
   
    componentDidMount() {
-    fetch(japlcejAPI + GET_CHARACTER_URL)
+    fetch(japlcejAPI + routesURLs.GET_CHARACTER_URL)
       .then(response => response.json())
       .then(data => this.setState({currentCharacter : data.character}));
   }
