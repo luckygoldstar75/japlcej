@@ -38,20 +38,39 @@ class LogInOutButton extends React.Component {
     this.props.onLoginSuccess(jsonUserLoginInfo);
   }
 
-  onClickLogInOutButton() {
-	  this.setState({showModalLogin: !this.state.userLoggedIn});
-	  
+ onLogoutSuccess = () => {
+	  this.setState({
+      showModalLogin: false,
+      userLoggedIn:false      
+    });    
+  }
+
+  onClickLogInOutButton() {	  
 	  if (this.state.userLoggedIn) { // le client clique pour logout
-		  fetch(japlcejAPI + routesURLs.LOGOUT)
-			.then(response => response.json())
+		  fetch(japlcejAPI + routesURLs.LOGOUT, {
+			 method: "GET",
+			 headers: {
+				'Content-Type': 'application/json',
+				'Accept': 'application/json, text/plain, */*'
+			 },
+			 body : {},
+			 credentials : 'include',
+			 mode : 'cors',
+			 redirect : 'follow'
+			})
+		.then(response => {return({code : response.status , json : response.json()})})
+		.catch(error => {console.error('Logout Error:', error);
+		 })
 		.then(data => {
-			this.setState({userLoggedIn : false});
-			this.onLoginSuccess(null); // on efface les infos clients de la session précédente
-			});
+			if (data != null  && data.code == 200 && (data.json == null || data.json.error == null) ) {
+				this.setState({userLoggedIn : false});
+				this.props.onLogoutSuccess(); // on efface les infos clients de la session précédente
+			}});
 	  }
 	  else // le client clique pour login
 	  {
-		  // rien à faire . ShowModal fait
+		  this.setState({showModalLogin: true,
+		  userLoggedIn: false,});
 	  }
   }	
 
@@ -85,11 +104,24 @@ class App extends Component {
   constructor(props) {
 	super(props);
 	this.onLoginSuccess = this.onLoginSuccess.bind(this);
-	fetch(japlcejAPI + routesURLs.IS_LOGGEDIN_URL)
-			.then(response => response.json())
-		.then(data => this.setState({isLoggedIn : data.isLoggedIn}));
-	this.state = {currentUser: null, userChanged : false};
-	
+	fetch(japlcejAPI + routesURLs.IS_LOGGEDIN,{
+			 method: "GET",
+			 headers: {
+				'Content-Type': 'application/json',
+				'Accept': 'application/json, text/plain, */*'
+			 },
+			 body : {},
+			 credentials : 'include',
+			 mode : 'cors',
+			 redirect : 'follow'
+			}	
+	)
+		.then(response => response.json())
+		.catch(error => {console.error('IsLoggedIn Error: ', error);
+		 })
+		.then(data => this.setState({userLoggedIn : data.isLoggedIn}));
+	this.state = {currentUser: null, userChanged : false, lastSession : null ,
+		avatarUrl:null, pseudo : null};
   }	
 
   onLoginSuccess = (jsonUserLoginInfo) => {
@@ -98,9 +130,13 @@ class App extends Component {
 	  var _avatarUrl = (jsonUserLoginInfo == null)? null : jsonUserLoginInfo.avatarUrl;
 	  var _pseudo = (jsonUserLoginInfo == null)? null : jsonUserLoginInfo.pseudo;
 	  
-	  this.setState({userChanged : true, lastSession : _lastSession, avatarUrl : _avatarUrl, pseudo : _pseudo});
+	  this.setState({userLoggedIn : true, userChanged : true, lastSession : _lastSession, avatarUrl : _avatarUrl, pseudo : _pseudo});
   }
  
+  onLogoutSuccess = () => {
+	  console.log("OnLogoutSuccess Invoked! ");
+	  this.setState({userLoggedIn : false, userChanged : true, lastSession : null, avatarUrl : null, pseudo : null});
+  }
 		
   render() {	  
     return (
@@ -111,7 +147,7 @@ class App extends Component {
 					accompagnant dans l'apprentissage du chinois.</h1>
         </header>
 		<MenuBar /> 
-		<LogInOutButton onLoginSuccess={this.onLoginSuccess} userLoggedIn={this.state.userLoggedIn} />
+		<LogInOutButton onLoginSuccess={this.onLoginSuccess} onLogoutSuccess={this.onLogoutSuccess} userLoggedIn={this.state.userLoggedIn} />
 		<UserInfo userChanged={this.state.userChanged} lastSession={this.state.lastSession} avatarUrl={this.state.avatarUrl} pseudo={this.state.pseudo}/>		
 		<GameSection />
       </div>

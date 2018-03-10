@@ -113,7 +113,7 @@ class UserInfo extends React.Component {
 		  console.log("let's call retrieveRankingUserInfo : firstTimeRender " + this.firstTimeRender) ;
 		  this.retrieveRankingUserInfo();
 	  }	  
-	if (this.state.userInfo.pseudo != null) {  	  
+	if (this.props.pseudo != null) {  	  
 		return (
 			<div id="userInfo">
 				<WelcomeMessage pseudo={this.state.userInfo.pseudo} userLastSession={this.state.userInfo.lastSession} />

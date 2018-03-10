@@ -45,9 +45,9 @@ class ModalLogin extends React.Component {
   
   handleSubmit(event) {
 	  event.preventDefault();
-	  
+	 
 	  //console.log("Submit login form bien reçu!");
-	  fetch(japlcejAPI + routesURLs.LOGIN_URL, 
+	  fetch(japlcejAPI + routesURLs.LOGIN, 
 			{method: "POST",
 			 headers: {
 				'Content-Type': 'application/json',

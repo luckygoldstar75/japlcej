@@ -112,7 +112,7 @@ class GuessCharacterGame extends React.Component {
 	
 	auSuivant() {
 		 //fetch new Caracter to guess
-		 fetch(japlcejAPI + routesURLs.GET_CHARACTER_URL, 
+		 fetch(japlcejAPI + routesURLs.GET_CHARACTER, 
 			{method: "GET",
 			 headers: {
 				'Content-Type': 'application/json',
@@ -163,7 +163,7 @@ class GuessCharacterGame extends React.Component {
   
   
    componentDidMount() {
-    fetch(japlcejAPI + routesURLs.GET_CHARACTER_URL)
+    fetch(japlcejAPI + routesURLs.GET_CHARACTER)
       .then(response => response.json())
       .then(data => this.setState({currentCharacter : data.character}));
   }
