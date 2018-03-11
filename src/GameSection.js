@@ -102,8 +102,9 @@ class GuessCharacterGame extends React.Component {
 		this.state = {lastResultIsFalse: undefined,
 			nbTries: 0,
 			nbSuccess : 0,
-			currentCharacter : 	"好"	,
-			currenCharacterPinyin : "hǎo"
+			currentCharacter : 	{id : null,
+				character : null,
+				answer : null }
 		};
 		
 		this.auSuivant = this.auSuivant.bind(this);
@@ -112,36 +113,64 @@ class GuessCharacterGame extends React.Component {
 	
 	auSuivant() {
 		 //fetch new Caracter to guess
-		 fetch(japlcejAPI + routesURLs.GET_CHARACTER, 
+		 fetch(japlcejAPI + routesURLs.GUESS_CHARACTER, 
 			{method: "GET",
 			 headers: {
 				'Content-Type': 'application/json',
 				'Accept': 'application/json, text/plain, */*'
 			 },			 
-			 credentials : 'include',
+			 //credentials : 'include',
 			 mode : 'cors',
 			 redirect : 'follow'
 			}
-		).then(response => {console.log("response fetched : " + response.json()); 
-						this.setState({currentCharacter : response.json()	});
-						this.setState({lastResultIsFalse : undefined});
+		).then(response => {var respjson = response.json();
+				//console.debug("response fetched : " + respjson); 
+				this.setState({lastResultIsFalse : undefined});
+				return respjson;
 			})
-		.catch(error => console.error('Error: when attempting to fetch new chinese character : URL :' + routesURLs.GET_CHARACTER_URL + " : ", error))
+		.catch(error => console.error('Error: when attempting to fetch new chinese character : URL :' + routesURLs.GUESS_CHARACTER + " : ", error))
+		.then(respjson => {	//console.debug("response json : " + respjson);
+							this.setState({currentCharacter : respjson}); })
+		.catch(error => console.error('Error: when attempting to fetch new chinese character : URL :' + routesURLs.GUESS_CHARACTER + " : ", error))
 		;
-   		 //this.setState({currentCharacter : 'è', currenCharacterPinyin : 'èe'}) ; //caracteres[indexHasard];
-		 
 	}	
 	
 	valider(inputValue) {
-		if(this.state.currenCharacterPinyin.toLowerCase() !== inputValue.toLowerCase()) {
-			this.setState({lastResultIsFalse : true,
-				nbTries : this.state.nbTries+1});
-		}
-		else {
-			this.setState({lastResultIsFalse : false,
-				nbSuccess : this.state.nbSuccess+1,
-				nbTries : this.state.nbTries+1});
-		}		
+		//post client's pinyin guess answer
+		 fetch(japlcejAPI + routesURLs.GUESS_CHARACTER,
+			{method: "POST",
+			 headers: {
+				'Content-Type': 'application/json',
+				'Accept': 'application/json, text/plain, */*'
+			 },
+			 body : JSON.stringify({id : this.state.currentCharacter.id ,
+					 userInputPinyin : inputValue})
+			 ,			 
+			 mode : 'cors',
+			 redirect : 'follow'
+			}
+		).then(response => {var respjson = response.json();
+				//console.debug("response fetched : " + respjson); 
+				return respjson;
+			})
+		.then(respjson => {	//console.debug("response json : " + respjson);
+			if (respjson != null) {
+				var _currentCharacter = this.state.currentCharacter;
+				_currentCharacter.answer = respjson.answer;
+				this.setState({currentCharacter : _currentCharacter});				
+				if(respjson.isGood) {
+					this.setState({lastResultIsFalse : false,
+						nbSuccess : this.state.nbSuccess+1,
+						nbTries : this.state.nbTries+1});	
+				}
+				else {
+					this.setState({lastResultIsFalse : true,
+						nbTries : this.state.nbTries+1});
+				}		
+			}
+		})
+		.catch(error => console.error('Error: when attempting to post guess character : URL :' + routesURLs.GUESS_CHARACTER + " : ", error))
+		;	
 	}
   
 
@@ -150,12 +179,12 @@ class GuessCharacterGame extends React.Component {
     return ( <div className="GuessCharacterGame">
 				<GuessCharacterGameCurrentResult nbSuccess={this.state.nbSuccess} nbTries={this.state.nbTries} />
 
-				<GuessCharacterGameCurrentCharacter currentCharacter={this.state.currentCharacter} />
+				<GuessCharacterGameCurrentCharacter currentCharacter={this.state.currentCharacter.character} />
 
 				<GuessCharacterGameInput lastResultIsFalse={this.state.lastResultIsFalse} 
 					onGameInputChange={this.valider} onNextCharacterRequested={this.auSuivant} 
 					currentCharacter={this.state.currentCharacter} 
-					currentCharacterPinyin={this.state.currenCharacterPinyin}
+					currentCharacterPinyin={this.state.currentCharacter.answer}
 					/>	
 			</div>
 			);
@@ -163,9 +192,7 @@ class GuessCharacterGame extends React.Component {
   
   
    componentDidMount() {
-    fetch(japlcejAPI + routesURLs.GET_CHARACTER)
-      .then(response => response.json())
-      .then(data => this.setState({currentCharacter : data.character}));
+	this.auSuivant();
   }
 }
 

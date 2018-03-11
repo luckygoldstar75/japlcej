@@ -62,7 +62,7 @@ class LogInOutButton extends React.Component {
 		.catch(error => {console.error('Logout Error:', error);
 		 })
 		.then(data => {
-			if (data != null  && data.code == 200 && (data.json == null || data.json.error == null) ) {
+			if (data != null  && data.code === 200 && (data.json == null || data.json.error == null) ) {
 				this.setState({userLoggedIn : false});
 				this.props.onLogoutSuccess(); // on efface les infos clients de la session précédente
 			}});
@@ -76,7 +76,7 @@ class LogInOutButton extends React.Component {
 
  render() { //onClick={() => this.setState((this.state.userLoggedIn)?{showModalLogin: true}:{userLoggedIn: false})}>{(this.state.userLoggedIn)? "Log Out" : "Log In"}
     return (
-    <div id="loginZone">
+    <div id="loginZone" className="loginZone">
     <button
         className="loginbtn"
         onClick={() => this.onClickLogInOutButton()}>{(this.state.userLoggedIn)? "Log Out" : "Log In"}
@@ -141,13 +141,16 @@ class App extends Component {
   render() {	  
     return (
       <div className="App">
-        <header className="App-header">
-          <img src={lampion} className="App-logo" alt="logo" />
-          <h1 className="App-title">Bonjour et bienvenue pour découvrir des outils vous 
-					accompagnant dans l'apprentissage du chinois.</h1>
-        </header>
-		<MenuBar /> 
-		<LogInOutButton onLoginSuccess={this.onLoginSuccess} onLogoutSuccess={this.onLogoutSuccess} userLoggedIn={this.state.userLoggedIn} />
+		<div id="top" className="App-top">
+          <header className="App-header" >
+            <img src={lampion} className="App-logo" alt="logo" />
+            <div id="App-title" className="App-title">Bonjour et bienvenue pour découvrir des outils vous accompagnant dans l'apprentissage du chinois.</div>
+          </header>
+		  <div id="toolbar" className="App-toolbar">
+			<MenuBar /> 
+			<LogInOutButton onLoginSuccess={this.onLoginSuccess} onLogoutSuccess={this.onLogoutSuccess} userLoggedIn={this.state.userLoggedIn} />
+		  </div>	
+		</div>
 		<UserInfo userChanged={this.state.userChanged} lastSession={this.state.lastSession} avatarUrl={this.state.avatarUrl} pseudo={this.state.pseudo}/>		
 		<GameSection />
       </div>
