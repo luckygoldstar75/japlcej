@@ -7,6 +7,7 @@ body {
 .pinyintextarea { 
     background-color: yellow;
     font-size:250%;
+    width: 80%
 }
 
 .pinyintextareawrong { 
@@ -14,16 +15,22 @@ body {
     font-size:250%;
 }
 
-.pinyinbutton { 
-   font-size:200%;
-}
-
-.caracterTobeGuessed { 
-  font-size:300%;
+.pinyinbutton {
+  font-size: 1em;
 }
 
 
-.actionbutton { 
-   font-size:200%;
-   margin: 10px;
+.guessCharacterInput {
+	display: flex;
+	width:100%;
+	flex-direction:'column';
+	flex-flow : flex-wrap;
+	justify-content: center;
+	margin: 0px;
+  padding: 0px;	
 }
+
+.guessCharacterInputFieldset {
+	margin: 2px;
+  padding: 2px;
+}	

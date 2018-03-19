@@ -78,7 +78,7 @@ class UserInfo extends React.Component {
 				'Content-Type': 'application/json',
 				'Accept': 'application/json, text/plain, */*'
 			 },
-			 body : {},
+			 //body : {},
 			 credentials : 'include',
 			 mode : 'cors',
 			 redirect : 'follow'

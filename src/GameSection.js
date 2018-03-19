@@ -15,8 +15,19 @@ class GuessCharacterGameCurrentCharacter extends React.Component {
 		super(props);
 	}
 	
+	
 	render() {
-		return (<div id="caractereADeviner" align="center" className="caracterTobeGuessed">{this.props.currentCharacter}</div>);
+		const characterTobeGuessedStyle ={
+		display: 'flex',
+		flexDirection:'row',
+		flexFlow : 'flex-wrap',
+		justifyContent: 'center',
+		fontSize:'300%',
+		}		 
+		
+		var myCharacter = (this.props.currentCharacter == null)? "😀" : this.props.currentCharacter.character;
+		
+		return (<div id="caractereADeviner" align="center" style={characterTobeGuessedStyle}>{myCharacter}</div>);
 	}
 }
 
@@ -74,22 +85,75 @@ class GuessCharacterGameInput extends React.Component {
 				else {
 				  i.value = "";		
 				}}
-				
+				//{this.pinyinSpecialButtons}
 				return (
-				  <fieldset>
-					<div id="actions" align="center">
+				<fieldset className="guessCharacterInputFieldset">
+				  <div id="actions" className="guessCharacterInput">
+						<div id="actionsPinYinButtonsLot1">
+							<table >
+							<tbody>
+							<tr>
+								<td><input key="ā" type="button" onClick={this.addChar} value="ā" className="pinyinbutton" /></td>
+								<td><input key="á" type="button" onClick={this.addChar} value="á" className="pinyinbutton" /></td>
+								<td><input key="ǎ" type="button" onClick={this.addChar} value="ǎ" className="pinyinbutton" /></td>
+								<td><input key="à" type="button" onClick={this.addChar} value="à" className="pinyinbutton" /></td>
+							</tr>
+							<tr>
+								<td><input key="ē" type="button" onClick={this.addChar} value="ē" className="pinyinbutton" /></td>
+								<td><input key="é" type="button" onClick={this.addChar} value="é" className="pinyinbutton" /></td>
+								<td><input key="ě" type="button" onClick={this.addChar} value="ě" className="pinyinbutton" /></td>
+								<td><input key="è" type="button" onClick={this.addChar} value="è" className="pinyinbutton" /></td>
+							</tr>
+							<tr>
+								<td><input key="ō" type="button" onClick={this.addChar} value="ō" className="pinyinbutton" /></td>
+								<td><input key="ó" type="button" onClick={this.addChar} value="ó" className="pinyinbutton" /></td>
+								<td><input key="ǒ" type="button" onClick={this.addChar} value="ǒ" className="pinyinbutton" /></td>
+								<td><input key="ò" type="button" onClick={this.addChar} value="ò" className="pinyinbutton" /></td>
+							</tr>
+							</tbody>
+							</table>
+						</div>
+											
+						<div id ="actionsPinYinButtonsLot2">
+							<table >
+							<tbody>
+							<tr>
+								<td><input key="ī" type="button" onClick={this.addChar} value="ī" className="pinyinbutton" /></td>
+								<td><input key="í" type="button" onClick={this.addChar} value="í" className="pinyinbutton" /></td>
+								<td><input key="ǐ" type="button" onClick={this.addChar} value="ǐ" className="pinyinbutton" /></td>
+								<td><input key="ì" type="button" onClick={this.addChar} value="ì" className="pinyinbutton" /></td>
+							</tr>
+							<tr>
+								<td><input key="ū" type="button" onClick={this.addChar} value="ū" className="pinyinbutton" /></td>
+								<td><input key="ú" type="button" onClick={this.addChar} value="ú" className="pinyinbutton" /></td>
+								<td><input key="ǔ" type="button" onClick={this.addChar} value="ǔ" className="pinyinbutton" /></td>
+								<td><input key="ù" type="button" onClick={this.addChar} value="ù" className="pinyinbutton" /></td>
+							</tr>
+							<tr>
+								<td><input key="ǖ" type="button" onClick={this.addChar} value="ǖ" className="pinyinbutton" /></td>
+								<td><input key="ǘ" type="button" onClick={this.addChar} value="ǘ" className="pinyinbutton" /></td>
+								<td><input key="ǚ" type="button" onClick={this.addChar} value="ǚ" className="pinyinbutton" /></td>
+								<td><input key="ǜ" type="button" onClick={this.addChar} value="ǜ" className="pinyinbutton" /></td>
+							</tr>
+							</tbody>
+							</table>
+					   </div>			
+							
+						
+					</div>
+					
+					<div id="actionsButtonsGuessChracterPinyin" className="guessCharacterInput">
 						<button type="button" className="actionbutton" id="Valider" autoFocus onClick={this.handleInputValidated} 
 							disabled={!answerExpected}>Valider↵</button>
-						
-						{this.pinyinSpecialButtons}
-						
-						<textarea name="saisie Pinyin" id="saisiePinyin" cols="50" rows="4"
-								className="pinyintextarea" spellCheck="false" 
-									disabled={!answerExpected} onKeyPress={this.saisiePinyinKeyPressed} />
+						<button type="button" className="actionbutton" id="Suivant" autoFocus 
+							onClick={this.handleNextCharacterRequested} disabled={answerExpected}>Suivant↓</button>					
 					</div>
-					<button type="button" className="actionbutton" id="Suivant" autoFocus 
-						onClick={this.handleNextCharacterRequested} disabled={answerExpected}>Suivant↓</button>					
-				  </fieldset>
+					
+					<textarea name="saisie Pinyin" id="saisiePinyin" cols="50" rows="4"
+								className="pinyintextarea" spellCheck="false" 
+									disabled={!answerExpected} onKeyPress={this.saisiePinyinKeyPressed} />	
+					
+					</fieldset>				  
 				);
 	}
 }
@@ -136,6 +200,11 @@ class GuessCharacterGame extends React.Component {
 	}	
 	
 	valider(inputValue) {
+		if (this.state.currentCharacter == null) { 
+			console.log("currentCharacter is empty : valider impossible. Nothing done");
+			return;
+		};
+		
 		//post client's pinyin guess answer
 		 fetch(japlcejAPI + routesURLs.GUESS_CHARACTER,
 			{method: "POST",
@@ -143,7 +212,7 @@ class GuessCharacterGame extends React.Component {
 				'Content-Type': 'application/json',
 				'Accept': 'application/json, text/plain, */*'
 			 },
-			 body : JSON.stringify({id : this.state.currentCharacter.id ,
+			 body : JSON.stringify({id : this.state.currentCharacter.id,
 					 userInputPinyin : inputValue})
 			 ,			 
 			 mode : 'cors',
@@ -176,15 +245,17 @@ class GuessCharacterGame extends React.Component {
 
   
   render() {
+	 var myCharacterAnswer = (this.state.currentCharacter == null)? "😀" : this.state.currentCharacter.answer; 
+	  
     return ( <div className="GuessCharacterGame">
 				<GuessCharacterGameCurrentResult nbSuccess={this.state.nbSuccess} nbTries={this.state.nbTries} />
 
-				<GuessCharacterGameCurrentCharacter currentCharacter={this.state.currentCharacter.character} />
+				<GuessCharacterGameCurrentCharacter currentCharacter={this.state.currentCharacter} />
 
 				<GuessCharacterGameInput lastResultIsFalse={this.state.lastResultIsFalse} 
 					onGameInputChange={this.valider} onNextCharacterRequested={this.auSuivant} 
 					currentCharacter={this.state.currentCharacter} 
-					currentCharacterPinyin={this.state.currentCharacter.answer}
+					currentCharacterPinyin={myCharacterAnswer}
 					/>	
 			</div>
 			);

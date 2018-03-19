@@ -4,27 +4,34 @@
 
 .App-top {
 	width:100%;
-	display: block
-}
-
-.App-logo {
-  //animation: App-logo-spin infinite 20s linear;
-  height: 50%;
-  display: inline-block;
-  padding-right: 10px
+	display: flex;
+	flex-direction: column;
 }
 
 .App-header {
   background-color: #222;
-  height: 100px;
-  padding: 20px;
   color: white;
-  display: inline-block
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  padding: 5px
+}
+
+.App-logo {
+  animation: App-logo-spin infinite 20s linear;
+  padding: 5px;
+  background-image: url('http://placekitten.com/g/200/300');
+  background-repeat: no-repeat;
+  background-size: cover; /* Make the image cover the div */
+  background-position: 50%; /* Center the image inside the div */
+  height: 40px;
+  width: 40 px
 }
 
 .App-title {
   font-size: 1em;
-  display: inline-block
+  align-self: baseline;
+  width: 90%
 }
 
 .App-intro {
@@ -36,15 +43,19 @@
 }
 
 .MenuBar {
-  display: inline-block
+  display: inline-block;
+  margin : 10px
 }
 
-.loginZone {
-	display: inline-block;
-	width:100%;
+.loginZone, .signupZone {
+	display: flex;
+	width:30%%;
+	flex-direction:'row';
+	margin : '2px';
+	flex-flow : 'flex-wrap';		 
 }
 
-.loginbtn, .btn {
+.loginbtn, .signupbtn , .btn {
 	margin: '10px 10px 10px 0';
 	background-color: white;
     border: none;
@@ -64,20 +75,42 @@
 	background-color:goldenrod
 }
 
-.loginbtn:hover{
-	background-color: red;
+.loginbtn:hover {
+	background-color: crimson;
+	font-weight: bold;
+	color: goldenrod;
 }
 
 .signupbtn {
-
+	-webkit-transition-duration: 0.4s; /* Safari */
+    transition-duration: 0.4s;
+	color: goldenrod;
+	background-color: beige
 }
 
-.pinyinbutton {
-  font-size: 1em;
-  display: inline-block
+.signupbtn:hover{
+	background-color: palegreen	;
+	color: white;
+	font-weight: bold;
+}
+
+.loginbtn::after, .signupbtn::after {
+    display: block;
+    content: attr(title);
+    font-weight: bold;
+    height: 0;
+    overflow: hidden;
+    visibility: hidden;
+}
+
+
+
+.actionbuttonXXX { 
+   font-size:200%;
+   margin: 10px;
 }
 
 @keyframes App-logo-spin {
   from { transform: rotate(0deg); }
-  to { transform: rotate(360deg); }
+  to { transform: rotate(180deg); }
 }
