@@ -44,6 +44,7 @@ class ModalLogin extends React.Component {
   }
   
   handleSubmit(event) {
+	  var _that = this;
 	  event.preventDefault();
 	 
 	  //console.log("Submit login form bien reçu!");
@@ -74,17 +75,17 @@ class ModalLogin extends React.Component {
 				else return null;
 		  })
 	 	.catch(error => {console.error('Error:', error);
-				this.setState.message = {severity: 'error', text : error}})
+				_that.setState.message = {severity: 'error', text : error}})
 		.then( respjson => {
 					// Examine the text in the response
 					console.log(respjson);
 					if(respjson != null && respjson.error != null) {
-						this.setState({message : {severity: 'error', text : respjson.errMessage}});
+						_that.setState({message : {severity: 'error', text : respjson.errMessage}});
 					}
 					else //NO error
 					{
-						console.log(this.props);
-						this.props.onLoginSuccess(respjson);
+						console.log(_that.props);
+						_that.props.onLoginSuccess(respjson);
 					}
 				});
   }
@@ -131,7 +132,7 @@ class ModalLogin extends React.Component {
 			<input type="submit" value="Submit" />
 		</form>
 
-		 <a href="/forgottenPassword">Forgotten Password ?</a>
+		 <a href="/forgottenPassword">Mot de passe oublié ?</a>
 		 
           <div className="footer">
             <button onClick={this.props.onClose}>

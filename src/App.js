@@ -20,32 +20,32 @@ class SignUpButton extends React.Component {
 		super(props);
 		this.state = {showModalSignUp: false, userSignedUp : this.props.userSignedUp, userLoggedIn : this.props.userLoggedIn};
 		this.toggleModalSignUp = this.toggleModalSignUp.bind(this);
-		this.onSignUpSuccess = this.onSignUpSuccess.bind(this);	
-	}	
+		this.onSignUpSuccess = this.onSignUpSuccess.bind(this);
+	}
 
   toggleModalSignUp = () => {
     this.setState({
       showModalSignUp: !this.state.showModalSignUp
     });
   }
-  
+
   onSignUpSuccess = (jsonUserSignUpInfo) => {
 	  this.setState({
       showModalSignUp: false,
-      userSignedUp:true      
+      userSignedUp:true
     });
-    
+
     this.props.onSignUpSuccess(jsonUserSignUpInfo);
   }
 
  onQuitSignUpSuccess = () => {
 	  this.setState({
       showModalSignUp: false,
-      userSignedUp:false      
-    });    
+      userSignedUp:false
+    });
   }
 
-  onClickSignUpButton() {	  
+  onClickSignUpButton() {
 	  if (this.state.userSignedUp) { // le client clique pour logout
 		  fetch(japlcejAPI + routesURLs.SIGNUP, {
 			 method: "POST",
@@ -65,19 +65,19 @@ class SignUpButton extends React.Component {
 				this.props.onSignUpSuccess();
 			}});
 	  }
-	  else 
+	  else
 	  {
 		  this.setState({showModalSignUp: true,
 		  userSignedUp: false,});
 	  }
-  }	
+  }
 
  render() {
 	if(this.state.userLoggedIn) {
       return null;
     }
-	
-	// TODO : ModalLogin is to become a ModalSignup !!!   
+
+	// TODO : ModalLogin is to become a ModalSignup !!!
     return (
     <div id="signupZone" className="signupZone">
     <button
@@ -85,44 +85,44 @@ class SignUpButton extends React.Component {
         onClick={() => this.onClickSignUpButton()}>{(this.state.userSignedUp)? "Welcome!" : "Sign Up"}
     </button>
 
-	
+
     <ModalLogin show={this.state.showModalSignUp} onClose={this.toggleModalSignUp} onSignUpSuccess={this.onSignUpSuccess}>Inscrivez-vous en quelques clics</ModalLogin>
    </div>
 	);
-  } 
-}	
+  }
+}
 
 class LogInOutButton extends React.Component {
   constructor(props) {
 		super(props);
 		this.state = {showModalLogin: false, userLoggedIn : this.props.userLoggedIn};
 		this.toggleModalLogin = this.toggleModalLogin.bind(this);
-		this.onLoginSuccess = this.onLoginSuccess.bind(this);	
-	}	
+		this.onLoginSuccess = this.onLoginSuccess.bind(this);
+	}
 
   toggleModalLogin = () => {
     this.setState({
       showModalLogin: !this.state.showModalLogin
     });
   }
-  
+
   onLoginSuccess = (jsonUserLoginInfo) => {
 	  this.setState({
       showModalLogin: false,
-      userLoggedIn:true      
+      userLoggedIn:true
     });
-    
+
     this.props.onLoginSuccess(jsonUserLoginInfo);
   }
 
  onLogoutSuccess = () => {
 	  this.setState({
       showModalLogin: false,
-      userLoggedIn:false      
-    });    
+      userLoggedIn:false
+    });
   }
 
-  onClickLogInOutButton() {	  
+  onClickLogInOutButton() {
 	  if (this.state.userLoggedIn) { // le client clique pour logout
 		  fetch(japlcejAPI + routesURLs.LOGOUT, {
 			 method: "GET",
@@ -149,7 +149,7 @@ class LogInOutButton extends React.Component {
 		  this.setState({showModalLogin: true,
 		  userLoggedIn: false,});
 	  }
-  }	
+  }
 
  render() { //onClick={() => this.setState((this.state.userLoggedIn)?{showModalLogin: true}:{userLoggedIn: false})}>{(this.state.userLoggedIn)? "Log Out" : "Log In"}
     return (
@@ -162,18 +162,18 @@ class LogInOutButton extends React.Component {
     <ModalLogin show={this.state.showModalLogin} onClose={this.toggleModalLogin} onLoginSuccess={this.onLoginSuccess}>Veuillez saisir vos identifiants de connexion</ModalLogin>
    </div>
 	);
-  } 
-}	
+  }
+}
 
 class MenuBar extends React.Component {
   constructor(props) {
 		super(props);
-	}	
-		
+	}
+
   render() {
     return (<div className="MenuBar">
     <Hamburger />
-    </div>);	
+    </div>);
   }
 }
 
@@ -181,56 +181,42 @@ class App extends Component {
   constructor(props) {
 	super(props);
 	this.onLoginSuccess = this.onLoginSuccess.bind(this);
-	fetch(japlcejAPI + routesURLs.IS_LOGGEDIN,{
-			 method: "GET",
-			 headers: {
-				'Content-Type': 'application/json',
-				'Accept': 'application/json, text/plain, */*'
-			 },
-			 body : {},
-			 credentials : 'include',
-			 mode : 'cors',
-			 redirect : 'follow'
-			}	
-	)
-		.then(response => response.json())
-		.catch(error => {console.error('IsLoggedIn Error: ', error);
-		 })
-		.then(data => { if (data != null) {this.setState({userLoggedIn : data.isLoggedIn})}});
-	this.state = {currentUser: null, userChanged : false, lastSession : null ,
+	
+
+  this.state = {currentUser: null, userChanged : false, lastSession : null ,
 		avatarUrl:null, pseudo : null};
-  }	
+  }
 
   onLoginSuccess = (jsonUserLoginInfo) => {
 	  console.log("OnLoginSuccess Invoked! " + jsonUserLoginInfo);
 	  var _lastSession = (jsonUserLoginInfo == null)? null : jsonUserLoginInfo.lastSession;
 	  var _avatarUrl = (jsonUserLoginInfo == null)? null : jsonUserLoginInfo.avatarUrl;
 	  var _pseudo = (jsonUserLoginInfo == null)? null : jsonUserLoginInfo.pseudo;
-	  
+
 	  this.setState({userLoggedIn : true, userChanged : true, lastSession : _lastSession, avatarUrl : _avatarUrl, pseudo : _pseudo});
   }
- 
+
   onLogoutSuccess = () => {
 	  console.log("OnLogoutSuccess Invoked! ");
 	  this.setState({userLoggedIn : false, userChanged : true, lastSession : null, avatarUrl : null, pseudo : null});
   }
-		
+
   render() {
 	  const logoStyle = {
 		backgroundImage: "url(" + lampion +")",
 		backgroundRepeat: 'no-repeat',
 		backgroundSize: 'cover', /* Make the image cover the div */
 		width: '40px',
-		height: '40px',		
+		height: '40px',
     };
-	
+
 	const loginSignupButtonsStyle ={
 		display: 'flex',
 		flexDirection:'row',
 		margin : '2px',
-		flexFlow : 'flex-wrap',		 
+		flexFlow : 'flex-wrap',
 	};
-	  	  
+
     return (
       <div className="App">
 		<div id="top" className="App-top">
@@ -240,18 +226,34 @@ class App extends Component {
             <div id="App-logo" style={logoStyle} alt="logo" />
           </header>
 		  <div id="toolbar" className="App-toolbar">
-
 			<div id="signuploginbuttons" style={loginSignupButtonsStyle} >
 			    <LogInOutButton onLoginSuccess={this.onLoginSuccess} onLogoutSuccess={this.onLogoutSuccess} userLoggedIn={this.state.userLoggedIn} />
 			    <SignUpButton onSignUpSuccess={this.onLoginSuccess} userLoggedIn={this.state.userLoggedIn} />
-			    <MenuBar /> 						
+			    <MenuBar />
 			</div>
-		  </div>	
+		  </div>
 		</div>
-		<UserInfo userChanged={this.state.userChanged} lastSession={this.state.lastSession} avatarUrl={this.state.avatarUrl} pseudo={this.state.pseudo}/>		
+		<UserInfo userChanged={this.state.userChanged} lastSession={this.state.lastSession} avatarUrl={this.state.avatarUrl} pseudo={this.state.pseudo}/>
 		<GameSection />
       </div>
     );
+  }
+
+  componentDidMount() {
+	fetch(japlcejAPI + routesURLs.IS_LOGGEDIN,{
+			 method: "GET",
+			 headers: {
+				'Content-Type': 'application/json',
+				'Accept': 'application/json, text/plain, */*'
+			 },
+			 credentials : 'include',
+			 mode : 'cors',
+			 redirect : 'follow'
+			}
+	)
+	.then(data => { if (data != null) {this.setState({userLoggedIn : data.isLoggedIn})}})
+	.catch(error => {console.error('IsLoggedIn Error: ', error);
+		 })
   }
 }
 
