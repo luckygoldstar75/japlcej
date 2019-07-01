@@ -99,7 +99,7 @@ class GuessCharacterGameInput extends React.Component {
 				  i.focus();
 				}
 				else if (this.props.lastResultIsFalse ===false) {
-				  i.value = "Well done Bobby! That's what we call a nice shot!";
+				  i.value = "Excellent! That's what we call a nice shot!";
 				}
 				}
 				//{this.pinyinSpecialButtons}

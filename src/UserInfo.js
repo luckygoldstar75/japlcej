@@ -20,22 +20,30 @@ class Rank extends React.Component {
 }
 
 
-function nbDaysSinceLastSession(dateLastSession) {
-	if(dateLastSession == null)
+function nbDaysSinceLastSession(timestampLastSession) {
+	if(timestampLastSession == null)
 			return 0;
 	else { 
-		return (Date.now() - dateLastSession);
+		var timestampDiff=Date.now() - timestampLastSession;
+		var nbDaysDiff=Math.floor(timestampDiff/ (1000 * 60 *60* 24));
+		return nbDaysDiff;
 	}
 }
 
 class WelcomeMessage extends React.Component {
   render() {
+	var welcomeString="C'est bon de vous revoir.";
+	if(this.props.userLastSession) {
+  		var _nbDaysSinceLastSession = nbDaysSinceLastSession(this.props.userLastSession);
+	   	if (_nbDaysSinceLastSession != NaN && _nbDaysSinceLastSession > 0) {
+		  welcomeString+=" Cela faisait déjà " + _nbDaysSinceLastSession + " jour(s)!";
+	        }
+	}
 	if (this.props.pseudo !== null) {
 		return (
 			<div id="greeting">
 				<div id="persoGreeting">
-					<h1>Hello, {this.props.pseudo}. 
-					C'est bon de vous revoir . Cela faisait déjà {nbDaysSinceLastSession(this.props.userLastSession)} jour(s)!</h1>
+					<h1>Hello, {this.props.pseudo}. {welcomeString}</h1>
 				</div>
 			</div>
 		);

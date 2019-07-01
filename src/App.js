@@ -130,19 +130,24 @@ class LogInOutButton extends React.Component {
 				'Content-Type': 'application/json',
 				'Accept': 'application/json, text/plain, */*'
 			 },
-			 body : {},
 			 credentials : 'include',
 			 mode : 'cors',
 			 redirect : 'follow'
 			})
-		.then(response => {return({code : response.status , json : response.json()})})
-		.catch(error => {console.error('Logout Error:', error);
-		 })
+		.then(response => {
+			return response.json();			
+		})
 		.then(data => {
-			if (data != null  && data.code === 200 && (data.json == null || data.json.error == null) ) {
+			if (data != null  && data.statusCode === 200 && data.error === null) {
 				this.setState({userLoggedIn : false});
 				this.props.onLogoutSuccess(); // on efface les infos clients de la session précédente
-			}});
+			}
+			else {
+				console.error('Logout error . Code:', data.statusCode, ' Error:' , data.error);
+			}
+		})
+		.catch(error => {console.error('Logout Error:', error);
+		 	})
 	  }
 	  else // le client clique pour login
 	  {
@@ -188,12 +193,16 @@ class App extends Component {
   }
 
   onLoginSuccess = (jsonUserLoginInfo) => {
-	  console.log("OnLoginSuccess Invoked! " + jsonUserLoginInfo);
-	  var _lastSession = (jsonUserLoginInfo == null)? null : jsonUserLoginInfo.lastSession;
-	  var _avatarUrl = (jsonUserLoginInfo == null)? null : jsonUserLoginInfo.avatarUrl;
-	  var _pseudo = (jsonUserLoginInfo == null)? null : jsonUserLoginInfo.pseudo;
-
-	  this.setState({userLoggedIn : true, userChanged : true, lastSession : _lastSession, avatarUrl : _avatarUrl, pseudo : _pseudo});
+	console.log("OnLoginSuccess Invoked! " + jsonUserLoginInfo);
+	  
+	var _lastSession = null, _avatarUrl = null, _pseudo = null;
+	if (jsonUserLoginInfo) {
+	  _lastSession = jsonUserLoginInfo.lastSession;
+	  _avatarUrl = jsonUserLoginInfo.avatarUrl;
+	  _pseudo =  jsonUserLoginInfo.pseudo;
+	}
+	
+	this.setState({userLoggedIn : true, userChanged : true, lastSession : _lastSession, avatarUrl : _avatarUrl, pseudo : _pseudo});
   }
 
   onLogoutSuccess = () => {
