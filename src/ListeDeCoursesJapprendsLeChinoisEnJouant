@@ -1,0 +1,34 @@
+Déployer le jeu sur internet: back done  + front!
+
+
+Faire réinitialiser au login les compteurs et globalement toute l'appli
+Faire signin avec la cinématique envoi mail etc.
+Faire le mot de passe oublié
+Faire une VM Alpine avec dependences sur poste local
+Finir Logout + corriger index.js:2178 Logout Error: SyntaxError: Unexpected token L in JSON at position 0
+
+Faire fonctionner les insomnia : /stats /privacycheckservice et dumRetrieveLastSession
+Mettre dans git avec la partie serveur les tests insomnia
+done reinstaller insomnia
+done mettre à jour nodejs/npm
+
++Définir la stratégie pour que l'on gagne des points (plus tu joues , plus tu gagnes de points)
++Permettre que les points fassent monter de niveau kung fu
+Faire le  mode de jeu : je vois le caractère, je dois trouver le bon mot français
++Afficher le leaderboard (classement)
+Faire le  mode de jeu : je vois le mot francais, je dois sélectionner le bon caractère
+Faire le  mode de jeu : je vois le pinyin, je dois trouver le bon caractère
+Faire le  mode de jeu : je vois le pinyin, je dois trouver le bon mot français
+Faire le  mode de jeu : je vois le francais, je dois trouver le bon mot pinyin
+Faire le  mode de jeu: tracer le caractère quand je vois le pinyin ou le mot francais (rouge : dur ou bleu: facile)
+Faire le  mode de jeu: sélectionner le bon pinyin ou le bon caractère par rapport à ce que j'ai entendu
+Faire le  mode de jeu: prononcer en chinois le bon mot en fonction de si l'on voit : francais, le pinyin ou le caractère
+Faire le  mode de jeu: sélectionner le bon pinyin ou le bon caractère par rapport à l'image
+Faire le  mode de jeu: prononcer en chinois le bon caractère par rapport à l'image
+Faire un mode de sélection du niveau par rapport aux jeux à la complexité: grades de kung fu !?
+Adapter automatiquement la langue au navigateur du visiteur
+Permettre de changer de langue anglais/fr à la volée
+
+
+
+
