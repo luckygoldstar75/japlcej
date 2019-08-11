@@ -52,7 +52,7 @@
 	width:30%%;
 	flex-direction:'row';
 	margin : '2px';
-	flex-flow : 'flex-wrap';		 
+	flex-flow : 'flex-wrap';
 }
 
 .loginbtn, .signupbtn , .btn {
@@ -105,10 +105,67 @@
 
 
 
-.actionbuttonXXX { 
+.actionbuttonXXX {
    font-size:200%;
    margin: 10px;
 }
+
+#gameSelector {
+  background-color: lightsalmon;
+  color: white;
+  display: flex;
+  flex-direction: col;
+  align-items: center;
+  padding: 5px;
+  height:80%
+}
+
+#GameSectionTitle {
+  text-align: left;
+  color : black;
+  margin-top:2%;
+}
+
+.cardGame {
+  color: black;
+  background-color: firebrick;
+  margin: 10px;
+  border-radius: 8px;
+  align-items:center
+}
+.cardGameComingSoon {
+  color: white;
+  background-color: grey;
+  margin: 10px;
+  border-radius: 25px;
+}
+
+.cardGameAbstractText {
+  background-color : orange;
+  text-align: center;
+  padding :5px;
+  font-style: italic;
+}
+.cardGameGoButton {
+  background-color : white;
+  color : SteelBlue;
+  text-align: center;
+  margin-left:30%;
+  margin-right:30%;
+  font-weight: bold;
+  width:40%;
+  border-radius: 8px;
+  align: center
+}
+.cardGameDecorationCharacterTop {
+  text-align: left;
+  padding:5px
+}
+.cardGameDecorationCharacterBottom {
+  text-align: right;
+  padding:5px
+}
+
 
 @keyframes App-logo-spin {
   from { transform: rotate(0deg); }

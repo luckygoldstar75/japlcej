@@ -35,8 +35,8 @@ class WelcomeMessage extends React.Component {
 	var welcomeString="C'est bon de vous revoir.";
 	if(this.props.userLastSession) {
   		var _nbDaysSinceLastSession = nbDaysSinceLastSession(this.props.userLastSession);
-	   	if (_nbDaysSinceLastSession != NaN && _nbDaysSinceLastSession > 0) {
-		  welcomeString+=" Cela faisait déjà " + _nbDaysSinceLastSession + " jour(s)!";
+	   	if (isNaN(_nbDaysSinceLastSession) && _nbDaysSinceLastSession > 0) {
+		  welcomeString+=" Cela faisait déjà " + _nbDaysSinceLastSession + (_nbDaysSinceLastSession)>1?" jours!":"jour!";
 	        }
 	}
 	if (this.props.pseudo !== null) {

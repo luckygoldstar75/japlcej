@@ -135,7 +135,7 @@ class LogInOutButton extends React.Component {
 			 redirect : 'follow'
 			})
 		.then(response => {
-			return response.json();			
+			return response.json();
 		})
 		.then(data => {
 			if (data != null  && data.statusCode === 200 && data.error === null) {
@@ -186,7 +186,7 @@ class App extends Component {
   constructor(props) {
 	super(props);
 	this.onLoginSuccess = this.onLoginSuccess.bind(this);
-	
+
 
   this.state = {currentUser: null, userChanged : false, lastSession : null ,
 		avatarUrl:null, pseudo : null};
@@ -194,14 +194,14 @@ class App extends Component {
 
   onLoginSuccess = (jsonUserLoginInfo) => {
 	console.log("OnLoginSuccess Invoked! " + jsonUserLoginInfo);
-	  
+
 	var _lastSession = null, _avatarUrl = null, _pseudo = null;
 	if (jsonUserLoginInfo) {
 	  _lastSession = jsonUserLoginInfo.lastSession;
 	  _avatarUrl = jsonUserLoginInfo.avatarUrl;
 	  _pseudo =  jsonUserLoginInfo.pseudo;
 	}
-	
+
 	this.setState({userLoggedIn : true, userChanged : true, lastSession : _lastSession, avatarUrl : _avatarUrl, pseudo : _pseudo});
   }
 
@@ -243,7 +243,7 @@ class App extends Component {
 		  </div>
 		</div>
 		<UserInfo userChanged={this.state.userChanged} lastSession={this.state.lastSession} avatarUrl={this.state.avatarUrl} pseudo={this.state.pseudo}/>
-		<GameSection />
+		<GameSection gameSelected={undefined}/>
       </div>
     );
   }

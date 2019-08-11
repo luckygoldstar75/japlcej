@@ -6,6 +6,7 @@ Faire signin avec la cinématique envoi mail etc.
 Faire le mot de passe oublié
 Faire une VM Alpine avec dependences sur poste local
 Finir Logout + corriger index.js:2178 Logout Error: SyntaxError: Unexpected token L in JSON at position 0
+Faire que le résultat ne soit pas affihé au fur et à mesure. 12/20 etc ... trop scolaire
 
 Faire fonctionner les insomnia : /stats /privacycheckservice et dumRetrieveLastSession
 Mettre dans git avec la partie serveur les tests insomnia

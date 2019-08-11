@@ -6,7 +6,7 @@ import AppMessage from './AppMessage.js';
 class ModalLogin extends React.Component {
    constructor(props) {
 		super(props);
-		this.state = { 
+		this.state = {
 			message : {text : null, severity : null}
 			};
 		this.passwordChange = this.passwordChange.bind(this);
@@ -14,7 +14,7 @@ class ModalLogin extends React.Component {
 		this.handleSubmit = this.handleSubmit.bind(this);
 		this.addMessage = this.addMessage.bind(this);
 		this.hideMessage = this.hideMessage.bind(this);
-	}		
+	}
 
  passwordChange(e) {
     this.setState({
@@ -22,33 +22,33 @@ class ModalLogin extends React.Component {
       message : {text : null, severity : null},
     })
   }
-  
+
   emailChange(e) {
     this.setState({
       email: e.target.value,
       message :	{text : null, severity : null},
     })
   }
-  
+
   addMessage(message) {
 	  if (message == null) {
-		  this.setState({message : {severity: null, text : null}});		
+		  this.setState({message : {severity: null, text : null}});
 	  }
 	  else {
 		  this.setState({message : {severity: message.severity, text : message.text}});
 	  }
   }
-  
+
   hideMessage() {
-	  this.setState({message : {severity: null, text : null}});	
+	  this.setState({message : {severity: null, text : null}});
   }
-  
+
   handleSubmit(event) {
 	  var _that = this;
 	  event.preventDefault();
-	 
+
 	  //console.log("Submit login form bien reçu!");
-	  fetch(japlcejAPI + routesURLs.LOGIN, 
+	  fetch(japlcejAPI + routesURLs.LOGIN,
 			{method: "POST",
 			 headers: {
 				'Content-Type': 'application/json',
@@ -61,7 +61,7 @@ class ModalLogin extends React.Component {
 			 mode : 'cors',
 			 redirect : 'follow'
 			}
-		).then(response => {				
+		).then(response => {
 				if (response != null) {
 					if (response.ok) {
 					  //window.location = '/'	;
@@ -89,7 +89,7 @@ class ModalLogin extends React.Component {
 					}
 				});
   }
-    	
+
   render() {
     // Render nothing if the "show" prop is false
     if(!this.props.show) {
@@ -116,11 +116,11 @@ class ModalLogin extends React.Component {
       margin: '0 auto',
       padding: 30
     };
- 
+
     return (
       <div className="backdrop" style={backdropStyle}>
         <div className="modal" style={modalStyle}>
-		  <AppMessage severity={this.state.message.severity} message={this.state.message.text} onClose={this.hideMessage}/>		
+		  <AppMessage severity={this.state.message.severity} message={this.state.message.text} onClose={this.hideMessage}/>
           <form onSubmit={this.handleSubmit}>
 			Merci de saisir vos identifiants pour vous connecter<br/>
 			<label>Email
@@ -133,7 +133,7 @@ class ModalLogin extends React.Component {
 		</form>
 
 		 <a href="/forgottenPassword">Mot de passe oublié ?</a>
-		 
+
           <div className="footer">
             <button onClick={this.props.onClose}>
               Close

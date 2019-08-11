@@ -4,13 +4,13 @@ body {
   font-family: sans-serif;
 }
 
-.pinyintextarea { 
+.pinyintextarea {
     background-color: yellow;
     font-size:250%;
     width: 80%
 }
 
-.pinyintextareawrong { 
+.pinyintextareawrong {
     background-color: red;
     font-size:250%;
 }
@@ -27,10 +27,24 @@ body {
 	flex-flow : flex-wrap;
 	justify-content: center;
 	margin: 0px;
-  padding: 0px;	
+  padding: 0px;
 }
 
 .guessCharacterInputFieldset {
 	margin: 2px;
   padding: 2px;
-}	
+}
+
+.cardGame {
+
+}
+.cardGameComingSoon {
+  disabled: true
+}
+
+#gameSelector {
+  display: flex;
+	width:100%;
+	flex-direction:'column';
+	flex-flow : flex-wrap;
+}
