@@ -1,5 +1,4 @@
 import React from 'react';
-import {japlcejAPI, routesURLs} from './config';
 import GameReadCharacterWritePinyin from './GameReadCharacterWritePinyin';
 import GameCard from './GameCard'
 
@@ -25,12 +24,17 @@ class Game extends React.Component {
 class GameSection extends React.Component {
 	constructor(props) {
 		super(props);
-		this.state={gameSelected : this.props.gameSelected};
+		this.state={gameSelected : this.props.gameSelected, userLoggedIn : this.props.userLoggedIn};
 		this.selectGame = this.selectGame.bind(this);
+		this.unselectGame = this.unselectGame.bind(this);
   }
 
-	selectGame(event) {
-    this.setState({gameSelected : event.target.id});
+	unselectGame() {
+		this.setState({gameSelected : undefined, gameSelectedTextAbstract : undefined});
+	}
+
+	selectGame(_gameName, _gameTextAbstract) {
+    this.setState({gameSelected : _gameName, gameSelectedTextAbstract : _gameTextAbstract});
   }
 
 	render() {
@@ -39,10 +43,10 @@ class GameSection extends React.Component {
 			<div className="GameSection">
 			<div id="GameSectionTitle">Choose your game!</div>
 			  <div id="gameSelector">
-			  	 <GameCard isAvailable={true} decorationCharacter="家" gameName="GameReadCharacterWritePinyin" gameTextAbstract="Read character, write pinyin" onClick={this.selectGame}/>
+			  	 <GameCard isAvailable={true} decorationCharacter="家" gameName="GameReadCharacterWritePinyin" gameTextAbstract="Read character, write pinyin" quitGame={this.unselectGame} onClick={this.selectGame} />
 					 <GameCard isAvailable={false} decorationCharacter="Vote!" gameName="GameReadCharacterSelectFrench" gameTextAbstract="Read character, select french" />
 					 <GameCard isAvailable={false} decorationCharacter="Vote!" gameName="GameReadCharacterChoosePronunciation" gameTextAbstract="Read character, choose pronunciation" />
-		   </div>
+		    </div>
 			</div>
 		);
   }
@@ -50,8 +54,12 @@ class GameSection extends React.Component {
 				return (
 					<div className="GameSection">
 						<div id="gameSelector">
-							 <label>GuessCharacter<input type="radio" id="gameWritePinyinFromCharacter" checked="checked" />
+							 <label><input type="radio" id={this.state.gameSelected} checked="checked" readonly />
+							 {this.state.gameSelectedTextAbstract}
 							 </label>
+							 <div className="gameReturnButton" onClick={this.unselectGame}>
+					       ⇦<div className="">Return</div>
+					     </div>
 						</div>
 						<Game type={this.state.gameSelected} />
 					</div>

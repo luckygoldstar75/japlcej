@@ -166,6 +166,17 @@
   padding:5px
 }
 
+.gameReturnButton {
+  margin-left :15px;
+  margin-right :15px;
+  padding-left : 15px;
+  padding-right : 15px;
+  font-weight: bold;
+  color : SteelBlue;
+  background-color : white;
+  border-radius: 8px;
+  align: center
+}
 
 @keyframes App-logo-spin {
   from { transform: rotate(0deg); }

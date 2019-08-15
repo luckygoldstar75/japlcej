@@ -134,19 +134,19 @@ class LogInOutButton extends React.Component {
 			 mode : 'cors',
 			 redirect : 'follow'
 			})
-		.then(response => {
-			return response.json();
-		})
-		.then(data => {
-			if (data != null  && data.statusCode === 200 && data.error === null) {
-				this.setState({userLoggedIn : false});
-				this.props.onLogoutSuccess(); // on efface les infos clients de la session précédente
-			}
-			else {
-				console.error('Logout error . Code:', data.statusCode, ' Error:' , data.error);
-			}
-		})
-		.catch(error => {console.error('Logout Error:', error);
+      .then(response => {return({code : response.status , json : response.json()})})
+  		.catch(error => {console.error('Logout Error:', error);
+  		 })
+  		.then(data => {
+  			if (data != null  && data.code === 200 && (data.json === null || data.json.error == null)) {
+          this.setState({userLoggedIn : false});
+  				this.props.onLogoutSuccess(); // on efface les infos clients de la session précédente
+  			}
+        else {
+  				console.error('Logout error . Code:', data.code, ' Error:' , data.json);
+  			}
+      })
+		 .catch(error => {console.error('Logout Error:', error);
 		 	})
 	  }
 	  else // le client clique pour login
@@ -238,12 +238,12 @@ class App extends Component {
 			<div id="signuploginbuttons" style={loginSignupButtonsStyle} >
 			    <LogInOutButton onLoginSuccess={this.onLoginSuccess} onLogoutSuccess={this.onLogoutSuccess} userLoggedIn={this.state.userLoggedIn} />
 			    <SignUpButton onSignUpSuccess={this.onLoginSuccess} userLoggedIn={this.state.userLoggedIn} />
-			    <MenuBar />
+			    <MenuBar   d/>
 			</div>
 		  </div>
 		</div>
 		<UserInfo userChanged={this.state.userChanged} lastSession={this.state.lastSession} avatarUrl={this.state.avatarUrl} pseudo={this.state.pseudo}/>
-		<GameSection gameSelected={undefined}/>
+		<GameSection gameSelected={undefined} userLoggedIn={this.state.userLoggedIn} />
       </div>
     );
   }
