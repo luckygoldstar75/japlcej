@@ -1,10 +1,12 @@
 import './config-login.js'
 
- 
+
 export const japlcejAPI = 'http://melocal:4000/'||'https://japlcej.herokuapp.com/';
 export const routesURLs = {
  GUESS_CHARACTER : 'guessCharacter',
- IS_LOGGEDIN : 'login',	
+ IS_LOGGEDIN : 'login',
  LOGIN : 'login',
  LOGOUT  :'logout',
- USER_RANK_INFO : 'rank'};
+ USER_RANK_INFO : 'rank',
+ GETSCORES : 'scores'
+};

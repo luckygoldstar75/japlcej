@@ -4,7 +4,7 @@ import GameScores from './GameScores'
 class GameCard extends React.Component {
 	constructor(props) {
 		super(props);
-		this.state={isAvailable : this.props.isAvailable, decorationCharacter : this.props.decorationCharacter,
+		this.state={isAvailable : this.props.isAvailable, userLoggedIn : this.props.userLoggedIn, decorationCharacter : this.props.decorationCharacter,
        gameName : this.props.gameName, gameTextAbstract: this.props.gameTextAbstract, onClick:this.props.onClick};
     this.quitGame = this.props.quitGame;
     this.onClick=this.onClick.bind(this);
@@ -20,7 +20,7 @@ class GameCard extends React.Component {
 			<div className="cardGame" id={this.state.gameName} onClick={this.onClick}>
           <div className="cardGameDecorationCharacterTop">{this.state.decorationCharacter}<br/></div>
           <div className="cardGameAbstractText">{this.state.gameTextAbstract}</div><br/>
-          <GameScores />
+          <GameScores gameName={this.state.gameName} userLoggedIn={this.props.userLoggedIn}/>
           <div className="cardGameGoButton">Go!</div><br/>
           <div className="cardGameDecorationCharacterBottom">{this.state.decorationCharacter}</div>
 			</div>

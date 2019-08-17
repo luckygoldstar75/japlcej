@@ -13,7 +13,7 @@ class Game extends React.Component {
 			divBlocGame = "<" + this.props.type +"/>";
 
 		switch(this.props.type) {
-    		case 'GameReadCharacterWritePinyin':
+    		case 'readCharacterWritePinyin':
 					return ( <GameReadCharacterWritePinyin />	);
 				default:
 					return ( <GameReadCharacterWritePinyin />	);
@@ -43,9 +43,9 @@ class GameSection extends React.Component {
 			<div className="GameSection">
 			<div id="GameSectionTitle">Choose your game!</div>
 			  <div id="gameSelector">
-			  	 <GameCard isAvailable={true} decorationCharacter="家" gameName="GameReadCharacterWritePinyin" gameTextAbstract="Read character, write pinyin" quitGame={this.unselectGame} onClick={this.selectGame} />
-					 <GameCard isAvailable={false} decorationCharacter="Vote!" gameName="GameReadCharacterSelectFrench" gameTextAbstract="Read character, select french" />
-					 <GameCard isAvailable={false} decorationCharacter="Vote!" gameName="GameReadCharacterChoosePronunciation" gameTextAbstract="Read character, choose pronunciation" />
+			  	 <GameCard isAvailable={true} decorationCharacter="家" gameName="readCharacterWritePinyin" gameTextAbstract="Read character, write pinyin" quitGame={this.unselectGame} onClick={this.selectGame} userLoggedIn={this.props.userLoggedIn} />
+					 <GameCard isAvailable={false} decorationCharacter="Vote!" gameName="readCharacterSelectFrench" gameTextAbstract="Read character, select french" />
+					 <GameCard isAvailable={false} decorationCharacter="Vote!" gameName="readCharacterChoosePronunciation" gameTextAbstract="Read character, choose pronunciation" />
 		    </div>
 			</div>
 		);

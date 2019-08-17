@@ -178,6 +178,69 @@
   align: center
 }
 
+progress {
+ /* RESETS */
+ -webkit-appearance: none;
+ -moz-appearance: none;
+ appearance: none;
+ border: none;
+ /*margin-left :1%;
+ margin-right :1%;
+ width: 300px;
+ height: 15px;*/
+ border-radius: 20px;
+ /* The gray background in Firefox */
+ background-color: white
+ /*display: block;
+ margin-bottom: 1em;
+ width: 100%;*/
+}
+
+/* WEBKIT BROWSERS - CHROME, OPERA AND SAFARI*/
+progress::-webkit-progress-bar {
+  background-color:White;
+  border-radius: 20px;
+ }
+
+progress::-webkit-progress-value {
+  background-color: White;
+  border-radius: 20px;
+}
+
+// MOZILLA FIREFOX
+progress.percentageProgressionBar_unknown::-moz-progress-bar {
+  background-color: White;
+}
+progress.percentageProgressionBar_grey::-moz-progress-bar {
+  background-color:SlateGray;
+}
+progress.percentageProgressionBar_blue::-moz-progress-bar {
+  background-color: LightSeaGreen;
+}
+progress.percentageProgressionBar_red::-moz-progress-bar {
+  background-color: lightsalmon;
+}
+progress.percentageProgressionBar_gold::-moz-progress-bar {
+  background-color: Gold;
+}
+// WEBKIT
+progress.percentageProgressionBar_unknown::-webkit-progress-value {
+  background-color:White;
+}
+progress.percentageProgressionBar_grey::-webkit-progress-value {
+  background-color:SlateGray;
+}
+progress.percentageProgressionBar_blue::-webkit-progress-value {
+  background-color: LightSeaGreen;
+}
+progress.percentageProgressionBar_red::-webkit-progress-value {
+  background-color: lightsalmon;
+}
+progress.percentageProgressionBar_gold::-webkit-progress-value {
+  background-color: Gold;
+}
+
+
 @keyframes App-logo-spin {
   from { transform: rotate(0deg); }
   to { transform: rotate(180deg); }
