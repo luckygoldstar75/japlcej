@@ -238,7 +238,7 @@ class App extends Component {
 			<div id="signuploginbuttons" style={loginSignupButtonsStyle} >
 			    <LogInOutButton onLoginSuccess={this.onLoginSuccess} onLogoutSuccess={this.onLogoutSuccess} userLoggedIn={this.state.userLoggedIn} />
 			    <SignUpButton onSignUpSuccess={this.onLoginSuccess} userLoggedIn={this.state.userLoggedIn} />
-			    <MenuBar   d/>
+			    <MenuBar />
 			</div>
 		  </div>
 		</div>

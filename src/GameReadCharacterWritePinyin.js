@@ -198,7 +198,7 @@ class GameReadCharacterWritePinyin extends React.Component {
 
 	auSuivant() {
 		 //fetch new Character to guess
-		 fetch(japlcejAPI + routesURLs.GUESS_CHARACTER +"/"+this.state.currentGameLevel,
+		 fetch(japlcejAPI + routesURLs.GUESS + "/" + "readCharacterWritePinyin" + "/" + this.state.currentGameLevel,
 			{method: "GET",
 			 headers: {
 				'Content-Type': 'application/json',
@@ -215,32 +215,34 @@ class GameReadCharacterWritePinyin extends React.Component {
 		.then((respjson) => {
 				console.debug("response fetched : " + respjson);
 				this.setState({lastResultIsFalse : undefined, apiAlive : true,
-					currentCharacter : {id : respjson.id, character : respjson.character.caracter, answer:null}});
+					currentCharacter : {id : respjson.id, character : respjson.value, answer:null}});
 		})
 		.catch((error) => {console.error('Error: when attempting to fetch new chinese character : URL :'
-				+ routesURLs.GUESS_CHARACTER + " : ", error);
+				+ routesURLs.GUESS + " : ", error);
 				this.setState({apiAlive : false});
 				}
 			)
 	}
 
 	valider(inputValue) {
+		var that = this;
+
 		if (this.state.currentCharacter == null) {
 			console.log("currentCharacter is empty : valider impossible. Nothing done");
 			return;
 		};
 
 		//post client's pinyin guess answer
-		 fetch(japlcejAPI + routesURLs.GUESS_CHARACTER,
+		 fetch(japlcejAPI + routesURLs.GUESS + "/" + this.state.currentCharacter.id,
 			{method: "POST",
 			 headers: {
 				'Content-Type': 'application/json',
-				'Accept': 'application/json, text/plain, */*'
+				'Accept': 'application/json, text/plain, */*',
 			 },
-			 body : JSON.stringify({id : this.state.currentCharacter.id,
-					 userInputPinyin : inputValue})
+			 body : JSON.stringify({"type" : "string", "value" : inputValue})
 			 ,
 			 mode : 'cors',
+			 credentials : 'include',
 			 redirect : 'follow'
 			}
 		).then(response => {var respjson = response.json();
@@ -249,17 +251,17 @@ class GameReadCharacterWritePinyin extends React.Component {
 			})
 		.then(respjson => {	//console.debug("response json : " + respjson);
 			if (respjson != null) {
-				var _currentCharacter = this.state.currentCharacter;
+				var _currentCharacter = that.state.currentCharacter;
 				_currentCharacter.answer = respjson.answer;
-				this.setState({currentCharacter : _currentCharacter});
+				that.setState({currentCharacter : _currentCharacter});
 				if(respjson.isGood) {
-					this.setState({lastResultIsFalse : false,
-						nbSuccess : this.state.nbSuccess+1,
-						nbTries : this.state.nbTries+1});
+					that.setState({lastResultIsFalse : false,
+						nbSuccess : that.state.nbSuccess+1,
+						nbTries : that.state.nbTries+1});
 				}
 				else {
-					this.setState({lastResultIsFalse : true,
-						nbTries : this.state.nbTries+1});
+					that.setState({lastResultIsFalse : true,
+						nbTries : that.state.nbTries+1});
 				}
 			}
 		})
@@ -270,7 +272,7 @@ class GameReadCharacterWritePinyin extends React.Component {
 
 
   render() {
-	 var myCharacterAnswer = (this.state.currentCharacter == null)? "😀" : this.state.currentCharacter.answer;
+	 var myCharacterAnswer = (this.state.currentCharacter.answer == null)? "😀" : this.state.currentCharacter.answer.value;
 
     return ( <div className="GuessCharacterGame">
 				<GameCurrentResult nbSuccess={this.state.nbSuccess} nbTries={this.state.nbTries} />

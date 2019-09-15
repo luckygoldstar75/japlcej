@@ -4,10 +4,9 @@ Déployer le jeu sur internet: back done  + front!
 Faire réinitialiser au login les compteurs et globalement toute l'appli
 Faire signin avec la cinématique envoi mail etc.
 Faire le mot de passe oublié
-Faire une VM Alpine avec dependences sur poste local
-Finir Logout + corriger index.js:2178 Logout Error: SyntaxError: Unexpected token L in JSON at position 0
+Passer en https appli + services api
+done Finir Logout + corriger index.js:2178 Logout Error: SyntaxError: Unexpected token L in JSON at position 0
 Faire que le résultat ne soit pas affihé au fur et à mesure. 12/20 etc ... trop scolaire
-
 Faire fonctionner les insomnia : /stats /privacycheckservice et dumRetrieveLastSession
 Mettre dans git avec la partie serveur les tests insomnia
 done reinstaller insomnia
@@ -29,7 +28,4 @@ Faire le  mode de jeu: prononcer en chinois le bon caractère par rapport à l'i
 Faire un mode de sélection du niveau par rapport aux jeux à la complexité: grades de kung fu !?
 Adapter automatiquement la langue au navigateur du visiteur
 Permettre de changer de langue anglais/fr à la volée
-
-
-
-
+Faire une VM Alpine avec dependences sur poste local

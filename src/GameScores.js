@@ -5,15 +5,20 @@ import {japlcejAPI, routesURLs} from './config';
 class GameScores extends React.Component {
 	constructor(props) {
 		super(props);
-	this.state={gameName : this.props.gameName, userLoggedIn : this.props.userLoggedIn, progression : {level: "0", percentageDone : "0", percentageGood: "0"}};
+	this.state={gameName : this.props.gameName, userLoggedIn : this.props.userLoggedIn,
+		progression : {
+				level: "novice",
+				levelsAvailable : [] ,
+				percentageDone : "0", percentageGood: "0",
+				potentialNewAvailableLevel : null}};
   this.thresholdPercent= new Map([ ["gold", 99], ["red", 90], ["blue", 75], ["grey", 0]]);
   this.giveImgForLevel=this.giveImgForLevel.bind(this);
   this.giveStyleForProgressionBarAccordingToPercentageGood=this.giveStyleForProgressionBarAccordingToPercentageGood.bind(this);
 }
 
   giveImgForLevel(level) {
-      var _level=parseInt(level)
-      if(isNaN(_level)) {_level=0};
+      var _level=Object.keys(GameScores.getLevels()).indexOf(level);
+      if(isNaN(_level)||_level<0) {_level=0};
       return ("pics/level" + _level +".jpg");
   }
 
@@ -37,7 +42,21 @@ class GameScores extends React.Component {
       }
   }
 
+static getLevels() {
+	return(Object.freeze(
+		{"novice" : 200,
+		"confirmed" : 400,
+		"advanced" : 400,
+		"master" : 400}));
+}
 
+static getLevelsAvailable(percentageTries, percentageGood, currentLevel) {
+		var currentLevelIndex=Math.max(0,Object.keys(this.getLevels()).indexOf(currentLevel));
+		if(percentageTries >= 100 && percentageGood >= 80) { currentLevelIndex++};
+
+		var arrayOfLevelsAvailable=Object.keys(this.getLevels()).slice(0,currentLevelIndex+1);
+		return arrayOfLevelsAvailable;
+	}
 
 	render() {
 		if (!this.props.userLoggedIn) {
@@ -49,11 +68,11 @@ class GameScores extends React.Component {
 						<div className="level">
 							 <label for="percentageProgression">{this.state.progression.level}
 							 </label>
-               <progress min="0" max="200" value={this.state.progression.percentageDone}
+               <progress min="0" max="100" value={this.state.progression.percentageDone}
                       className={this.giveStyleForProgressionBarAccordingToPercentageGood(this.state.progression.percentageGood)}>
                </progress>
                <div className="levelPicture">
-                  <img src={this.giveImgForLevel(this.state.progression.level)} />
+                  <img className="responsive-image" src={this.giveImgForLevel(this.state.progression.level)} />
                </div>
 						</div>
 					</div>
@@ -71,7 +90,7 @@ class GameScores extends React.Component {
    var _that=this;
 
    if (!_that.props.userLoggedIn) return;
-   fetch(japlcejAPI + routesURLs.GETSCORES + "/" + _that.state.gameName, {
+   fetch(japlcejAPI + routesURLs.GETPLAYERRESULTS + "/" + _that.state.gameName + "/" + _that.state.progression.level, {
       method: "GET",
       headers: {
        'Content-Type': 'application/json',
@@ -83,23 +102,32 @@ class GameScores extends React.Component {
      }
    )
  .then(response => {
+	 if (response.status ===204) return null;
    var responseJson=response.json();
    if(response.status !==200) {
-      console.error('GETSCORES Error: response status', response.status);
+      console.error('GETPLAYERRESULTS Error: response status', response.status);
       return;
     }
    return(responseJson);
  })
- .catch(error => {console.error('GETSCORES Error:', error);
+ .catch(error => {console.error('GETPLAYERRESULTS Error:', error);
   })
  .then(data => {
    if (data != null  &&  data.error == null) {
-     var newDataProgression = {percentageDone : data.percentageDone, percentageGood : data.percentageGood, level : data.level};
+     var newDataProgression = {percentageDone : data.percentageTries, percentageGood : data.percentageGood, level : data.level};
+		 var __levelsAvailable=GameScores.getLevelsAvailable(data.percentageTries, data.percentageGood, data.level);
+		 var potentialNewAvailableLevel = __levelsAvailable[__levelsAvailable.length-1];
+
    	  if(_that.state.progression.level !== newDataProgression.level ||
           _that.state.progression.percentageDone !== newDataProgression.percentageDone ||
-          _that.state.progression.percentageGood !== newDataProgression.percentageGood
+          _that.state.progression.percentageGood !== newDataProgression.percentageGood ||
+					_that.state.progression.potentialNewAvailableLevel !== potentialNewAvailableLevel
       ) {
-        _that.setState({progression : {percentageDone : data.percentageDone, percentageGood : data.percentageGood, level : data.level}});
+        _that.setState({progression : {percentageDone : newDataProgression.percentageDone,
+					percentageGood : newDataProgression.percentageGood,
+					level : newDataProgression.level ,
+					levelsAvailable : __levelsAvailable,
+					potentialNewAvailableLevel : potentialNewAvailableLevel}});
    	  }
    }})
  .catch(error => {console.error('retrieveScores for game ' + _that.props.gameName + ' and user XXX?' + ' Error: ', error);

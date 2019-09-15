@@ -42,6 +42,8 @@
   display: inline-block
 }
 
+.responsive-image {  max-width: 100%;}
+
 .MenuBar {
   display: inline-block;
   margin : 10px
@@ -131,7 +133,8 @@
   background-color: firebrick;
   margin: 10px;
   border-radius: 8px;
-  align-items:center
+  align-items:center;
+  max-width: 30%
 }
 .cardGameComingSoon {
   color: white;
@@ -178,6 +181,16 @@
   align: center
 }
 
+.levelPicture {
+  max-width: 100%;
+  margin: 6px 0;
+}
+
+.GameScores {
+  max-height: 90%;
+  max-width:95%
+}
+
 progress {
  /* RESETS */
  -webkit-appearance: none;
@@ -188,7 +201,8 @@ progress {
  margin-right :1%;
  width: 300px;
  height: 15px;*/
- border-radius: 20px;
+ border-top-right-radius: 20px;
+ border-bottom-right-radius: 20px;
  /* The gray background in Firefox */
  background-color: white
  /*display: block;
@@ -199,12 +213,14 @@ progress {
 /* WEBKIT BROWSERS - CHROME, OPERA AND SAFARI*/
 progress::-webkit-progress-bar {
   background-color:White;
-  border-radius: 20px;
+  border-top-right-radius: 20px;
+  border-bottom-right-radius: 20px;
  }
 
 progress::-webkit-progress-value {
   background-color: White;
-  border-radius: 20px;
+  border-top-right-radius: 20px;
+  border-bottom-right-radius: 20px;
 }
 
 // MOZILLA FIREFOX
