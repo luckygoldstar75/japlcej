@@ -3,6 +3,7 @@ import lampion from './lampion.jpg';
 import './App.css';
 import {japlcejAPI, routesURLs} from './config.js';
 import ModalLogin from './ModalLogin.js'
+import ModalSignup from './ModalSignup.js'
 import GameSection from './GameSection.js'
 import UserInfo from './UserInfo.js'
 
@@ -35,7 +36,7 @@ class SignUpButton extends React.Component {
       userSignedUp:true
     });
 
-    this.props.onSignUpSuccess(jsonUserSignUpInfo);
+    //this.props.onSignUpSuccess(jsonUserSignUpInfo);
   }
 
  onQuitSignUpSuccess = () => {
@@ -46,30 +47,8 @@ class SignUpButton extends React.Component {
   }
 
   onClickSignUpButton() {
-	  if (this.state.userSignedUp) { // le client clique pour logout
-		  fetch(japlcejAPI + routesURLs.SIGNUP, {
-			 method: "POST",
-			 headers: {
-				'Content-Type': 'application/json',
-				'Accept': 'application/json, text/plain, */*'
-			 },
-			 body : {},
-			 mode : 'cors',
-			 redirect : 'follow'
-			})
-		.then(response => {return({code : response.status , json : response.json()})})
-		.catch(error => {console.error('Signup Error:', error);
-		 })
-		.then(data => {
-			if (data != null  && data.code === 200 && (data.json == null || data.json.error == null) ) {
-				this.props.onSignUpSuccess();
-			}});
-	  }
-	  else
-	  {
-		  this.setState({showModalSignUp: true,
-		  userSignedUp: false,});
-	  }
+	  this.setState({showModalSignUp: true,
+		userSignedUp: false});
   }
 
  render() {
@@ -77,7 +56,6 @@ class SignUpButton extends React.Component {
       return null;
     }
 
-	// TODO : ModalLogin is to become a ModalSignup !!!
     return (
     <div id="signupZone" className="signupZone">
     <button
@@ -86,7 +64,7 @@ class SignUpButton extends React.Component {
     </button>
 
 
-    <ModalLogin show={this.state.showModalSignUp} onClose={this.toggleModalSignUp} onSignUpSuccess={this.onSignUpSuccess}>Inscrivez-vous en quelques clics</ModalLogin>
+    <ModalSignup show={this.state.showModalSignUp} onClose={this.toggleModalSignUp} onSignUpSuccess={this.onSignUpSuccess}>Inscrivez-vous en quelques clics</ModalSignup>
    </div>
 	);
   }
@@ -186,10 +164,11 @@ class App extends Component {
   constructor(props) {
 	super(props);
 	this.onLoginSuccess = this.onLoginSuccess.bind(this);
-
+  this.onLogoutSuccess = this.onLogoutSuccess.bind(this);
+  this.onSignUpSuccess = this.onSignUpSuccess.bind(this);
 
   this.state = {currentUser: null, userChanged : false, lastSession : null ,
-		avatarUrl:null, pseudo : null};
+		avatarUrl:null, pseudo : null, userSignedUp: false};
   }
 
   onLoginSuccess = (jsonUserLoginInfo) => {
@@ -208,6 +187,10 @@ class App extends Component {
   onLogoutSuccess = () => {
 	  console.log("OnLogoutSuccess Invoked! ");
 	  this.setState({userLoggedIn : false, userChanged : true, lastSession : null, avatarUrl : null, pseudo : null});
+  }
+
+  onSignUpSuccess = () => {
+      this.setState({userSignedUp: true});
   }
 
   render() {
@@ -237,7 +220,7 @@ class App extends Component {
 		  <div id="toolbar" className="App-toolbar">
 			<div id="signuploginbuttons" style={loginSignupButtonsStyle} >
 			    <LogInOutButton onLoginSuccess={this.onLoginSuccess} onLogoutSuccess={this.onLogoutSuccess} userLoggedIn={this.state.userLoggedIn} />
-			    <SignUpButton onSignUpSuccess={this.onLoginSuccess} userLoggedIn={this.state.userLoggedIn} />
+			    <SignUpButton onSignUpSuccess={this.onSignupSuccess} userSignedUp={this.state.userSignedUp} />
 			    <MenuBar />
 			</div>
 		  </div>

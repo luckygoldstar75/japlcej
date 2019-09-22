@@ -7,6 +7,7 @@ export const routesURLs = {
  IS_LOGGEDIN : 'login',
  LOGIN : 'login',
  LOGOUT  :'logout',
+ SIGNUP :'signup',
  USER_RANK_INFO : 'rank',
  GETSCORES : 'scores',
  GETPLAYERRESULTS : 'playerResults' //playerResults/{gameName}/{level}

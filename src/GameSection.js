@@ -37,6 +37,14 @@ class GameSection extends React.Component {
     this.setState({gameSelected : _gameName, gameSelectedTextAbstract : _gameTextAbstract});
   }
 
+	componentDidUpdate() {
+		// If login occurs while anonymous game started : go back logged in to gameselection
+		if(this.props.userLoggedIn && !this.state.userLoggedIn) {
+			this.unselectGame();
+			this.state.userLoggedIn = this.props.userLoggedIn;
+		}
+	}
+
 	render() {
 		if (!this.state.gameSelected) {
     return (

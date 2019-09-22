@@ -1,12 +1,20 @@
 Déployer le jeu sur internet: back done  + front!
 
-
-Faire réinitialiser au login les compteurs et globalement toute l'appli
+***********POUR V1 ONLINE :
+done Faire réinitialiser au login les compteurs et globalement toute l'appli
 Faire signin avec la cinématique envoi mail etc.
+Faire signup standard + Use case : renvoyer le lien de confirmation
 Faire le mot de passe oublié
 Passer en https appli + services api
 done Finir Logout + corriger index.js:2178 Logout Error: SyntaxError: Unexpected token L in JSON at position 0
-Faire que le résultat ne soit pas affihé au fur et à mesure. 12/20 etc ... trop scolaire
+faire tester à Oscar + feedback Oscar, Caro et Nono
+commiter sur github (passer en mode privé github?)
+
+
+*********Later:
+Faire le  mode de jeu : je vois le caractère, je dois trouver le bon mot français
+Faire le  mode de jeu : je vois le mot français, je choisi le bon mot caractère
+?? Faire que le résultat ne soit pas affihé au fur et à mesure. 12/20 etc ... trop scolaire
 Faire fonctionner les insomnia : /stats /privacycheckservice et dumRetrieveLastSession
 Mettre dans git avec la partie serveur les tests insomnia
 done reinstaller insomnia
@@ -14,7 +22,7 @@ done mettre à jour nodejs/npm
 
 +Définir la stratégie pour que l'on gagne des points (plus tu joues , plus tu gagnes de points)
 +Permettre que les points fassent monter de niveau kung fu
-Faire le  mode de jeu : je vois le caractère, je dois trouver le bon mot français
+
 +Afficher le leaderboard (classement)
 Faire le  mode de jeu : je vois le mot francais, je dois sélectionner le bon caractère
 Faire le  mode de jeu : je vois le pinyin, je dois trouver le bon caractère
