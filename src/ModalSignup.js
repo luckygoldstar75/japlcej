@@ -2,45 +2,25 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import {japlcejAPI, routesURLs} from './config.js';
 import AppMessage from './AppMessage.js';
-
-const minimumPasswordSize = 8;
+import ModalSignupCommons from './ModalSignupCommons.js';
+import ModalSignupReemissionLink from './ModalSignupReemissionLink.js'
 
 class ModalSignup extends React.Component {
    constructor(props) {
 		super(props);
 		this.state = {
-			message : {text : null, severity : null}
+			message : {text : null, severity : null},
+      signupReemissionLinkRequest : false
 			};
-		this.passwordChanged = this.passwordChanged.bind(this);
+		this.passwordChanged = ModalSignupCommons.passwordChanged.bind(this);
     this.confirmationPasswordChanged = this.confirmationPasswordChanged.bind(this);
-		this.emailChanged = this.emailChanged.bind(this);
-		this.handleSubmit = this.handleSubmit.bind(this);
-		this.addMessage = this.addMessage.bind(this);
-		this.hideMessage = this.hideMessage.bind(this);
+		this.emailChanged = ModalSignupCommons.emailChanged.bind(this);
+		this.handleSubmitSignup = this.handleSubmitSignup.bind(this);
+		this.addMessage = ModalSignupCommons.addMessage.bind(this);
+		this.hideMessage = ModalSignupCommons.hideMessage.bind(this);
+    this.onSignupReemissionLinkRequest=this.onSignupReemissionLinkRequest.bind(this);
+    this.onCloseReemissionLinkRequest=this.onCloseReemissionLinkRequest.bind(this);
 	}
-
-  isValidPassword(pwd) {
-      return (pwd !== null && pwd !== undefined &&  pwd.length >= minimumPasswordSize
-       &&  pwd.match(/^(?=.*[a-z])^(?=.*[A-Z])^(?=.*\d)^(?=.*[^A-Za-z0-9])/));
-  }
-
- passwordChanged(e) {
-   var _message = {text : null, severity : null};
-   var _password = e.target.value;
-
-   if(!this.isValidPassword(_password)) {
-     e.target.style.backgroundColor = 'red';
-   }
-   else {
-     e.target.style.backgroundColor ='white';
-   };
-
-  this.setState({
-      passwordValid : false,
-      password: e.target.value,
-      message : _message
-    })
-  }
 
   confirmationPasswordChanged(e) {
      if(! this.state.passwordValid || e.target.value !== document.getElementById("password")) {
@@ -52,28 +32,16 @@ class ModalSignup extends React.Component {
      this.passwordChanged(e);
    }
 
+   onSignupReemissionLinkRequest() {
+     this.setState({signupReemissionLinkRequest : true});
+   }
 
-  emailChanged(e) {
-    this.setState({
-      email: e.target.value,
-      message :	{text : null, severity : null},
-    })
-  }
+   onCloseReemissionLinkRequest() {
+     this.setState({signupReemissionLinkRequest : false});
+     this.props.onClose();
+   }
 
-  addMessage(message) {
-	  if (message == null) {
-		  this.setState({message : {severity: null, text : null}});
-	  }
-	  else {
-		  this.setState({message : {severity: message.severity, text : message.text}});
-	  }
-  }
-
-  hideMessage() {
-	  this.setState({message : {severity: null, text : null}});
-  }
-
-  handleSubmit(event) {
+    handleSubmitSignup(event) {
 	  var _that = this;
 	  event.preventDefault();
 
@@ -117,7 +85,6 @@ class ModalSignup extends React.Component {
 						console.log(_that.props);
 
             _that.setState({message : {severity: 'info', text : respjson?respjson.message:'oups'}});
-						//_that.props.onSignUpSuccess(respjson);
 					}
 				});
   }
@@ -128,50 +95,31 @@ class ModalSignup extends React.Component {
       return null;
     }
 
-    // The gray background
-    const backdropStyle = {
-      position: 'fixed',
-      top: 0,
-      bottom: 0,
-      left: 0,
-      right: 0,
-      backgroundColor: 'rgba(0,0,0,0.3)',
-      padding: 50
-    };
-
-    // The modal "window"
-    const modalStyle = {
-      backgroundColor: '#fff',
-      borderRadius: 5,
-      maxWidth: 500,
-      minHeight: 300,
-      margin: '0 auto',
-      padding: 30
-    };
-
+    if (!this.state.signupReemissionLinkRequest)
+    {
     return (
-      <div className="backdrop" style={backdropStyle}>
-        <div className="modal" style={modalStyle}>
-		  <AppMessage severity={this.state.message.severity} message={this.state.message.text} onClose={this.hideMessage}/>
+     <div className="backdrop" style={ModalSignupCommons.backdropStyle}>
+        <div className="modal" style={ModalSignupCommons.modalStyle}>
+		 <AppMessage severity={this.state.message.severity} message={this.state.message.text} onClose={this.hideMessage}/>
 
-    <form onSubmit={this.handleSubmit}>
+     <form onSubmit={this.handleSubmitSignup}>
 			Bienvenue et merci de saisir les informations nécessaires pour votre inscription <br/>
 			<label>Email
 			<input type="email" name="email" placeholder="youremail@here" required  size="35" onChange={this.emailChanged}/>
 			</label>
 			<label>Password
-			<input type="password" id="password" placeholder="your password"required  size="15" minLenght="8"
+			<input type="password" id="password" placeholder="your password"required  size="15" minLength="8"
                     maxLength="40" onChange={this.passwordChanged}/>
 			</label>
       <label>Confirmation Password
-			<input type="password" id="confirmationPassword" placeholder="your password"required  size="15" minLenght="8"
+			<input type="password" id="confirmationPassword" placeholder="your password"required  size="15" minLength="8"
                   maxLength="40" onChange={this.confirmationPasswordChanged}/>
 			</label>
 
 			<input type="submit" value="Submit" />
 		</form>
 
-		 <a href="/newConfirmationLink" onClick="this.newConfirmationLinkRequested()">Need a new confirmation link ?</a>
+		 <a href="#newConfirmationLink" onClick={this.onSignupReemissionLinkRequest}>Need a new confirmation link ?</a>
 
           <div className="footer">
             <button onClick={this.props.onClose}>
@@ -182,12 +130,13 @@ class ModalSignup extends React.Component {
       </div>
     );
   }
+  else { //REEMISION LINK REQUEST
+    return (<ModalSignupReemissionLink show={this.props.show}
+            onClose={this.onCloseReemissionLinkRequest}>
+      Inscrivez-vous en quelques clics</ModalSignupReemissionLink>
+   );
+  }
+  }
 }
-
-ModalSignup.propTypes = {
-  onClose: PropTypes.func.isRequired,
-  show: PropTypes.bool,
-  children: PropTypes.node
-};
 
 export default ModalSignup;

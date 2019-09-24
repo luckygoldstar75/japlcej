@@ -4,6 +4,8 @@ import './App.css';
 import {japlcejAPI, routesURLs} from './config.js';
 import ModalLogin from './ModalLogin.js'
 import ModalSignup from './ModalSignup.js'
+//import ModalSignupReemissionLink from './ModalSignupReemissionLink.js'
+
 import GameSection from './GameSection.js'
 import UserInfo from './UserInfo.js'
 
@@ -19,30 +21,16 @@ class Hamburger extends React.Component {
 class SignUpButton extends React.Component {
   constructor(props) {
 		super(props);
-		this.state = {showModalSignUp: false, userSignedUp : this.props.userSignedUp, userLoggedIn : this.props.userLoggedIn};
-		this.toggleModalSignUp = this.toggleModalSignUp.bind(this);
-		this.onSignUpSuccess = this.onSignUpSuccess.bind(this);
+		this.state = {showModalSignUp: false,
+      showModalSignUpReemissionLink : false,
+      userSignedUp : this.props.userSignedUp,
+      userLoggedIn : this.props.userLoggedIn};
+		this.closeModalSignUp =  this.closeModalSignUp.bind(this);
 	}
 
-  toggleModalSignUp = () => {
+  closeModalSignUp() {
     this.setState({
-      showModalSignUp: !this.state.showModalSignUp
-    });
-  }
-
-  onSignUpSuccess = (jsonUserSignUpInfo) => {
-	  this.setState({
-      showModalSignUp: false,
-      userSignedUp:true
-    });
-
-    //this.props.onSignUpSuccess(jsonUserSignUpInfo);
-  }
-
- onQuitSignUpSuccess = () => {
-	  this.setState({
-      showModalSignUp: false,
-      userSignedUp:false
+      showModalSignUp: false
     });
   }
 
@@ -63,12 +51,13 @@ class SignUpButton extends React.Component {
         onClick={() => this.onClickSignUpButton()}>{(this.state.userSignedUp)? "Welcome!" : "Sign Up"}
     </button>
 
-
-    <ModalSignup show={this.state.showModalSignUp} onClose={this.toggleModalSignUp} onSignUpSuccess={this.onSignUpSuccess}>Inscrivez-vous en quelques clics</ModalSignup>
-   </div>
+    <ModalSignup show={this.state.showModalSignUp}  onClose={this.closeModalSignUp}>Inscrivez-vous en quelques clics</ModalSignup>
+    </div>
 	);
   }
 }
+
+
 
 class LogInOutButton extends React.Component {
   constructor(props) {

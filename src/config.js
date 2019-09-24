@@ -8,6 +8,7 @@ export const routesURLs = {
  LOGIN : 'login',
  LOGOUT  :'logout',
  SIGNUP :'signup',
+ SIGNUP_REEMISSION_REQUEST : 'signupReemissionRequest',
  USER_RANK_INFO : 'rank',
  GETSCORES : 'scores',
  GETPLAYERRESULTS : 'playerResults' //playerResults/{gameName}/{level}
