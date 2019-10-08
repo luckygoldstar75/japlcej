@@ -62,7 +62,7 @@ class GameSection extends React.Component {
 				return (
 					<div className="GameSection">
 						<div id="gameSelector">
-							 <label><input type="radio" id={this.state.gameSelected} checked="checked" readonly />
+							 <label><input type="radio" id={this.state.gameSelected} checked="checked" readOnly />
 							 {this.state.gameSelectedTextAbstract}
 							 </label>
 							 <div className="gameReturnButton" onClick={this.unselectGame}>

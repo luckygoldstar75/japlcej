@@ -28,7 +28,7 @@ class GameCard extends React.Component {
   }
 	else {
 				return (
-          <div className="cardGameComingSoon" id={this.state.gameName} onClick="">
+          <div className="cardGameComingSoon" id={this.state.gameName} onClick={(e) => {e.preventDefault();}}>
             <div className="cardGameDecorationCharacterTop">{this.state.decorationCharacter}<br/></div>
             <div className="cardGameAbstractText">{this.state.gameTextAbstract}</div><br/>
             <div className="cardGameGoButton">Vote!</div><br/>

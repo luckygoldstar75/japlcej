@@ -1,5 +1,5 @@
 import React from 'react';
-import {japlcejAPI, routesURLs} from './config';
+import {japlcejAPI, routesURLs} from './config-routes.js';
 
 
 class GameCurrentResult extends React.Component {
@@ -198,7 +198,7 @@ class GameReadCharacterWritePinyin extends React.Component {
 
 	auSuivant() {
 		 //fetch new Character to guess
-		 fetch(japlcejAPI + routesURLs.GUESS + "/" + "readCharacterWritePinyin" + "/" + this.state.currentGameLevel,
+		 fetch(japlcejAPI + routesURLs.GUESS + "/readCharacterWritePinyin/" + this.state.currentGameLevel,
 			{method: "GET",
 			 headers: {
 				'Content-Type': 'application/json',

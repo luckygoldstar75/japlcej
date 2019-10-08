@@ -1,19 +1,24 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {japlcejAPI, routesURLs} from './config.js';
+import {japlcejAPI, routesURLs} from './config-routes.js';
 import AppMessage from './AppMessage.js';
 
 class ModalLogin extends React.Component {
    constructor(props) {
 		super(props);
 		this.state = {
-			message : {text : null, severity : null}
+      email : this.props.email||'',
+			message : {text : null, severity : null},
+      isForgottenPasswordResetRequest : this.props.isForgottenPasswordResetRequest
 			};
 		this.passwordChange = this.passwordChange.bind(this);
 		this.emailChange = this.emailChange.bind(this);
 		this.handleSubmit = this.handleSubmit.bind(this);
 		this.addMessage = this.addMessage.bind(this);
 		this.hideMessage = this.hideMessage.bind(this);
+    this.setForgottenPasswordMode = this.setForgottenPasswordMode.bind(this);
+    this.emailPasswordForgottenChange = this.emailPasswordForgottenChange.bind(this);
+    this.handleForgottenPasswordSubmit=this.handleForgottenPasswordSubmit.bind(this);
 	}
 
  passwordChange(e) {
@@ -28,6 +33,17 @@ class ModalLogin extends React.Component {
       email: e.target.value,
       message :	{text : null, severity : null},
     })
+  }
+
+  emailPasswordForgottenChange(e) {
+    this.setState({
+      email: e.target.value,
+      message :	{text : null, severity : null},
+    })
+  }
+
+  setForgottenPasswordMode() {
+    this.setState({isForgottenPasswordRequest : true});
   }
 
   addMessage(message) {
@@ -90,6 +106,51 @@ class ModalLogin extends React.Component {
 				});
   }
 
+  handleForgottenPasswordSubmit(event) {
+    var _that = this;
+    event.preventDefault();
+
+    //console.log("Submit login form bien reçu!");
+    fetch(japlcejAPI + routesURLs.LOGIN_FORGOT_PASSWORD,
+      {method: "POST",
+       headers: {
+        'Content-Type': 'application/json',
+        'Accept': 'application/json, text/plain, */*'
+       },
+       body : JSON.stringify({email : this.state.email })
+       ,
+       mode : 'cors',
+       redirect : 'follow'
+      }
+    ).then(response => {
+        if (response != null) {
+          if (response.ok) {
+            //window.location = '/'	;
+          }
+          var contentType = response.headers.get("content-type");
+          if(contentType && contentType.includes("application/json")) {
+            return response.json();
+          }
+          throw new TypeError("Oops, we haven't got JSON!");
+        }
+        else return null;
+      })
+    .catch(error => {console.error('Error:', error);
+        _that.setState.message = {severity: 'error', text : error}})
+    .then( respjson => {
+          // Examine the text in the response
+          console.log(respjson);
+          if(respjson != null && respjson.error != null) {
+            _that.setState({message : {severity: 'error', text : respjson.errMessage}});
+          }
+          else //NO error
+          {
+            console.log(_that.props);
+            _that.setState({message : {severity: 'info', text : respjson.message}});
+          }
+        });
+  }
+
   render() {
     // Render nothing if the "show" prop is false
     if(!this.props.show) {
@@ -117,33 +178,60 @@ class ModalLogin extends React.Component {
       padding: 30
     };
 
-    return (
+
+
+      if (!this.state.isForgottenPasswordRequest)
+      {
+        return (
+        <div id="loginInputZone">
+          <div className="backdrop" style={backdropStyle}>
+          <div className="modal" style={modalStyle}>
+        		  <AppMessage severity={this.state.message.severity} message={this.state.message.text} onClose={this.hideMessage}/>
+        			Merci de saisir vos identifiants pour vous connecter<br/>
+            <form onSubmit={this.handleSubmit}>
+            	<label>Email
+            	<input type="email" name="email" value={this.state.email} placeholder="youremail@here" required  size="35" onChange={this.emailChange}/>
+            	</label>
+            	<label>Password
+            	<input type="password" name="password" placeholder="your password"required  size="15" maxLength="40" onChange={this.passwordChange}/>
+            	</label>
+            	<input type="submit" value="Submit" />
+            </form>
+            <div className="footer">
+                 <a href="#forgottenPassword" onClick={this.setForgottenPasswordMode}>Mot de passe oublié ?</a>
+                 <button onClick={this.props.onClose}>
+                  Close
+                 </button>
+            </div>
+        </div>
+        </div>
+     </div>
+  );
+  }
+  else { // forgottenPasswordRequest
+    return(
+    <div id="loginInputZone">
       <div className="backdrop" style={backdropStyle}>
-        <div className="modal" style={modalStyle}>
-		  <AppMessage severity={this.state.message.severity} message={this.state.message.text} onClose={this.hideMessage}/>
-          <form onSubmit={this.handleSubmit}>
-			Merci de saisir vos identifiants pour vous connecter<br/>
+      <div className="modal" style={modalStyle}>
+          <AppMessage severity={this.state.message.severity} message={this.state.message.text} onClose={this.hideMessage}/>
+    <form onSubmit={this.handleForgottenPasswordSubmit}>
+			Merci de saisir les informations nécessaires pour que nous puissions vous renvoyer un mail de confirmation <br/>
 			<label>Email
-			<input type="email" name="email" placeholder="youremail@here" required  size="35" onChange={this.emailChange}/>
-			</label>
-			<label>Password
-			<input type="password" name="password" placeholder="your password"required  size="15" maxLength="40" onChange={this.passwordChange}/>
+			<input type="email" name="email" placeholder="youremail@here" required  size="35" onChange={this.emailPasswordForgottenChange}/>
 			</label>
 			<input type="submit" value="Submit" />
 		</form>
-
-		 <a href="/forgottenPassword">Mot de passe oublié ?</a>
-
-          <div className="footer">
-            <button onClick={this.props.onClose}>
-              Close
-            </button>
-          </div>
-        </div>
+    <div className="footer">
+      <button onClick={this.props.onClose}>
+        Close
+      </button>
+    </div>
       </div>
-    );
-  }
-}
+      </div>
+   </div>
+ );
+ }
+}}
 
 ModalLogin.propTypes = {
   onClose: PropTypes.func.isRequired,

@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {japlcejAPI, routesURLs} from './config.js';
+import {japlcejAPI, routesURLs} from './config-routes.js';
 import AppMessage from './AppMessage.js';
 import ModalSignupCommons from './ModalSignupCommons.js';
 
@@ -29,8 +29,7 @@ class ModalSignupReemissionLink extends React.Component {
 				'Content-Type': 'application/json',
 				'Accept': 'application/json, text/plain, */*'
 			 },
-			 body : JSON.stringify({email : this.state.email ,
-					 password : this.state.password})
+			 body : JSON.stringify({email : this.state.email})
 			 ,
 			 mode : 'cors',
 			 redirect : 'follow'
@@ -78,8 +77,6 @@ class ModalSignupReemissionLink extends React.Component {
   			  Bonjour, veuillez saisir les informations demandées<br/>
   			 <label>Email
   			 <input type="email" name="email" placeholder="youremail@here" required  size="35" onChange={this.emailChanged}/>
-         <input type="password" id="password" placeholder="your password"required  size="15" minLength="8"
-                       maxLength="40" onChange={this.passwordChanged}/>
    			</label>
   			 <input type="submit" value="Submit" />
   		  </form>

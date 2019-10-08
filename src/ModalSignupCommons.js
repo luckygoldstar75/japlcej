@@ -4,7 +4,7 @@ const ModalSignupCommons = {
 
   isValidPassword(pwd) {
       return (pwd !== null && pwd !== undefined &&  pwd.length >= this.minimumPasswordSize
-       &&  pwd.match(/^(?=.*[a-z])^(?=.*[A-Z])^(?=.*\d)^(?=.*[^A-Za-z0-9])/));
+       &&  pwd.match(/^(?=.*[a-z])^(?=.*[A-Z])^(?=.*\d)^(?=.*[^A-Za-z0-9])/) !== false);
   },
 
  passwordChanged(e) {
@@ -19,7 +19,6 @@ const ModalSignupCommons = {
    };
 
   this.setState({
-      passwordValid : false,
       password: e.target.value,
       message : _message
     })

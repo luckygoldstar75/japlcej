@@ -1,5 +1,5 @@
 import React from 'react';
-import {japlcejAPI, routesURLs} from './config';
+import {japlcejAPI, routesURLs} from './config-routes.js';
 
 
 class GameScores extends React.Component {
@@ -19,26 +19,26 @@ class GameScores extends React.Component {
   giveImgForLevel(level) {
       var _level=Object.keys(GameScores.getLevels()).indexOf(level);
       if(isNaN(_level)||_level<0) {_level=0};
-      return ("pics/level" + _level +".jpg");
+      return ("/pics/level" + _level +".jpg");
   }
 
   giveStyleForProgressionBarAccordingToPercentageGood(percentGood) {
     var _percentGood=parseInt(percentGood);
 
       if (isNaN(_percentGood)) {
-        return ("percentageProgressionBar" + "_unknown");
+        return ("percentageProgressionBar_unknown");
       }
       else if(percentGood >= this.thresholdPercent.get("gold")) {
-        return ("percentageProgressionBar" + "_gold");
+        return ("percentageProgressionBar_gold");
       }
       else if (percentGood >= this.thresholdPercent.get("red")) {
-        return ("percentageProgressionBar" + "_red");
+        return ("percentageProgressionBar_red");
       }
       else if (percentGood >= this.thresholdPercent.get("blue")) {
-        return ("percentageProgressionBar" + "_blue");
+        return ("percentageProgressionBar_blue");
       }
       else {
-        return ("percentageProgressionBar" + "_grey");
+        return ("percentageProgressionBar_grey");
       }
   }
 
@@ -72,11 +72,11 @@ static getLevelsAvailable(percentageTries, percentageGood, currentLevel) {
                       className={this.giveStyleForProgressionBarAccordingToPercentageGood(this.state.progression.percentageGood)}>
                </progress>
                <div className="levelPicture">
-                  <img className="responsive-image" src={this.giveImgForLevel(this.state.progression.level)} />
+                  <img className="responsive-image" alt="your progression!" src={this.giveImgForLevel(this.state.progression.level)} />
                </div>
 						</div>
 					</div>
-				);};
+				)};
 	}
 
  componentDidMount() {
@@ -84,6 +84,10 @@ static getLevelsAvailable(percentageTries, percentageGood, currentLevel) {
  }
  componentDidUpdate() {
    this.updateScores();
+ }
+
+ updateAvailableLevels() {
+
  }
 
  updateScores() {
@@ -94,7 +98,7 @@ static getLevelsAvailable(percentageTries, percentageGood, currentLevel) {
       method: "GET",
       headers: {
        'Content-Type': 'application/json',
-       'Accept': 'application/json, text/plain, *\/*'
+       'Accept': 'application/json, text/plain, */*'
      },
       credentials : 'include',
       mode : 'cors',
@@ -130,7 +134,7 @@ static getLevelsAvailable(percentageTries, percentageGood, currentLevel) {
 					potentialNewAvailableLevel : potentialNewAvailableLevel}});
    	  }
    }})
- .catch(error => {console.error('retrieveScores for game ' + _that.props.gameName + ' and user XXX?' + ' Error: ', error);
+ .catch(error => {console.error('retrieveScores for game ' + _that.props.gameName + ' and user XXX? Error: ', error);
     })
  }
 }

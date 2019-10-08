@@ -1,13 +1,20 @@
 import React, { Component } from 'react';
+import { BrowserRouter, Route, withRouter/*, Link*/ } from "react-router-dom";
+import queryString from 'query-string';
+import {japlcejAPI, routesURLs} from './config-routes.js';
+
 import lampion from './lampion.jpg';
 import './App.css';
-import {japlcejAPI, routesURLs} from './config.js';
+
+//import TopLevelRoute from './TopLevelRoute.js'
+
 import ModalLogin from './ModalLogin.js'
 import ModalSignup from './ModalSignup.js'
+import ModalResetPassword from './ModalResetPassword.js'
 //import ModalSignupReemissionLink from './ModalSignupReemissionLink.js'
 
-import GameSection from './GameSection.js'
-import UserInfo from './UserInfo.js'
+import UserInfo from './UserInfo';
+import GameSection from './GameSection';
 
 class Hamburger extends React.Component {
   render() {
@@ -21,7 +28,7 @@ class Hamburger extends React.Component {
 class SignUpButton extends React.Component {
   constructor(props) {
 		super(props);
-		this.state = {showModalSignUp: false,
+		this.state = {showModalSignUp: this.props.showModalSignup,
       showModalSignUpReemissionLink : false,
       userSignedUp : this.props.userSignedUp,
       userLoggedIn : this.props.userLoggedIn};
@@ -62,10 +69,15 @@ class SignUpButton extends React.Component {
 class LogInOutButton extends React.Component {
   constructor(props) {
 		super(props);
-		this.state = {showModalLogin: false, userLoggedIn : this.props.userLoggedIn};
+    var _email= queryString.parse(decodeURI(this.props.location)).email;
+
+		this.state = {email: _email, showModalLogin: this.props.showModalLogin,
+            showModalForgottenPassword : false,
+              userLoggedIn : this.props.userLoggedIn,
+              isForgottenPasswordResetRequest : this.props.isForgottenPasswordResetRequest};
 		this.toggleModalLogin = this.toggleModalLogin.bind(this);
 		this.onLoginSuccess = this.onLoginSuccess.bind(this);
-	}
+    };
 
   toggleModalLogin = () => {
     this.setState({
@@ -131,7 +143,8 @@ class LogInOutButton extends React.Component {
         onClick={() => this.onClickLogInOutButton()}>{(this.state.userLoggedIn)? "Log Out" : "Log In"}
     </button>
 
-    <ModalLogin show={this.state.showModalLogin} onClose={this.toggleModalLogin} onLoginSuccess={this.onLoginSuccess}>Veuillez saisir vos identifiants de connexion</ModalLogin>
+    <ModalLogin email={this.state.email} show={this.state.showModalLogin} onClose={this.toggleModalLogin} onLoginSuccess={this.onLoginSuccess}
+        isForgottenPasswordResetRequest={this.state.isForgottenPasswordResetRequest}>Veuillez saisir vos identifiants de connexion</ModalLogin>
    </div>
 	);
   }
@@ -182,7 +195,7 @@ class App extends Component {
       this.setState({userSignedUp: true});
   }
 
-  render() {
+  render(history) {
 	  const logoStyle = {
 		backgroundImage: "url(" + lampion +")",
 		backgroundRepeat: 'no-repeat',
@@ -198,27 +211,41 @@ class App extends Component {
 		flexFlow : 'flex-wrap',
 	};
 
-    return (
+  return (
+    <BrowserRouter>
+      <Route render={(history) =>
       <div className="App">
-		<div id="top" className="App-top">
-          <header className="App-header" >
+       <div id="top" className="App-top">
+          <header className="App-header">
             <div id="App-logo" style={logoStyle} alt="logo" />
-            <div id="App-title" className="App-title">Bonjour et bienvenue pour découvrir des outils vous accompagnant dans l'apprentissage du chinois.</div>
+            <div id="App-title" className="App-title">Bonjour et bienvenue pour découvrir des outils vous accompagnant dans lapprentissage du chinois.</div>
             <div id="App-logo" style={logoStyle} alt="logo" />
           </header>
-		  <div id="toolbar" className="App-toolbar">
-			<div id="signuploginbuttons" style={loginSignupButtonsStyle} >
-			    <LogInOutButton onLoginSuccess={this.onLoginSuccess} onLogoutSuccess={this.onLogoutSuccess} userLoggedIn={this.state.userLoggedIn} />
-			    <SignUpButton onSignUpSuccess={this.onSignupSuccess} userSignedUp={this.state.userSignedUp} />
-			    <MenuBar />
-			</div>
-		  </div>
-		</div>
-		<UserInfo userChanged={this.state.userChanged} lastSession={this.state.lastSession} avatarUrl={this.state.avatarUrl} pseudo={this.state.pseudo}/>
-		<GameSection gameSelected={undefined} userLoggedIn={this.state.userLoggedIn} />
-      </div>
+         <div id="toolbar" className="App-toolbar">
+         <div id="signuploginbuttons" style={loginSignupButtonsStyle} >
+          <LogInOutButton showModalLogin={(history.location.pathname === '/login')} onLoginSuccess={this.onLoginSuccess}
+                          onLogoutSuccess={this.onLogoutSuccess} userLoggedIn={this.state.userLoggedIn} />
+          <SignUpButton showModalSignup={(history.location.pathname==="/signup")}  onSignUpSuccess={this.onSignupSuccess} userSignedUp={this.state.userSignedUp} />
+          <ModalResetPassword show={((history.location.pathname === '/login/resetPassword') && (null !== history.location.search.match("^\\?email=.*&link=.*")))}
+                              location={history.location} /*onSuccess={TODO function here = redirect to / idéalement en mode loggué}
+                              OnClose={TODO function here}*//>
+          <MenuBar />
+         </div>
+         </div>
+       </div>
+
+       <div className="main-route-place">
+         <Route exact path="*" render={() => ( <div id="GameView">
+           <UserInfo userChanged={this.state.userChanged} lastSession={this.state.lastSession} avatarUrl={this.state.avatarUrl} pseudo={this.state.pseudo}/>
+           <GameSection gameSelected={undefined} userLoggedIn={this.state.userLoggedIn} />
+         </div>)} />
+       </div>
+     </div>
+   }/>
+  </BrowserRouter>
     );
   }
+
 
   componentDidMount() {
 	fetch(japlcejAPI + routesURLs.IS_LOGGEDIN,{
