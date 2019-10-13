@@ -1,39 +1,7 @@
 import React from 'react';
 import {japlcejAPI, routesURLs} from './config-routes.js';
-
-
-class GameCurrentResult extends React.Component {
-	constructor(props) {
-		super(props);
-	}
-	render() {
-		return (<div id="currentResult" align="center">Réussis: {this.props.nbSuccess} / Total: {this.props.nbTries} </div>);
-	}
-}
-
-class GameCurrentCharacter extends React.Component {
-	constructor(props) {
-		super(props);
-	}
-
-
-	render() {
-		const characterTobeGuessedStyle ={
-		display: 'flex',
-		flexDirection:'row',
-		flexFlow : 'flex-wrap',
-		justifyContent: 'center',
-		fontSize:'300%',
-		}
-
-		var myCharacter = (this.props.currentCharacter == null)? "😀" : this.props.currentCharacter.character;
-
-		return (<div id="caractereADeviner" align="center" style={characterTobeGuessedStyle}>{myCharacter}</div>);
-	}
-}
-
-
-
+import GameCurrentCharacter from './GameCurrentCharacter.js'
+import GameCurrentResult from './GameCurrentResult.js'
 
 class GameReadCharacterWritePinyinGameInput extends React.Component {
 	constructor(props) {
@@ -160,7 +128,7 @@ class GameReadCharacterWritePinyinGameInput extends React.Component {
 
 					</div>
 
-					<div id="actionsButtonsGuessChracterPinyin" className="guessCharacterInput">
+					<div id="actionsButtonsGuessCharacterPinyin" className="guessCharacterInput">
 						<button type="button" className="actionbutton" id="Valider" autoFocus onClick={this.handleInputValidated}
 							disabled={!answerExpected}>Valider↵</button>
 						<button type="button" className="actionbutton" id="Suivant" autoFocus

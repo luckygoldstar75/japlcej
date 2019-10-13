@@ -1,6 +1,7 @@
 import React from 'react';
 import loginLogo from './login.svg';
 import {japlcejAPI, routesURLs} from './config-routes.js';
+import { i18n, useTranslation, withTranslation, Trans } from "react-i18next";
 
 class Avatar extends React.Component {
   render() {
@@ -12,13 +13,18 @@ class Avatar extends React.Component {
   }
 }
 
-class Rank extends React.Component {
+class _Rank extends React.Component {
+  constructor(props) {
+    super(props);
+  }
+
   render() {
-    return (<div className="Rank"> #{this.props.rank} / {this.props.nbPoints} pts
+    const { t } = this.props;
+    return (<div className="Rank"> #{this.props.rank} / {this.props.nbPoints} {t("Rank_points")}
 			</div>);
   }
 }
-
+const Rank=withTranslation()(_Rank);
 
 function nbDaysSinceLastSession(timestampLastSession) {
 	if(timestampLastSession == null)
@@ -30,13 +36,15 @@ function nbDaysSinceLastSession(timestampLastSession) {
 	}
 }
 
-class WelcomeMessage extends React.Component {
+class _WelcomeMessage extends React.Component {
   render() {
-	var welcomeString="C'est bon de vous revoir.";
+  const { t } = this.props;
+	var welcomeString=t("WelcomeMessage_goodToSeeYou");
 	if(this.props.userLastSession) {
   		var _nbDaysSinceLastSession = nbDaysSinceLastSession(this.props.userLastSession);
 	   	if (isNaN(_nbDaysSinceLastSession) && _nbDaysSinceLastSession > 0) {
-		  welcomeString+=" Cela faisait déjà " + _nbDaysSinceLastSession + (_nbDaysSinceLastSession)>1?" jours!":"jour!";
+		  welcomeString+=t("WelcomeMessage_countingTime")
+        + _nbDaysSinceLastSession + (_nbDaysSinceLastSession)>1?t("WelcomeMessage_days"):t("WelcomeMessage_day");
 	        }
 	}
 	if (this.props.pseudo !== null) {
@@ -53,8 +61,9 @@ class WelcomeMessage extends React.Component {
    }
   }
 };
+const WelcomeMessage=withTranslation()(_WelcomeMessage);
 
-class UserInfo extends React.Component {
+class _UserInfo extends React.Component {
   constructor(props) {
 		super(props);
 
@@ -99,7 +108,7 @@ class UserInfo extends React.Component {
 			var avatarUrl= _that.props.avatarUrl;
 			var pseudo = _that.props.pseudo;
 			var lastSession = _that.props.lastSession;
-			console.log("UserInfo : retrieveUserInfo : data" : userInfoJson);
+			console.debug("UserInfo : retrieveUserInfo : data" : userInfoJson);
 			if (userInfoJson == null) {return ;}
 			else {
 				var myCurrentUser = _that.state.userInfo;
@@ -116,9 +125,11 @@ class UserInfo extends React.Component {
   }
 
   render() {
+    const { t } = this.props;
+
 	  if (this.props.userChanged && this.firstTimeRender === false) {
 		  this.firstTimeRender=true;
-		  console.log("let's call retrieveRankingUserInfo : firstTimeRender " + this.firstTimeRender) ;
+		  console.debug("let's call retrieveRankingUserInfo : firstTimeRender " + this.firstTimeRender) ;
 		  this.retrieveRankingUserInfo();
 	  }
 	if (this.props.pseudo != null) {
@@ -136,5 +147,5 @@ class UserInfo extends React.Component {
   }
 }
 
-
+const UserInfo = withTranslation()(_UserInfo);
 export default UserInfo;

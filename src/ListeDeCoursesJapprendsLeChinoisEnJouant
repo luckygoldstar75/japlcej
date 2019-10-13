@@ -10,35 +10,41 @@ done Faire le mot de passe oublié
 done BUg du mot de passe oublié : email arrive pas chargé + relocation via history.push does not work!!
 
 Passer en https appli + services api
-Faire que sur le mail de signup reemission, on arrive sur le login dans l'interface si le lien est valide
-Faire que sur le mot de passe oublié , à la fin , on soit loggué
+
 done Finir Logout + corriger index.js:2178 Logout Error: SyntaxError: Unexpected token L in JSON at position 0
-commiter sur github (passer en mode privé github!)
-Mettre mode norobot, no index sur le index.htm
-Faire le  mode de jeu : je vois le caractère chinois, je dois trouver le bon mot français
+done commiter sur github
+done Mettre mode norobot, no index sur le index.htm
+done Faire le  mode de jeu : je vois le caractère chinois, je dois trouver le bon mot français
 Faire le  mode de jeu : je vois le mot français, je dois trouver le bon caractère chinois
 Compléter la liste 1 et 2 des mots par HSK1
 Déployer  en prod
+faire tester à Oscar + feedback Oscar, Caro et Nono
 Faire un test integ avec stub et moch et sinon.js : niveau unit et niveau integ mock de handler de route hapijs /anti regression
 Faire une test selenium de login par ex
-faire tester à Oscar + feedback Oscar, Caro et Nono
+
 
 
 *********Later:
-Extraire toutes les chaines de caractères pour i18n parties client et serveur
+Adapter le level available dans Gamescore pour faire une ami présentant qu'il est passé au niveau supérieur : dropdown list de choix de niveau + par défaut sur le dernier atteint + adapter l'image cheval devient lapin !
+Faire que l'on puisse un peu jouer en mode invité sans login ?? ou bien gérer ce cas en redirigeant vers signup
+En cours : Extraire toutes les chaines de caractères pour i18n parties client et serveur
+passer repositories en mode privé github!
+
 voir pour faire un facebook app vs app android ou ios vs react native
+
+Faire que sur le mail de signup reemission, on arrive sur le login dans l'interface si le lien est valide
+Faire que sur le mot de passe oublié , à la fin , on soit loggué
 
 Faire fonctionner les insomnia : /stats /privacycheckservice et dumRetrieveLastSession
 Mettre dans git avec la partie serveur les tests insomnia
 done reinstaller insomnia
 done mettre à jour nodejs/npm
-?? Faire que le résultat ne soit pas affihé au fur et à mesure. 12/20 etc ... trop scolaire11111
+?? Faire que le résultat ne soit pas affiché au fur et à mesure. 12/20 etc ... trop scolaire11111
 
 +Définir la stratégie pour que l'on gagne des points (plus tu joues , plus tu gagnes de points)
 +Permettre que les points fassent monter de niveau kung fu
 
 +Afficher le leaderboard (classement)
-Faire le  mode de jeu : je vois le mot francais, je dois sélectionner le bon caractère
 Faire le  mode de jeu : je vois le pinyin, je dois trouver le bon caractère
 Faire le  mode de jeu : je vois le pinyin, je dois trouver le bon mot français
 Faire le  mode de jeu : je vois le francais, je dois trouver le bon mot pinyin
@@ -51,3 +57,8 @@ Faire un mode de sélection du niveau par rapport aux jeux à la complexité: gr
 Adapter automatiquement la langue au navigateur du visiteur
 Permettre de changer de langue anglais/fr à la volée
 Faire une VM Alpine avec dependences sur poste local
+
+
+A l'activation en prod:
+Enlever mode norobot, no index sur le index.htm
+Mettre en place les alertes : factu / sécu sur AWS

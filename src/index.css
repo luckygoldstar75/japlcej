@@ -45,6 +45,24 @@ body {
 #gameSelector {
   display: flex;
 	width:100%;
-	flex-direction:'column';
+	flex-direction: row;
 	flex-flow : flex-wrap;
+}
+
+.lastResultCharacter_wrong {
+  fontSize: 300% ;
+  color : red;
+  opacity: 1;
+}
+
+.lastResultCharacter_good {
+  font-size:  300%;
+  color : green;
+  opacity: 1;
+}
+
+.lastResultCharacter_none {
+  font-size:  300%;
+  color : white;
+  opacity: 0;
 }

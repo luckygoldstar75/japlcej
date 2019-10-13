@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import { BrowserRouter, Route, withRouter/*, Link*/ } from "react-router-dom";
 import queryString from 'query-string';
+import { i18n, useTranslation, withTranslation, Trans } from "react-i18next";
+
 import {japlcejAPI, routesURLs} from './config-routes.js';
 
 import lampion from './lampion.jpg';
@@ -16,16 +18,26 @@ import ModalResetPassword from './ModalResetPassword.js'
 import UserInfo from './UserInfo';
 import GameSection from './GameSection';
 
-class Hamburger extends React.Component {
+
+const changeLanguage = lng => {
+  const { t, i18n } = useTranslation();
+  i18n.changeLanguage(lng);
+};
+
+class _Hamburger extends React.Component {
   render() {
+    const { t } = this.props;
+
     return (<a href="#menu">
-				&#9776; Menu
+				&#9776; {t('Menu')}
 			</a>
 	);
   }
 }
+const Hamburger = withTranslation()(_Hamburger);
 
-class SignUpButton extends React.Component {
+
+class _SignUpButton extends React.Component {
   constructor(props) {
 		super(props);
 		this.state = {showModalSignUp: this.props.showModalSignup,
@@ -47,6 +59,8 @@ class SignUpButton extends React.Component {
   }
 
  render() {
+  const { t } = this.props;
+
 	if(this.state.userLoggedIn) {
       return null;
     }
@@ -54,19 +68,20 @@ class SignUpButton extends React.Component {
     return (
     <div id="signupZone" className="signupZone">
     <button
-        className="signupbtn" title="Sign Up"
-        onClick={() => this.onClickSignUpButton()}>{(this.state.userSignedUp)? "Welcome!" : "Sign Up"}
+        className="signupbtn" title={t("SignUpButton_title")}
+        onClick={() => this.onClickSignUpButton()}>{(this.state.userSignedUp)?
+              t("SignUpButton_notSignedUp") : t("SignUpButton_signedUp")}
     </button>
 
-    <ModalSignup show={this.state.showModalSignUp}  onClose={this.closeModalSignUp}>Inscrivez-vous en quelques clics</ModalSignup>
+    <ModalSignup show={this.state.showModalSignUp}  onClose={this.closeModalSignUp}>t("Signup_invitation")</ModalSignup>
     </div>
 	);
   }
 }
+const SignUpButton = withTranslation()(_SignUpButton);
 
 
-
-class LogInOutButton extends React.Component {
+class _LogInOutButton extends React.Component {
   constructor(props) {
 		super(props);
     var _email= queryString.parse(decodeURI(this.props.location)).email;
@@ -114,7 +129,7 @@ class LogInOutButton extends React.Component {
 			 redirect : 'follow'
 			})
       .then(response => {return({code : response.status , json : response.json()})})
-  		.catch(error => {console.error('Logout Error:', error);
+  		.catch(error => {console.debug('Logout Error:', error);
   		 })
   		.then(data => {
   			if (data != null  && data.code === 200 && (data.json === null || data.json.error == null)) {
@@ -122,7 +137,7 @@ class LogInOutButton extends React.Component {
   				this.props.onLogoutSuccess(); // on efface les infos clients de la session précédente
   			}
         else {
-  				console.error('Logout error . Code:', data.code, ' Error:' , data.json);
+  				console.debug('Logout error . Code:', data.code, ' Error:' , data.json);
   			}
       })
 		 .catch(error => {console.error('Logout Error:', error);
@@ -136,19 +151,22 @@ class LogInOutButton extends React.Component {
   }
 
  render() { //onClick={() => this.setState((this.state.userLoggedIn)?{showModalLogin: true}:{userLoggedIn: false})}>{(this.state.userLoggedIn)? "Log Out" : "Log In"}
+    const { t } = this.props;
+
     return (
     <div id="loginZone" className="loginZone">
     <button
         className="loginbtn" title="Log Out"
-        onClick={() => this.onClickLogInOutButton()}>{(this.state.userLoggedIn)? "Log Out" : "Log In"}
+        onClick={() => this.onClickLogInOutButton()}>{(this.state.userLoggedIn)? t("Login_out") : t("Login_in")}
     </button>
 
     <ModalLogin email={this.state.email} show={this.state.showModalLogin} onClose={this.toggleModalLogin} onLoginSuccess={this.onLoginSuccess}
-        isForgottenPasswordResetRequest={this.state.isForgottenPasswordResetRequest}>Veuillez saisir vos identifiants de connexion</ModalLogin>
+        isForgottenPasswordResetRequest={this.state.isForgottenPasswordResetRequest}>t("Login_invitation")</ModalLogin>
    </div>
 	);
   }
 }
+const LogInOutButton = withTranslation()(_LogInOutButton);
 
 class MenuBar extends React.Component {
   constructor(props) {
@@ -162,7 +180,7 @@ class MenuBar extends React.Component {
   }
 }
 
-class App extends Component {
+class _App extends Component {
   constructor(props) {
 	super(props);
 	this.onLoginSuccess = this.onLoginSuccess.bind(this);
@@ -174,7 +192,7 @@ class App extends Component {
   }
 
   onLoginSuccess = (jsonUserLoginInfo) => {
-	console.log("OnLoginSuccess Invoked! " + jsonUserLoginInfo);
+	console.debug("OnLoginSuccess Invoked! " + jsonUserLoginInfo);
 
 	var _lastSession = null, _avatarUrl = null, _pseudo = null;
 	if (jsonUserLoginInfo) {
@@ -187,7 +205,7 @@ class App extends Component {
   }
 
   onLogoutSuccess = () => {
-	  console.log("OnLogoutSuccess Invoked! ");
+	  console.debug("OnLogoutSuccess Invoked! ");
 	  this.setState({userLoggedIn : false, userChanged : true, lastSession : null, avatarUrl : null, pseudo : null});
   }
 
@@ -211,14 +229,17 @@ class App extends Component {
 		flexFlow : 'flex-wrap',
 	};
 
-  return (
+ const { t } = this.props;
+
+ return (
+
     <BrowserRouter>
       <Route render={(history) =>
       <div className="App">
        <div id="top" className="App-top">
           <header className="App-header">
             <div id="App-logo" style={logoStyle} alt="logo" />
-            <div id="App-title" className="App-title">Bonjour et bienvenue pour découvrir des outils vous accompagnant dans lapprentissage du chinois.</div>
+            <div id="App-title" className="App-title">{t("App_title")}</div>
             <div id="App-logo" style={logoStyle} alt="logo" />
           </header>
          <div id="toolbar" className="App-toolbar">
@@ -246,7 +267,6 @@ class App extends Component {
     );
   }
 
-
   componentDidMount() {
 	fetch(japlcejAPI + routesURLs.IS_LOGGEDIN,{
 			 method: "GET",
@@ -265,4 +285,5 @@ class App extends Component {
   }
 }
 
+const App = withTranslation()(_App);
 export default App;
