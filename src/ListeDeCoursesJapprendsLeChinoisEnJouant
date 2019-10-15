@@ -15,23 +15,25 @@ done Finir Logout + corriger index.js:2178 Logout Error: SyntaxError: Unexpected
 done commiter sur github
 done Mettre mode norobot, no index sur le index.htm
 done Faire le  mode de jeu : je vois le caractère chinois, je dois trouver le bon mot français
-Faire le  mode de jeu : je vois le mot français, je dois trouver le bon caractère chinois
 Compléter la liste 1 et 2 des mots par HSK1
 Déployer  en prod
 faire tester à Oscar + feedback Oscar, Caro et Nono
+
+Prio 2 :
 Faire un test integ avec stub et moch et sinon.js : niveau unit et niveau integ mock de handler de route hapijs /anti regression
 Faire une test selenium de login par ex
-
-
-
-*********Later:
-Adapter le level available dans Gamescore pour faire une ami présentant qu'il est passé au niveau supérieur : dropdown list de choix de niveau + par défaut sur le dernier atteint + adapter l'image cheval devient lapin !
+Adapter le level available dans Gamescore pour faire une anim présentant qu'il est passé au niveau supérieur : dropdown list de choix de niveau + par défaut sur le dernier atteint + adapter l'image cheval devient lapin !
+Dans readChracterSelectFrench ca vaudrait le coup d'afficher le résultat pinyin? prononciation ?
 Faire que l'on puisse un peu jouer en mode invité sans login ?? ou bien gérer ce cas en redirigeant vers signup
 En cours : Extraire toutes les chaines de caractères pour i18n parties client et serveur
 passer repositories en mode privé github!
 
-voir pour faire un facebook app vs app android ou ios vs react native
 
+
+*********Later:
+Faire le  mode de jeu : je vois le mot français, je dois trouver le bon caractère chinois
+
+voir pour faire un facebook app vs app android ou ios vs react native
 Faire que sur le mail de signup reemission, on arrive sur le login dans l'interface si le lien est valide
 Faire que sur le mot de passe oublié , à la fin , on soit loggué
 

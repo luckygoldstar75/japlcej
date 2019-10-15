@@ -134,7 +134,7 @@ class GameReadCharacterSelectFrench extends React.Component {
 			if (this.state.currentCharacter != null) {options = this.state.currentCharacter.suggestedAnswers};
 
 			if (options != null && options.length > 0) {
-				return options.map(suggestedAnswer => <option value={suggestedAnswer}>
+				return options.map((suggestedAnswer, index) => <option key={suggestedAnswer+index} value={suggestedAnswer}>
 																								{suggestedAnswer}
     																			</option>);
 			}
@@ -157,7 +157,7 @@ class GameReadCharacterSelectFrench extends React.Component {
 						<div id="lastResult" className={lastResultCharacterStyle}>{lastResultCharacter}</div>
 				</div>
 
-				<select id="suggestionsSelect" autofocus required>
+				<select id="suggestionsSelect" autoFocus required>
 						{this.getSuggestedAnswersOptions()}
 				</select>
 

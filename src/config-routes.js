@@ -1,5 +1,5 @@
 //import './config-login.js'
-export const japlcejAPI = 'http://melocal:4000/'||'https://japlcej.herokuapp.com/';
+export const japlcejAPI = 'http://melocal:4000/services/'||'https://japprendslechinoisenjouant.fr/services/';
 export const routesURLs = {
  GUESS : 'guess',
  IS_LOGGEDIN : 'login',
