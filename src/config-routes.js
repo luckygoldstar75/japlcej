@@ -1,5 +1,5 @@
 //import './config-login.js'
-export const japlcejAPI = process.env.REACT_APP_backendURLRadical||'http://melocal:4000/services/';
+export const japlcejAPI = process.env.REACT_APP_backendURLRadical;
 export const routesURLs = {
  GUESS : 'guess',
  IS_LOGGEDIN : 'login',

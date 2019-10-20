@@ -6,6 +6,7 @@ import ModalSignupCommons from './ModalSignupCommons.js';
 import ModalSignupReemissionLink from './ModalSignupReemissionLink.js'
 import queryString from 'query-string';
 import { withRouter } from "react-router-dom";
+import { i18n, useTranslation, withTranslation, Trans } from "react-i18next";
 
 class ModalResetPassword extends React.Component {
    constructor(props) {
@@ -99,27 +100,30 @@ class ModalResetPassword extends React.Component {
   }
 
   render() {
+    const { t } = this.props;
+
     // Render nothing if the "show" prop is false
     if(!this.state.show) {
       return null;
     }
 
     return (
+
      <div className="backdrop" style={ModalSignupCommons.backdropStyle}>
         <div className="modal" style={ModalSignupCommons.modalStyle}>
 		 <AppMessage severity={this.state.message.severity} message={this.state.message.text} onClose={this.hideMessage}/>
 
      <form onSubmit={this.handleSubmitPasswordReset}>
-			Bienvenue pour votre changement de mot de passe <br/>
+			{t("Reset_password_welcome")} <br/>
 			<label>Email
-			<input type="email" name="email" value={this.state.email==null?'':this.state.email} placeholder="youremail@here" required  size="35" onChange={this.emailChanged}/>
+			<input type="email" name="email" value={this.state.email==null?'':this.state.email} placeholder={t("Login_your_email")} required  size="35" onChange={this.emailChanged}/>
 			</label>
-			<label>Password
-			<input type="password" id="password"  placeholder="your password"required  size="15" minLength="8"
+			<label>t("Password")
+			<input type="password" id="password"  placeholder={t("Login_your_password")} required  size="15" minLength="8"
                     maxLength="40" onChange={this.passwordChanged}/>
 			</label>
       <label>Confirmation Password
-			<input type="password" id="confirmationPassword" placeholder="your password"required  size="15" minLength="8"
+			<input type="password" id="confirmationPassword" placeholder={t("Login_your_password")} required  size="15" minLength="8"
                   maxLength="40" onChange={this.confirmationPasswordChanged}/>
 			</label>
 
@@ -137,4 +141,4 @@ class ModalResetPassword extends React.Component {
   }
 }
 
-export default withRouter(ModalResetPassword);
+export default withTranslation() (withRouter(ModalResetPassword));

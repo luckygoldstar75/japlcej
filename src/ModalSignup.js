@@ -4,6 +4,8 @@ import {japlcejAPI, routesURLs} from './config-routes.js';
 import AppMessage from './AppMessage.js';
 import ModalSignupCommons from './ModalSignupCommons.js';
 import ModalSignupReemissionLink from './ModalSignupReemissionLink.js'
+import { i18n, useTranslation, withTranslation, Trans } from "react-i18next";
+
 
 class ModalSignup extends React.Component {
    constructor(props) {
@@ -90,6 +92,8 @@ class ModalSignup extends React.Component {
   }
 
   render() {
+    const {t} = this.props;
+
     // Render nothing if the "show" prop is false
     if(!this.props.show) {
       return null;
@@ -103,27 +107,27 @@ class ModalSignup extends React.Component {
 		 <AppMessage severity={this.state.message.severity} message={this.state.message.text} onClose={this.hideMessage}/>
 
      <form onSubmit={this.handleSubmitSignup}>
-			Bienvenue et merci de saisir les informations nécessaires pour votre inscription <br/>
-			<label>Email
-			<input type="email" name="email" placeholder="youremail@here" required  size="35" onChange={this.emailChanged}/>
+			{t("SignUp_welcome")} <br/>
+			<label>{t('SignUp_email')}
+			<input type="email" name="email" placeholder={t("Login_your_email")} required  size="35" onChange={this.emailChanged}/>
 			</label>
-			<label>Password
-			<input type="password" id="password" placeholder="your password"required  size="15" minLength="8"
+			<label>{t('SignUp_password')}
+			<input type="password" id="password" placeholder={t("Login_your_password")} required  size="15" minLength="8"
                     maxLength="40" onChange={this.passwordChanged}/>
 			</label>
-      <label>Confirmation Password
-			<input type="password" id="confirmationPassword" placeholder="your password"required  size="15" minLength="8"
+      <label>{t('SignUp_confirmation_password')}
+			<input type="password" id="confirmationPassword" placeholder={t("Login_your_password")} required  size="15" minLength="8"
                   maxLength="40" onChange={this.confirmationPasswordChanged}/>
 			</label>
 
-			<input type="submit" value="Submit" />
+			<input type="submit" value={t('Button_submit')} />
 		</form>
 
-		 <a href="#newConfirmationLink" onClick={this.onSignupReemissionLinkRequest}>Need a new confirmation link ?</a>
+		 <a href="#newConfirmationLink" onClick={this.onSignupReemissionLinkRequest}>{t('SignUp_confirmation_link_needed')}</a>
 
           <div className="footer">
             <button onClick={this.props.onClose}>
-              Close
+              {t('Button_close')}
             </button>
           </div>
         </div>
@@ -133,10 +137,10 @@ class ModalSignup extends React.Component {
   else { //REEMISION LINK REQUEST
     return (<ModalSignupReemissionLink show={this.props.show}
             onClose={this.onCloseReemissionLinkRequest}>
-      Inscrivez-vous en quelques clics</ModalSignupReemissionLink>
+      {t("SignUp_invitation")}</ModalSignupReemissionLink>
    );
   }
   }
 }
 
-export default ModalSignup;
+export default withTranslation() (ModalSignup);

@@ -17,7 +17,7 @@ import ModalResetPassword from './ModalResetPassword.js'
 
 import UserInfo from './UserInfo';
 import GameSection from './GameSection';
-
+import AppMessage from './AppMessage';
 
 const changeLanguage = lng => {
   const { t, i18n } = useTranslation();
@@ -186,9 +186,14 @@ class _App extends Component {
 	this.onLoginSuccess = this.onLoginSuccess.bind(this);
   this.onLogoutSuccess = this.onLogoutSuccess.bind(this);
   this.onSignUpSuccess = this.onSignUpSuccess.bind(this);
+  this.messageHook = this.messageHook.bind(this);
+  this.hideMessage = this.hideMessage.bind(this);
+
 
   this.state = {currentUser: null, userChanged : false, lastSession : null ,
-		avatarUrl:null, pseudo : null, userSignedUp: false};
+		avatarUrl:null, pseudo : null, userSignedUp: false,
+    message : {severity: null, text : null}
+    };
   }
 
   onLoginSuccess = (jsonUserLoginInfo) => {
@@ -211,6 +216,14 @@ class _App extends Component {
 
   onSignUpSuccess = () => {
       this.setState({userSignedUp: true});
+  }
+
+  messageHook(message) {
+    this.setState({message : {severity: message.severity, text : message.text}});
+  }
+
+  hideMessage() {
+	  this.setState({message : {severity: null, text : null}});
   }
 
   render(history) {
@@ -255,10 +268,12 @@ class _App extends Component {
          </div>
        </div>
 
+       <AppMessage severity={this.state.message.severity} message={this.state.message.text} onClose={this.hideMessage}/>
+
        <div className="main-route-place">
          <Route exact path="*" render={() => ( <div id="GameView">
            <UserInfo userChanged={this.state.userChanged} lastSession={this.state.lastSession} avatarUrl={this.state.avatarUrl} pseudo={this.state.pseudo}/>
-           <GameSection gameSelected={undefined} userLoggedIn={this.state.userLoggedIn} />
+           <GameSection gameSelected={undefined} userLoggedIn={this.state.userLoggedIn} messageHook={this.messageHook}/>
          </div>)} />
        </div>
      </div>

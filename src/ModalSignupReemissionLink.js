@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import {japlcejAPI, routesURLs} from './config-routes.js';
 import AppMessage from './AppMessage.js';
 import ModalSignupCommons from './ModalSignupCommons.js';
+import { i18n, useTranslation, withTranslation, Trans } from "react-i18next";
 
 class ModalSignupReemissionLink extends React.Component {
    constructor(props) {
@@ -64,6 +65,8 @@ class ModalSignupReemissionLink extends React.Component {
   }
 
   render() {
+    const { t } = this.props;
+
     // Render nothing if the "show" prop is false
     if(!this.props.show) {
       return null;
@@ -74,15 +77,15 @@ class ModalSignupReemissionLink extends React.Component {
        <div className="modal" style={ModalSignupCommons.modalStyle}>
   		 <AppMessage severity={this.state.message.severity} message={this.state.message.text} onClose={this.hideMessage}/>
         <form onSubmit={this.handleSubmitReemissionSignupRequest}>
-  			  Bonjour, veuillez saisir les informations demandées<br/>
-  			 <label>Email
+  			  {t('SignUp_welcome_reemission_link')}<br/>
+  			 <label>{t('Signup_email')}
   			 <input type="email" name="email" placeholder="youremail@here" required  size="35" onChange={this.emailChanged}/>
    			</label>
-  			 <input type="submit" value="Submit" />
+  			 <input type="submit" value={t('Button_submit')} />
   		  </form>
          <div className="footer">
           <button onClick={this.props.onClose}>
-                Close
+                {t('Button_close')}
           </button>
          </div>
        </div>
@@ -90,4 +93,4 @@ class ModalSignupReemissionLink extends React.Component {
       );
   }
 }
-export default ModalSignupReemissionLink;
+export default withTranslation() (ModalSignupReemissionLink);

@@ -12,6 +12,8 @@ class Game extends React.Component {
 	}
 
   render() {
+		const { t } = this.props;
+
 			let divBlocGame ="";
 
 			divBlocGame = "<" + this.props.type +"/>";
@@ -22,7 +24,7 @@ class Game extends React.Component {
 				case 'readCharacterSelectFrench':
 						return ( <GameReadCharacterSelectFrench />	);
 				default:
-					return ( <AppMessage severity='error' message='Oups! game not Available!' onClose={this.props.goBackToGameSelection} />	);
+					return ( <AppMessage severity='error' message={t("Game_not_available_oups")} onClose={this.props.goBackToGameSelection} />	);
 	  }
   }
 }
@@ -41,7 +43,14 @@ class _GameSection extends React.Component {
 	}
 
 	selectGame(_gameName, _gameTextAbstract) {
-    this.setState({gameSelected : _gameName, gameSelectedTextAbstract : _gameTextAbstract});
+		const { t } = this.props;
+
+		if(!this.state.userLoggedIn) {
+				this.props.messageHook({message : {severity : "info", message : t("Login_required") }})
+		}
+		else {
+    	this.setState({gameSelected : _gameName, gameSelectedTextAbstract : _gameTextAbstract});
+		}
   }
 
 	goBackToGameSelection() {

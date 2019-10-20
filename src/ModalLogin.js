@@ -2,6 +2,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import {japlcejAPI, routesURLs} from './config-routes.js';
 import AppMessage from './AppMessage.js';
+import { i18n, useTranslation, withTranslation, Trans } from "react-i18next";
+
 
 class ModalLogin extends React.Component {
    constructor(props) {
@@ -17,6 +19,7 @@ class ModalLogin extends React.Component {
 		this.addMessage = this.addMessage.bind(this);
 		this.hideMessage = this.hideMessage.bind(this);
     this.setForgottenPasswordMode = this.setForgottenPasswordMode.bind(this);
+    this.quitForgottenPasswordMode = this.quitForgottenPasswordMode.bind(this);
     this.emailPasswordForgottenChange = this.emailPasswordForgottenChange.bind(this);
     this.handleForgottenPasswordSubmit=this.handleForgottenPasswordSubmit.bind(this);
 	}
@@ -45,6 +48,12 @@ class ModalLogin extends React.Component {
   setForgottenPasswordMode() {
     this.setState({isForgottenPasswordRequest : true});
   }
+
+  quitForgottenPasswordMode() {
+    this.setState({isForgottenPasswordRequest : false});
+    this.props.onClose();
+  }
+
 
   addMessage(message) {
 	  if (message == null) {
@@ -152,6 +161,8 @@ class ModalLogin extends React.Component {
   }
 
   render() {
+    const { t } = this.props;
+
     // Render nothing if the "show" prop is false
     if(!this.props.show) {
       return null;
@@ -168,7 +179,7 @@ class ModalLogin extends React.Component {
       padding: 50
     };
 
-    // The modal "window"
+    // The modal "window"this.state.message.text
     const modalStyle = {
       backgroundColor: '#fff',
       borderRadius: 5,
@@ -178,29 +189,26 @@ class ModalLogin extends React.Component {
       padding: 30
     };
 
-
-
-      if (!this.state.isForgottenPasswordRequest)
-      {
+      if (!this.state.isForgottenPasswordRequest) {
         return (
         <div id="loginInputZone">
           <div className="backdrop" style={backdropStyle}>
           <div className="modal" style={modalStyle}>
         		  <AppMessage severity={this.state.message.severity} message={this.state.message.text} onClose={this.hideMessage}/>
-        			Merci de saisir vos identifiants pour vous connecter<br/>
+        			{t('Login_invitation')}<br/>
             <form onSubmit={this.handleSubmit}>
-            	<label>Email
-            	<input type="email" name="email" value={this.state.email} placeholder="youremail@here" required  size="35" onChange={this.emailChange}/>
+            	<label>{t('Login_email')}
+            	<input type="email" name="email" value={this.state.email} placeholder={t("Login_your_email")} required  size="35" onChange={this.emailChange}/>
             	</label>
-            	<label>Password
-            	<input type="password" name="password" placeholder="your password"required  size="15" maxLength="40" onChange={this.passwordChange}/>
+            	<label>{t('Login_password')}
+            	<input type="password" name="password" placeholder={t("Login_your_password")} required  size="15" maxLength="40" onChange={this.passwordChange}/>
             	</label>
-            	<input type="submit" value="Submit" />
+            	<input type="submit" value={t('Button_submit')} />
             </form>
             <div className="footer">
-                 <a href="#forgottenPassword" onClick={this.setForgottenPasswordMode}>Mot de passe oublié ?</a>
+                 <a href="#forgottenPassword" onClick={this.setForgottenPasswordMode}>{t("Login_forgotten_password")}</a>
                  <button onClick={this.props.onClose}>
-                  Close
+                  {t('Button_close')}
                  </button>
             </div>
         </div>
@@ -215,15 +223,15 @@ class ModalLogin extends React.Component {
       <div className="modal" style={modalStyle}>
           <AppMessage severity={this.state.message.severity} message={this.state.message.text} onClose={this.hideMessage}/>
     <form onSubmit={this.handleForgottenPasswordSubmit}>
-			Merci de saisir les informations nécessaires pour que nous puissions vous renvoyer un mail de confirmation <br/>
-			<label>Email
-			<input type="email" name="email" placeholder="youremail@here" required  size="35" onChange={this.emailPasswordForgottenChange}/>
+			{t("Forgotten_password_resend_welcome")}<br/>
+			<label>{t('Login_email')}
+			<input type="email" name="email" placeholder={t("Login_your_email")} required  size="35" onChange={this.emailPasswordForgottenChange}/>
 			</label>
-			<input type="submit" value="Submit" />
+			<input type="submit" value={t('Button_submit')} />
 		</form>
     <div className="footer">
-      <button onClick={this.props.onClose}>
-        Close
+      <button onClick={this.quitForgottenPasswordMode}>
+        {t('Button_close')}
       </button>
     </div>
       </div>
@@ -239,4 +247,4 @@ ModalLogin.propTypes = {
   children: PropTypes.node
 };
 
-export default ModalLogin;
+export default withTranslation() (ModalLogin);

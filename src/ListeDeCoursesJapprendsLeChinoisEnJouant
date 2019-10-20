@@ -9,14 +9,14 @@ done Faire que  le mail de mot de passe oublié nous fasse arriver directement d
 done Faire le mot de passe oublié
 done BUg du mot de passe oublié : email arrive pas chargé + relocation via history.push does not work!!
 
-Passer en https appli + services api
+done Passer en https appli + services api
 
 done Finir Logout + corriger index.js:2178 Logout Error: SyntaxError: Unexpected token L in JSON at position 0
 done commiter sur github
 done Mettre mode norobot, no index sur le index.htm
 done Faire le  mode de jeu : je vois le caractère chinois, je dois trouver le bon mot français
-Compléter la liste 1 et 2 des mots par HSK1
-Déployer  en prod
+Compléter la liste 1 et 2 des mots par HSK1 : mettre traditionnel et simplifié !
+done Déployer  en prod
 faire tester à Oscar + feedback Oscar, Caro et Nono
 
 Prio 2 :
@@ -24,10 +24,10 @@ Faire un test integ avec stub et moch et sinon.js : niveau unit et niveau integ 
 Faire une test selenium de login par ex
 Adapter le level available dans Gamescore pour faire une anim présentant qu'il est passé au niveau supérieur : dropdown list de choix de niveau + par défaut sur le dernier atteint + adapter l'image cheval devient lapin !
 Dans readChracterSelectFrench ca vaudrait le coup d'afficher le résultat pinyin? prononciation ?
-Faire que l'on puisse un peu jouer en mode invité sans login ?? ou bien gérer ce cas en redirigeant vers signup
+??? Faire que l'on puisse un peu jouer en mode invité sans login ?? ou bien gérer ce cas en redirigeant vers signup
 En cours : Extraire toutes les chaines de caractères pour i18n parties client et serveur
 passer repositories en mode privé github!
-
+Mettre les sons et les lire
 
 
 *********Later:
