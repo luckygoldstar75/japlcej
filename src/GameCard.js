@@ -5,7 +5,7 @@ import { i18n, useTranslation, withTranslation, Trans } from "react-i18next";
 class _GameCard extends React.Component {
 	constructor(props) {
 		super(props);
-		this.state={isAvailable : this.props.isAvailable, userLoggedIn : this.props.userLoggedIn, decorationCharacter : this.props.decorationCharacter,
+		this.state={isAvailable : this.props.isAvailable, decorationCharacter : this.props.decorationCharacter,
        gameName : this.props.gameName, gameTextAbstract: this.props.gameTextAbstract};
     this.quitGame = this.props.quitGame;
     this.onClick=this.onClick.bind(this);

@@ -2,8 +2,10 @@ import React from 'react';
 import {japlcejAPI, routesURLs} from './config-routes.js';
 import GameCurrentCharacter from './GameCurrentCharacter.js'
 import GameCurrentResult from './GameCurrentResult.js'
+import {  withTranslation } from "react-i18next";
 
-class GameReadCharacterSelectFrench extends React.Component {
+
+class _GameReadCharacterSelectFrench extends React.Component {
 	constructor(props) {
 		super(props);
 
@@ -141,6 +143,8 @@ class GameReadCharacterSelectFrench extends React.Component {
 	}
 
   render() {
+	const { t } = this.props;
+
 	 var myCharacterAnswer = (this.state.currentCharacter.answer == null)? "😀" : this.state.currentCharacter.answer.value;
 	 var lastResultCharacter="✓";
 	 var lastResultCharacterStyle = 'lastResultCharacter_none';
@@ -163,9 +167,9 @@ class GameReadCharacterSelectFrench extends React.Component {
 
 				<div id="actionButtons" className="guessCharacterInput">
 					<button type="button" className="actionbutton" id="Valider" autoFocus onClick={this.valider}
-						disabled={!this.state.answerExpected}>Valider↵</button>
+						disabled={!this.state.answerExpected}>{t('Game_button_submit')}↵</button>
 					<button type="button" className="actionbutton" id="Suivant" autoFocus
-						onClick={this.auSuivant} disabled={this.state.answerExpected}>Suivant↓</button>
+						onClick={this.auSuivant} disabled={this.state.answerExpected}>{t('Game_button_next')}↓</button>
 				</div>
 
 			</div>
@@ -176,5 +180,5 @@ class GameReadCharacterSelectFrench extends React.Component {
 		this.auSuivant();
   }
 };
-
+const GameReadCharacterSelectFrench = withTranslation()(_GameReadCharacterSelectFrench)
 export default GameReadCharacterSelectFrench ;

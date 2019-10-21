@@ -2,6 +2,7 @@ import React from 'react';
 import {japlcejAPI, routesURLs} from './config-routes.js';
 import GameCurrentCharacter from './GameCurrentCharacter.js'
 import GameCurrentResult from './GameCurrentResult.js'
+import {  withTranslation } from "react-i18next";
 
 class GameReadCharacterWritePinyinGameInput extends React.Component {
 	constructor(props) {
@@ -45,6 +46,8 @@ class GameReadCharacterWritePinyinGameInput extends React.Component {
 	handleNextCharacterRequested(e) { this.props.onNextCharacterRequested(); }
 
 	render() {
+			const { t } = this.props;
+
 				var answerExpected = (this.props.lastResultIsFalse == null) ;
 				var i=document.getElementById("saisiePinyin");
 				if (i) {
@@ -130,9 +133,9 @@ class GameReadCharacterWritePinyinGameInput extends React.Component {
 
 					<div id="actionsButtonsGuessCharacterPinyin" className="guessCharacterInput">
 						<button type="button" className="actionbutton" id="Valider" autoFocus onClick={this.handleInputValidated}
-							disabled={!answerExpected}>Valider↵</button>
+							disabled={!answerExpected}>{t('Game_button_submit')}↵</button>
 						<button type="button" className="actionbutton" id="Suivant" autoFocus
-							onClick={this.handleNextCharacterRequested} disabled={answerExpected}>Suivant↓</button>
+							onClick={this.handleNextCharacterRequested} disabled={answerExpected}>{t('Game_button_next')}↓</button>
 					</div>
 
 					<textarea name="saisie Pinyin" id="saisiePinyin" cols="50" rows="4"
@@ -146,7 +149,7 @@ class GameReadCharacterWritePinyinGameInput extends React.Component {
 }
 
 
-class GameReadCharacterWritePinyin extends React.Component {
+class _GameReadCharacterWritePinyin extends React.Component {
 	constructor(props) {
 		super(props);
 
@@ -262,5 +265,5 @@ class GameReadCharacterWritePinyin extends React.Component {
 	this.auSuivant();
   }
 };
-
+const GameReadCharacterWritePinyin = withTranslation()(_GameReadCharacterWritePinyin)
 export default GameReadCharacterWritePinyin ;

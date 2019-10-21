@@ -218,12 +218,12 @@ class _App extends Component {
       this.setState({userSignedUp: true});
   }
 
-  messageHook(message) {
-    this.setState({message : {severity: message.severity, text : message.text}});
+  messageHook(_message) {
+    this.setState({message : _message});
   }
 
   hideMessage() {
-	  this.setState({message : {severity: null, text : null}});
+	  this.setState({message : {severity: null, message : null}});
   }
 
   render(history) {
@@ -268,7 +268,7 @@ class _App extends Component {
          </div>
        </div>
 
-       <AppMessage severity={this.state.message.severity} message={this.state.message.text} onClose={this.hideMessage}/>
+       <AppMessage severity={this.state.message.severity} message={this.state.message.message} onClose={this.hideMessage}/>
 
        <div className="main-route-place">
          <Route exact path="*" render={() => ( <div id="GameView">

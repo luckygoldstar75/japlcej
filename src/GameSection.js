@@ -32,7 +32,7 @@ class Game extends React.Component {
 class _GameSection extends React.Component {
 	constructor(props) {
 		super(props);
-		this.state={gameSelected : this.props.gameSelected, userLoggedIn : this.props.userLoggedIn};
+		this.state={gameSelected : this.props.gameSelected};
 		this.selectGame = this.selectGame.bind(this);
 		this.unselectGame = this.unselectGame.bind(this);
 		this.goBackToGameSelection = this.goBackToGameSelection.bind(this);
@@ -45,8 +45,8 @@ class _GameSection extends React.Component {
 	selectGame(_gameName, _gameTextAbstract) {
 		const { t } = this.props;
 
-		if(!this.state.userLoggedIn) {
-				this.props.messageHook({message : {severity : "info", message : t("Login_required") }})
+		if(!this.props.userLoggedIn) {
+				this.props.messageHook({severity : "info", message : t("Login_required")}); //message
 		}
 		else {
     	this.setState({gameSelected : _gameName, gameSelectedTextAbstract : _gameTextAbstract});
@@ -59,9 +59,8 @@ class _GameSection extends React.Component {
 
 	componentDidUpdate() {
 		// If login occurs while anonymous game started : go back logged in to gameselection
-		if(this.props.userLoggedIn && !this.state.userLoggedIn) {
+		if(!this.props.userLoggedIn && this.state.gameSelected !== undefined) {
 			this.unselectGame();
-			this.state.userLoggedIn = this.props.userLoggedIn;
 		}
 	}
 
