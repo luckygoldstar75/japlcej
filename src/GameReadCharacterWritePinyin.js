@@ -4,7 +4,7 @@ import GameCurrentCharacter from './GameCurrentCharacter.js'
 import GameCurrentResult from './GameCurrentResult.js'
 import {  withTranslation } from "react-i18next";
 
-class GameReadCharacterWritePinyinGameInput extends React.Component {
+class _GameReadCharacterWritePinyinGameInput extends React.Component {
 	constructor(props) {
 		super(props);
 		this.handleInputValidated = this.handleInputValidated.bind(this);
@@ -148,6 +148,7 @@ class GameReadCharacterWritePinyinGameInput extends React.Component {
 	}
 }
 
+const GameReadCharacterWritePinyinGameInput = withTranslation()(_GameReadCharacterWritePinyinGameInput);
 
 class _GameReadCharacterWritePinyin extends React.Component {
 	constructor(props) {
@@ -159,7 +160,7 @@ class _GameReadCharacterWritePinyin extends React.Component {
 			currentCharacter : 	{id : null,
 				character : null,
 				answer : null },
-			level: 1,
+			level: this.props.level,
 			apiAlive:true
 		};
 
@@ -169,7 +170,7 @@ class _GameReadCharacterWritePinyin extends React.Component {
 
 	auSuivant() {
 		 //fetch new Character to guess
-		 fetch(japlcejAPI + routesURLs.GUESS + "/readCharacterWritePinyin/" + this.state.currentGameLevel,
+		 fetch(japlcejAPI + routesURLs.GUESS + "/readCharacterWritePinyin/" + this.state.level,
 			{method: "GET",
 			 headers: {
 				'Content-Type': 'application/json',
@@ -243,6 +244,8 @@ class _GameReadCharacterWritePinyin extends React.Component {
 
 
   render() {
+	const { t } = this.props;
+
 	 var myCharacterAnswer = (this.state.currentCharacter.answer == null)? "😀" : this.state.currentCharacter.answer.value;
 
     return ( <div className="GuessCharacterGame">

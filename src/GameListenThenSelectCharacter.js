@@ -5,7 +5,7 @@ import GameCurrentResult from './GameCurrentResult.js'
 import {  withTranslation } from "react-i18next";
 
 
-class _GameReadCharacterSelectFrench extends React.Component {
+class _GameListenThenSelectCharacter extends React.Component {
 	constructor(props) {
 		super(props);
 
@@ -39,7 +39,7 @@ class _GameReadCharacterSelectFrench extends React.Component {
 	auSuivant() {
 		var that = this;
 		 //fetch new Character to guess
-		 fetch(japlcejAPI + routesURLs.GUESS + "/readCharacterSelectFrench/" + this.state.level,
+		 fetch(japlcejAPI + routesURLs.GUESS + "/listenThenSelectCharacter/" + this.state.level,
 			{method: "GET",
 			 headers: {
 				'Content-Type': 'application/json',
@@ -180,5 +180,5 @@ class _GameReadCharacterSelectFrench extends React.Component {
 		this.auSuivant();
   }
 };
-const GameReadCharacterSelectFrench = withTranslation()(_GameReadCharacterSelectFrench)
-export default GameReadCharacterSelectFrench ;
+const GameListenThenSelectCharacter = withTranslation()(_GameListenThenSelectCharacter)
+export default GameListenThenSelectCharacter ;

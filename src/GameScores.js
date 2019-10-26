@@ -7,13 +7,14 @@ class GameScores extends React.Component {
 		super(props);
 	this.state={gameName : this.props.gameName, userLoggedIn : this.props.userLoggedIn,
 		progression : {
-				level: "novice",
+				level: null,
 				levelsAvailable : [] ,
 				percentageDone : "0", percentageGood: "0",
 				potentialNewAvailableLevel : null}};
   this.thresholdPercent= new Map([ ["gold", 99], ["red", 90], ["blue", 75], ["grey", 0]]);
   this.giveImgForLevel=this.giveImgForLevel.bind(this);
   this.giveStyleForProgressionBarAccordingToPercentageGood=this.giveStyleForProgressionBarAccordingToPercentageGood.bind(this);
+	this.changeLevel=this.changeLevel.bind(this);
 }
 
   giveImgForLevel(level) {
@@ -50,12 +51,41 @@ static getLevels() {
 		"master" : 400}));
 }
 
+
+
 static getLevelsAvailable(percentageTries, percentageGood, currentLevel) {
 		var currentLevelIndex=Math.max(0,Object.keys(this.getLevels()).indexOf(currentLevel));
 		if(percentageTries >= 100 && percentageGood >= 80) { currentLevelIndex++};
 
 		var arrayOfLevelsAvailable=Object.keys(this.getLevels()).slice(0,currentLevelIndex+1);
 		return arrayOfLevelsAvailable;
+	}
+
+getLevelsAvailableOptions() {
+		var options = null;
+
+		if (this.state.progression.levelsAvailable !== null && this.state.progression.levelsAvailable !== undefined) {
+			options = this.state.progression.levelsAvailable;
+		};
+
+		if (options != null && options.length > 0) {
+			return options.map((levelAvailable, index) => <option key={levelAvailable+index} value={levelAvailable}>
+																							{levelAvailable}
+																				</option>);
+		}
+	}
+
+	changeLevel() {
+		var that = this;
+		var levelSelected = document.getElementById("levelsAvailableSelect")
+			.options[document.getElementById("levelsAvailableSelect").selectedIndex].value;
+
+		if(this.state.progression.level !== levelSelected) {
+			var newProgression = this.state.progression;
+			newProgression.level = levelSelected;
+			this.props.onNewLevel(levelSelected);
+			this.setState({progression : newProgression});
+		}
 	}
 
 	render() {
@@ -66,9 +96,12 @@ static getLevelsAvailable(percentageTries, percentageGood, currentLevel) {
 				return ( //draft
 					<div className="GameScores">
 						<div className="level">
-							 <label for="percentageProgression">{this.state.progression.level}
-							 </label>
-               <progress min="0" max="100" value={this.state.progression.percentageDone}
+
+							 <select id="levelsAvailableSelect"  required onChange={this.changeLevel} >
+			 						{this.getLevelsAvailableOptions()}
+			 				</select>
+
+							 <progress min="0" max="100" value={this.state.progression.percentageDone}
                       className={this.giveStyleForProgressionBarAccordingToPercentageGood(this.state.progression.percentageGood)}>
                </progress>
                <div className="levelPicture">
@@ -94,7 +127,9 @@ static getLevelsAvailable(percentageTries, percentageGood, currentLevel) {
    var _that=this;
 
    if (!_that.props.userLoggedIn) return;
-   fetch(japlcejAPI + routesURLs.GETPLAYERRESULTS + "/" + _that.state.gameName + "/" + _that.state.progression.level, {
+
+   fetch(japlcejAPI + routesURLs.GETPLAYERRESULTS + "/" + _that.state.gameName +
+	 		((_that.state.progression.level === undefined || _that.state.progression.level ===null) ? '' : "/" + _that.state.progression.level), {
       method: "GET",
       headers: {
        'Content-Type': 'application/json',
@@ -122,6 +157,10 @@ static getLevelsAvailable(percentageTries, percentageGood, currentLevel) {
 		 var __levelsAvailable=GameScores.getLevelsAvailable(data.percentageTries, data.percentageGood, data.level);
 		 var potentialNewAvailableLevel = __levelsAvailable[__levelsAvailable.length-1];
 
+		 	if(_that.state.progression.level !== newDataProgression.level) {
+				this.props.onNewLevel(newDataProgression.level);
+			}
+			
    	  if(_that.state.progression.level !== newDataProgression.level ||
           _that.state.progression.percentageDone !== newDataProgression.percentageDone ||
           _that.state.progression.percentageGood !== newDataProgression.percentageGood ||

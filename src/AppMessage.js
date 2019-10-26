@@ -33,15 +33,15 @@ class AppMessage extends React.Component {
 
 
     const errorMessageStyle = Object.assign({}, commonMessageStyle);
-    errorMessageStyle.backgroundColor = '#ff0000';
+    errorMessageStyle.backgroundColor = 'dc141c';
     errorMessageStyle.color = '#000000';
 
     const warnMessageStyle = Object.assign({}, commonMessageStyle);
-    warnMessageStyle.backgroundColor = '#ff0000';
+    warnMessageStyle.backgroundColor = '#ff7518';
     warnMessageStyle.color = '#ffffff';
 
     const infoMessageStyle = Object.assign({}, commonMessageStyle);
-    infoMessageStyle.backgroundColor = '#00ff00';
+    infoMessageStyle.backgroundColor = '#4aaf50';
     infoMessageStyle.color = '#ffffff';
 
     var myStyle = errorMessageStyle;

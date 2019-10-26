@@ -5,7 +5,7 @@ done Faire réinitialiser au login les compteurs et globalement toute l'appli
 done Faire signin avec la cinématique envoi mail etc.
 done Faire signup standard + Use case : renvoyer le lien de confirmation
 done Finir Forgot password use case
-done Faire que  le mail de mot de passe oublié nous fasse arriver directement dans popin Fortgot password avec le mail renseigné et les 2 passwords à saisir
+done Faire que  le mail de mot de passe oublié nous fasse arriver directement dans popin Forgot password avec le mail renseigné et les 2 passwords à saisir
 done Faire le mot de passe oublié
 done BUg du mot de passe oublié : email arrive pas chargé + relocation via history.push does not work!!
 
@@ -15,7 +15,7 @@ done Finir Logout + corriger index.js:2178 Logout Error: SyntaxError: Unexpected
 done commiter sur github
 done Mettre mode norobot, no index sur le index.htm
 done Faire le  mode de jeu : je vois le caractère chinois, je dois trouver le bon mot français
-Compléter la liste 1 et 2 des mots par HSK1 : mettre traditionnel et simplifié !
+done Compléter la liste 1 et 2 des mots par HSK1 : mettre traditionnel et simplifié !
 done Déployer  en prod
 faire tester à Oscar + feedback Oscar, Caro et Nono
 
@@ -31,6 +31,8 @@ Mettre les sons et les lire
 
 
 *********Later:
+donner possibilité de choisir entre mode chinois traditionnel et simplifié : bouton curseur  option
+Rendre dépendant de la validité du cookie + is logged in le statut interne de l'application React isLoggedIn .
 Faire le  mode de jeu : je vois le mot français, je dois trouver le bon caractère chinois
 
 voir pour faire un facebook app vs app android ou ios vs react native
