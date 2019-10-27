@@ -21,11 +21,11 @@ class Game extends React.Component {
 
 		switch(this.props.type) {
     		case 'readCharacterWritePinyin':
-					return ( <GameReadCharacterWritePinyin level={this.props.level} />	);
+					return ( <GameReadCharacterWritePinyin level={this.props.level} gameSelectedTextAbstract={this.props.gameSelectedTextAbstract} />	);
 				case 'readCharacterSelectFrench':
-						return ( <GameReadCharacterSelectFrench level={this.props.level} />	);
+						return ( <GameReadCharacterSelectFrench level={this.props.level} gameSelectedTextAbstract={this.props.gameSelectedTextAbstract} />	);
 				case 'listenThenSelectCharacter':
-								return ( <GameListenThenSelectCharacter level={this.props.level} />	);
+								return ( <GameListenThenSelectCharacter level={this.props.level} gameSelectedTextAbstract={this.props.gameSelectedTextAbstract} />	);
 				default:
 					return ( <AppMessage severity='error' message={t("Game_not_available_oups")} onClose={this.props.goBackToGameSelection} />	);
 	  }
@@ -45,14 +45,14 @@ class _GameSection extends React.Component {
 		this.setState({gameSelected : undefined, gameSelectedTextAbstract : undefined});
 	}
 
-	selectGame(_gameName, _level, _gameTextAbstract) {
+	selectGame(_gameName, _gameLevel, _gameTextAbstract) {
 		const { t } = this.props;
 
 		if(!this.props.userLoggedIn) {
 				this.props.messageHook({severity : "info", message : t("Login_required")}); //message
 		}
 		else {
-    	this.setState({gameSelected : _gameName, level: _level, gameSelectedTextAbstract : _gameTextAbstract});
+    	this.setState({gameSelected : _gameName, gameLevel : _gameLevel, gameSelectedTextAbstract : _gameTextAbstract});
 		}
   }
 
@@ -78,11 +78,11 @@ class _GameSection extends React.Component {
 					<GameCard isAvailable={true} decorationCharacter={t("CharacterMaison")} gameName="readCharacterSelectFrench"
 								gameTextAbstract={t("GameTextAbstract_readCharacterSelectFrench")} quitGame={this.unselectGame}
 						onClick={this.selectGame} userLoggedIn={this.props.userLoggedIn}/>
-
+{/*
 					 <GameCard isAvailable={true} decorationCharacter="ab" gameName="readCharacterWritePinyin"
 					 		gameTextAbstract={t("GameTextAbstract_readCharacterWritePinyin")} quitGame={this.unselectGame}
 							onClick={this.selectGame} userLoggedIn={this.props.userLoggedIn} />
-
+*/}
 					 <GameCard isAvailable={false} decorationCharacter={t("GameDecorationCharacter_gameNotAvailable")}
 											gameName="readCharacterChoosePronunciation" gameTextAbstract={t("GameTextAbstract_readCharacterChoosePronunciation")} />
 				{/*
@@ -102,7 +102,7 @@ class _GameSection extends React.Component {
 					       ⇦<div className="">Return</div>
 					     </div>
 						</div>
-						<Game type={this.state.gameSelected} level={this.state.level} goBackToGameSelection={this.goBackToGameSelection}/>
+						<Game type={this.state.gameSelected} level={this.state.gameLevel} gameSelectedTextAbstract={this.state.gameSelectedTextAbstract} />
 					</div>
 				);
 	}

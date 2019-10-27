@@ -170,7 +170,7 @@ class _GameReadCharacterWritePinyin extends React.Component {
 
 	auSuivant() {
 		 //fetch new Character to guess
-		 fetch(japlcejAPI + routesURLs.GUESS + "/readCharacterWritePinyin/" + this.state.level,
+		 fetch(japlcejAPI + routesURLs.GUESS + "/readCharacterWritePinyin/" + this.props.level,
 			{method: "GET",
 			 headers: {
 				'Content-Type': 'application/json',
