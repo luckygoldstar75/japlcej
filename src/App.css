@@ -39,7 +39,8 @@
 }
 
 .App-toolbar {
-  display: inline-block
+  display: inline-block;
+  float: right;
 }
 
 .responsive-image {  max-width: 100%;}
@@ -117,7 +118,7 @@
   color: white;
   display: flex;
   flex-direction: col;
-  align-items: center;
+  align-items: top;
   padding: 5px;
   height:80%
 }

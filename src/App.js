@@ -240,6 +240,7 @@ class _App extends Component {
 		flexDirection:'row',
 		margin : '2px',
 		flexFlow : 'flex-wrap',
+    float : 'right'
 	};
 
  const { t } = this.props;

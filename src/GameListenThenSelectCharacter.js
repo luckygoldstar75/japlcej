@@ -22,8 +22,7 @@ class _GameListenThenSelectCharacter extends React.Component {
 
 		this.auSuivant = this.auSuivant.bind(this);
 		this.valider = this.valider.bind(this);
-		this.valider = this.valider.bind(this);
-		this.getSuggestedAnswersOptions = this.getSuggestedAnswersOptions.bind(this);
+		this.getSuggestedAnswersAudio = this.getSuggestedAnswersAudio.bind(this);
 	}
 
 	_auSuivant() {
@@ -130,15 +129,13 @@ class _GameListenThenSelectCharacter extends React.Component {
 		;
 	}
 
-	getSuggestedAnswersOptions() {
+	getSuggestedAnswersAudio() {
 			var options = null;
 
 			if (this.state.currentCharacter != null) {options = this.state.currentCharacter.suggestedAnswers};
 
 			if (options != null && options.length > 0) {
-				return options.map((suggestedAnswer, index) => <option key={suggestedAnswer+index} value={suggestedAnswer}>
-																								{suggestedAnswer}
-    																			</option>);
+				return options.map((suggestedAnswer, index) => <th scope="col">{suggestedAnswer}</th>);
 			}
 	}
 
@@ -161,9 +158,13 @@ class _GameListenThenSelectCharacter extends React.Component {
 						<div id="lastResult" className={lastResultCharacterStyle}>{lastResultCharacter}</div>
 				</div>
 
-				<select id="suggestionsSelect" autoFocus required>
-						{this.getSuggestedAnswersOptions()}
-				</select>
+				<table id="suggestionsAudio" autoFocus required>
+					<tbody>
+					<tr id="listSuggestions">
+						{this.getSuggestedAnswersAudio()}
+					</tr>
+					</tbody>
+				</table>
 
 				<div id="actionButtons" className="guessCharacterInput">
 					<button type="button" className="actionbutton" id="Valider" autoFocus onClick={this.valider}

@@ -18,11 +18,12 @@ done Faire le  mode de jeu : je vois le caractère chinois, je dois trouver le b
 done Compléter la liste 1 et 2 des mots par HSK1 : mettre traditionnel et simplifié !
 done Déployer  en prod
 faire tester à Oscar + feedback Oscar, Caro et Nono
+Affichage vachement lent du niveau confirmed
 
 Prio 2 :
 Faire un test integ avec stub et moch et sinon.js : niveau unit et niveau integ mock de handler de route hapijs /anti regression
 Faire une test selenium de login par ex
-Adapter le level available dans Gamescore pour faire une anim présentant qu'il est passé au niveau supérieur : dropdown list de choix de niveau + par défaut sur le dernier atteint + adapter l'image cheval devient lapin !
+done: Adapter le level available dans Gamescore / passer au niveau supérieur : dropdown list de choix de niveau + par défaut sur le dernier atteint + adapter l'image cheval devient lapin !
 Dans readChracterSelectFrench ca vaudrait le coup d'afficher le résultat pinyin? prononciation ?
 ??? Faire que l'on puisse un peu jouer en mode invité sans login ?? ou bien gérer ce cas en redirigeant vers signup
 En cours : Extraire toutes les chaines de caractères pour i18n parties client et serveur
@@ -61,7 +62,8 @@ Faire un mode de sélection du niveau par rapport aux jeux à la complexité: gr
 Adapter automatiquement la langue au navigateur du visiteur
 Permettre de changer de langue anglais/fr à la volée
 Faire une VM Alpine avec dependences sur poste local
-
+Faire une anim pour présenter le nouveau niveau dispo (encadré d'or flashy)
+Faire une anim genre nuage ebullition potion magique avec un son pour le changement d'avatar de niveau
 
 A l'activation en prod:
 Enlever mode norobot, no index sur le index.htm

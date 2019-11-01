@@ -2,7 +2,7 @@ import React from 'react';
 import AppMessage from './AppMessage'
 import GameReadCharacterWritePinyin from './GameReadCharacterWritePinyin';
 import GameReadCharacterSelectFrench from './GameReadCharacterSelectFrench';
-import GameListenThenSelectCharacter from './GameReadCharacterSelectFrench';
+import GameListenThenSelectCharacter from './GameListenThenSelectCharacter';
 
 import GameCard from './GameCard';
 import { withTranslation  } from "react-i18next";
@@ -79,12 +79,17 @@ class _GameSection extends React.Component {
 								gameTextAbstract={t("GameTextAbstract_readCharacterSelectFrench")} quitGame={this.unselectGame}
 						onClick={this.selectGame} userLoggedIn={this.props.userLoggedIn}/>
 {/*
+						<GameCard isAvailable={true} decorationCharacter="♬♪" gameName="listenThenSelectCharacter"
+									gameTextAbstract={t("GameTextAbstract_ListenThenSelectCharacter")} quitGame={this.unselectGame}
+							onClick={this.selectGame} userLoggedIn={this.props.userLoggedIn}/>
+
 					 <GameCard isAvailable={true} decorationCharacter="ab" gameName="readCharacterWritePinyin"
 					 		gameTextAbstract={t("GameTextAbstract_readCharacterWritePinyin")} quitGame={this.unselectGame}
 							onClick={this.selectGame} userLoggedIn={this.props.userLoggedIn} />
-*/}
+
 					 <GameCard isAvailable={false} decorationCharacter={t("GameDecorationCharacter_gameNotAvailable")}
 											gameName="readCharacterChoosePronunciation" gameTextAbstract={t("GameTextAbstract_readCharacterChoosePronunciation")} />
+*/}
 				{/*
 				*/}
 				</div>

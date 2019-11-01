@@ -22,7 +22,6 @@ class _GameReadCharacterSelectFrench extends React.Component {
 
 		this.auSuivant = this.auSuivant.bind(this);
 		this.valider = this.valider.bind(this);
-		this.valider = this.valider.bind(this);
 		this.getSuggestedAnswersOptions = this.getSuggestedAnswersOptions.bind(this);
 	}
 

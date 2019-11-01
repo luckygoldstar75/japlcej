@@ -75,7 +75,7 @@ class _GameCard extends React.Component {
 
 onLevelsAvailable(__levelsAvailable) {
 		if(__levelsAvailable === undefined || __levelsAvailable === null) {
-			this.setState(
+			return(
 				{
 				levelsAvailable : null,
 				level : null
@@ -85,12 +85,14 @@ onLevelsAvailable(__levelsAvailable) {
 		if ((this.state.levelsAvailable === null || this.state.levelsAvailable === undefined) ||
 			(__levelsAvailable.length !== this.state.levelsAvailable.length) ||
 		 !(__levelsAvailable.every((oldi, i) => {return oldi = this.state.levelsAvailable[i]})))  {
-			this.setState(
+			return(
 				{
 				levelsAvailable : __levelsAvailable,
 				level : (__levelsAvailable.length > 0? __levelsAvailable[__levelsAvailable.length-1] : null)
 				});
 		}
+
+		return {};
 	}
 
   onClick() {
@@ -100,7 +102,7 @@ onLevelsAvailable(__levelsAvailable) {
 
 	changeLevel(newLevelSelected) {
 			if(this.state.level !== newLevelSelected) {
-					this.setState({level : newLevelSelected});
+					this.updateScores(newLevelSelected);
 			}
 		}
 
@@ -114,13 +116,17 @@ onLevelsAvailable(__levelsAvailable) {
 				return arrayOfLevelsAvailable;
 		}
 
-		updateScores() {
+		updateScores(newLevelSelected) {
 			var _that=this;
 
-			if (!_that.props.userLoggedIn) return;
+			if (!_that.props.userLoggedIn ||
+				(_that.state.level === newLevelSelected &&
+					(newLevelSelected !== null && newLevelSelected !== undefined))) return; // nothing to do in those cases
+
+			var targetLevel = (newLevelSelected === null || newLevelSelected === undefined)? _that.state.level : newLevelSelected;
 
 			fetch(japlcejAPI + routesURLs.GETPLAYERRESULTS + "/" + _that.props.gameName +
-				 ((_that.state.level === undefined || _that.state.level ===null) ? '' : "/" + _that.state.level), {
+				 ((targetLevel === undefined || targetLevel ===null) ? '' : "/" + targetLevel), {
 				 method: "GET",
 				 headers: {
 					'Content-Type': 'application/json',
@@ -148,26 +154,29 @@ onLevelsAvailable(__levelsAvailable) {
 				var __levelsAvailable=_GameCard.getLevelsAvailable(data.percentageTries, data.percentageGood, data.level);
 				var potentialNewAvailableLevel = __levelsAvailable[__levelsAvailable.length-1];
 
-				_that.onLevelsAvailable(__levelsAvailable);
-
-				var newState;
+				var newState = { };
+				if (_that.state.level === null || _that.state.level === undefined || _that.state.level !== data.level
+				|| 	((null !== this.state.levelsAvailable && undefined !== this.state.levelsAvailable) &&
+											__levelsAvailable.length !== this.state.levelsAvailable.length)
+				|| !(__levelsAvailable.every((oldi, i) => {return oldi = this.state.levelsAvailable[i]}))) {
+					newState.level = data.level;
+					newState.levelsAvailable = __levelsAvailable;
+				}
 
 				if (potentialNewAvailableLevel !== _that.state.newAvailableLevel) {
 					newState.newAvailableLevel = potentialNewAvailableLevel;
 				}
 
-				if(_that.state.level !== data.level) {
-					newState.level = data.level;
-				}
-
-				 if( (_that.state.progression.percentageDone !== newDataProgression.percentageDone) ||
+				if( (_that.state.progression.percentageDone !== newDataProgression.percentageDone) ||
 						 (_that.state.progression.percentageGood !== newDataProgression.percentageGood)
 				 ) {
 					 newState.progression = {percentageDone : newDataProgression.percentageDone,
 						 percentageGood : newDataProgression.percentageGood}
 				};
 
-				_that.setState(newState)
+				if(Object.keys(newState).length > 0 ) {
+				_that.setState(newState);
+				}
 			}})
 		.catch(error => {console.error('retrieveScores for game ' + _that.props.gameName + ' and user XXX? Error: ', error);
 			 })
@@ -178,7 +187,9 @@ onLevelsAvailable(__levelsAvailable) {
 	}
 
 	componentDidUpdate() {
-	    this.updateScores();
+	    if (this.state.level === undefined  || this.state.level === null) {
+				this.updateScores();
+			}
 	}
 
 	render() {
