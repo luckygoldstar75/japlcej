@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
-import { BrowserRouter, Route, withRouter/*, Link*/ } from "react-router-dom";
+import { BrowserRouter, Route/*, Link*/ } from "react-router-dom";
 import queryString from 'query-string';
-import { i18n, useTranslation, withTranslation, Trans } from "react-i18next";
+import { useTranslation, withTranslation } from "react-i18next";
 
 import {japlcejAPI, routesURLs} from './config-routes.js';
 
@@ -254,26 +254,26 @@ class _App extends Component {
           <header className="App-header">
             <div id="App-logo" style={logoStyle} alt="logo" />
             <div id="App-title" className="App-title">{t("App_title")}</div>
-            <div id="App-logo" style={logoStyle} alt="logo" />
+            <div id="toolbar" className="App-toolbar">
+            <div id="signuploginbuttons" style={loginSignupButtonsStyle} >
+              <UserInfo userChanged={this.state.userChanged} lastSession={this.state.lastSession} avatarUrl={this.state.avatarUrl} pseudo={this.state.pseudo}/>
+
+              <LogInOutButton showModalLogin={(history.location.pathname === '/login')} onLoginSuccess={this.onLoginSuccess}
+                             onLogoutSuccess={this.onLogoutSuccess} userLoggedIn={this.state.userLoggedIn} />
+              <SignUpButton showModalSignup={(history.location.pathname==="/signup")}  onSignUpSuccess={this.onSignupSuccess} userSignedUp={this.state.userSignedUp} />
+              <ModalResetPassword show={((history.location.pathname === '/login/resetPassword') && (null !== history.location.search.match("^\\?email=.*&link=.*")))}
+                                 location={history.location} /*onSuccess={TODO function here = redirect to / idéalement en mode loggué}
+                                 OnClose={TODO function here}*//>
+             <MenuBar />
+            </div>
+            </div>
           </header>
-         <div id="toolbar" className="App-toolbar">
-         <div id="signuploginbuttons" style={loginSignupButtonsStyle} >
-          <LogInOutButton showModalLogin={(history.location.pathname === '/login')} onLoginSuccess={this.onLoginSuccess}
-                          onLogoutSuccess={this.onLogoutSuccess} userLoggedIn={this.state.userLoggedIn} />
-          <SignUpButton showModalSignup={(history.location.pathname==="/signup")}  onSignUpSuccess={this.onSignupSuccess} userSignedUp={this.state.userSignedUp} />
-          <ModalResetPassword show={((history.location.pathname === '/login/resetPassword') && (null !== history.location.search.match("^\\?email=.*&link=.*")))}
-                              location={history.location} /*onSuccess={TODO function here = redirect to / idéalement en mode loggué}
-                              OnClose={TODO function here}*//>
-          <MenuBar />
-         </div>
-         </div>
        </div>
 
        <AppMessage severity={this.state.message.severity} message={this.state.message.message} onClose={this.hideMessage}/>
 
        <div className="main-route-place">
          <Route exact path="*" render={() => ( <div id="GameView">
-           <UserInfo userChanged={this.state.userChanged} lastSession={this.state.lastSession} avatarUrl={this.state.avatarUrl} pseudo={this.state.pseudo}/>
            <GameSection gameSelected={undefined} userLoggedIn={this.state.userLoggedIn} messageHook={this.messageHook}/>
          </div>)} />
        </div>

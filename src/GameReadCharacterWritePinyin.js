@@ -244,7 +244,7 @@ class _GameReadCharacterWritePinyin extends React.Component {
 
 
   render() {
-	const { t } = this.props;
+	//const { t } = this.props;
 
 	 var myCharacterAnswer = (this.state.currentCharacter.answer == null)? "😀" : this.state.currentCharacter.answer.value;
 

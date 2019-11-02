@@ -78,7 +78,7 @@ class _GameSection extends React.Component {
 					<GameCard isAvailable={true} decorationCharacter={t("CharacterMaison")} gameName="readCharacterSelectFrench"
 								gameTextAbstract={t("GameTextAbstract_readCharacterSelectFrench")} quitGame={this.unselectGame}
 						onClick={this.selectGame} userLoggedIn={this.props.userLoggedIn}/>
-{/*
+
 						<GameCard isAvailable={true} decorationCharacter="♬♪" gameName="listenThenSelectCharacter"
 									gameTextAbstract={t("GameTextAbstract_ListenThenSelectCharacter")} quitGame={this.unselectGame}
 							onClick={this.selectGame} userLoggedIn={this.props.userLoggedIn}/>
@@ -89,7 +89,6 @@ class _GameSection extends React.Component {
 
 					 <GameCard isAvailable={false} decorationCharacter={t("GameDecorationCharacter_gameNotAvailable")}
 											gameName="readCharacterChoosePronunciation" gameTextAbstract={t("GameTextAbstract_readCharacterChoosePronunciation")} />
-*/}
 				{/*
 				*/}
 				</div>

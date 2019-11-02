@@ -135,7 +135,7 @@ class _GameListenThenSelectCharacter extends React.Component {
 			if (this.state.currentCharacter != null) {options = this.state.currentCharacter.suggestedAnswers};
 
 			if (options != null && options.length > 0) {
-				return options.map((suggestedAnswer, index) => <th scope="col">{suggestedAnswer}</th>);
+				return options.map((suggestedAnswer, index) => <th scope="col" class="speaker">	🔊	{suggestedAnswer}</th>);
 			}
 	}
 

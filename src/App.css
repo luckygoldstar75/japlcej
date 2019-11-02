@@ -17,15 +17,15 @@
   padding: 5px
 }
 
-.App-logo {
-  animation: App-logo-spin infinite 20s linear;
+#App-logo {
+  animation: App-logo-spin 2 20s linear;
   padding: 5px;
   background-image: url('http://placekitten.com/g/200/300');
   background-repeat: no-repeat;
   background-size: cover; /* Make the image cover the div */
   background-position: 50%; /* Center the image inside the div */
-  height: 40px;
-  width: 40 px
+  height: 80px;
+  width: 80px;
 }
 
 .App-title {
@@ -47,19 +47,20 @@
 
 .MenuBar {
   display: inline-block;
-  margin : 10px
+  margin : 10px;
+  align-self: flex-end
 }
 
 .loginZone, .signupZone {
 	display: flex;
 	width:30%%;
 	flex-direction:'row';
-	margin : '2px';
+	margin : 2px;
 	flex-flow : 'flex-wrap';
 }
 
 .loginbtn, .signupbtn , .btn {
-	margin: '10px 10px 10px 0';
+	margin: 10px;
 	background-color: white;
     border: none;
     color: goldenrod;
@@ -106,7 +107,9 @@
     visibility: hidden;
 }
 
-
+#userInfo {
+  align-self: flex-end;
+}
 
 .actionbuttonXXX {
    font-size:200%;
@@ -114,7 +117,7 @@
 }
 
 #gameSelector {
-  background-color: lightsalmon;
+  //background-color: lightsalmon;
   color: white;
   display: flex;
   flex-direction: col;
@@ -126,7 +129,6 @@
 #GameSectionTitle {
   text-align: left;
   color : black;
-  margin-top:2%;
 }
 
 .cardGame {
@@ -259,5 +261,5 @@ progress.percentageProgressionBar_gold::-webkit-progress-value {
 
 @keyframes App-logo-spin {
   from { transform: rotate(0deg); }
-  to { transform: rotate(180deg); }
+  to { transform: rotate(360deg); }
 }
