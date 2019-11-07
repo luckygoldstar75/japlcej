@@ -42,13 +42,6 @@ body {
   disabled: true
 }
 
-#gameSelector {
-  display: flex;
-	width:100%;
-	flex-direction: row;
-	flex-flow : flex-wrap;
-}
-
 .lastResultCharacter_wrong {
   fontSize: 300% ;
   color : red;

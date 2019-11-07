@@ -14,7 +14,7 @@ i18n
           SignUp_welcome_reemission_link: "Hello, we just need a couple of information here",
           SignUp_invitation: "Just a few clics to subscribe",
           SignUpButton_title: "Sign Up",
-          SignUpButton_signedUp: "Welcome!",
+          SignUpButton_signedUp: "Subscribe!",
           SignUpButton_notSignedUp: "Sign Up",
           SignUp_confirmation_link_needed : "Need a new confirmation link ?",
           SignUp_email: "Email",
@@ -50,6 +50,7 @@ i18n
           WelcomeMessage_countingTime : " That was already ",
           WelcomeMessage_day : " day!",
           WelcomeMessage_days: " days!",
+          Browser_too_old: "Your browser is too old to play audio HTML 5. You would better change it ! ;)"
         }
       },
       fr: {
@@ -57,7 +58,7 @@ i18n
           SignUp_welcome :"Bienvenue et merci de saisir les informations nécessaires pour votre inscription",
           SignUp_welcome_reemission_link: "Bonjour, veuillez saisir les informations demandées",
           SignUpButton_title: "Je m'incris!",
-          SignUpButton_signedUp: "Bienvenue!",
+          SignUpButton_signedUp: "S'inscrire!",
           SignUpButton_notSignedUp: "Je m'incris!",
           SignUp_invitation : "Je m'inscris en quelques clics",
           SignUp_confirmation_link_needed : "Besoin d'un nouveau lien de confirmation ?",
@@ -94,6 +95,7 @@ i18n
           WelcomeMessage_countingTime: "Cela faisait déjà ",
           WelcomeMessage_day : " jour!",
           WelcomeMessage_days: " jours!",
+          Browser_too_old: "Votre navigateur ne prend pas en charge l'audio HTML.Il est trop vieux, changez le ! ;)"
         }
       }
     },

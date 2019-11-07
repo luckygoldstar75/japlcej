@@ -144,7 +144,6 @@ class _GameReadCharacterSelectFrench extends React.Component {
   render() {
 	const { t } = this.props;
 
-	 var myCharacterAnswer = (this.state.currentCharacter.answer == null)? "😀" : this.state.currentCharacter.answer.value;
 	 var lastResultCharacter="✓";
 	 var lastResultCharacterStyle = 'lastResultCharacter_none';
 

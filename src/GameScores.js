@@ -61,7 +61,7 @@ class GameScores extends React.Component {
                 </div>
  						</div>
  					</div>
- 				)};
+ 			)};
  	}
 
 }

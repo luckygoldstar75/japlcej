@@ -28,7 +28,7 @@ class _Hamburger extends React.Component {
   render() {
     const { t } = this.props;
 
-    return (<a href="#menu">
+    return (<a href="#menu" className="HamburgerMenu">
 				&#9776; {t('Menu')}
 			</a>
 	);
@@ -169,9 +169,6 @@ class _LogInOutButton extends React.Component {
 const LogInOutButton = withTranslation()(_LogInOutButton);
 
 class MenuBar extends React.Component {
-  constructor(props) {
-		super(props);
-	}
 
   render() {
     return (<div className="MenuBar">

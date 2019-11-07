@@ -30,7 +30,7 @@
 
 .App-title {
   font-size: 1em;
-  align-self: baseline;
+  align-self: center;
   width: 90%
 }
 
@@ -46,9 +46,14 @@
 .responsive-image {  max-width: 100%;}
 
 .MenuBar {
+  color: white;
   display: inline-block;
   margin : 10px;
-  align-self: flex-end
+  align-self: center
+}
+
+.HamburgerMenu {
+  color: white;
 }
 
 .loginZone, .signupZone {
@@ -118,7 +123,7 @@
 
 #gameSelector {
   //background-color: lightsalmon;
-  color: white;
+  color: SteelBlue;
   display: flex;
   flex-direction: col;
   align-items: top;
@@ -192,6 +197,37 @@
 .GameScores {
   max-height: 90%;
   max-width:95%
+}
+
+.audioSuggestion {
+
+}
+
+.audioSuggestionCell {
+
+}
+
+.audioSuggestionSpeaker, .audioSuggestionSpeakerSelected, .audioSuggestionSpeakerShowGoodAnswer  {
+  color : white;
+  background-color:SteelBlue;
+  border-radius: 5px;
+  margin: 3px;
+  padding: 3px
+}
+
+.audioSuggestionSpeakerSelected {
+  border : goldenrod;
+  border-width : 4px;
+  border-style : solid;
+  color: black;
+  background-color:white;
+}
+.audioSuggestionSpeakerShowGoodAnswer {
+  border : green;
+  border-width : 4px;
+  border-style : solid;
+  color: black;
+  background-color:white;
 }
 
 progress {

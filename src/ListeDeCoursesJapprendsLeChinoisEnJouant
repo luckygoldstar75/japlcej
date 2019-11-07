@@ -21,6 +21,7 @@ faire tester à Oscar + feedback Oscar, Caro et Nono
 Affichage vachement lent du niveau confirmed
 
 Prio 2 :
+Mettre les libellés de niveau en francais dans la picklist de GameCard (sans impacter les appels de service)
 Faire un test integ avec stub et moch et sinon.js : niveau unit et niveau integ mock de handler de route hapijs /anti regression
 Faire une test selenium de login par ex
 done: Adapter le level available dans Gamescore / passer au niveau supérieur : dropdown list de choix de niveau + par défaut sur le dernier atteint + adapter l'image cheval devient lapin !
@@ -28,7 +29,13 @@ Dans readChracterSelectFrench ca vaudrait le coup d'afficher le résultat pinyin
 ??? Faire que l'on puisse un peu jouer en mode invité sans login ?? ou bien gérer ce cas en redirigeant vers signup
 En cours : Extraire toutes les chaines de caractères pour i18n parties client et serveur
 passer repositories en mode privé github!
-Mettre les sons et les lire
+En cours : Mettre les sons et les lire
+    1/ Corriger ano qui présente toujours les mêmes suggestions
+    2/ Une fois la réponse donnée / lire à haute voix la bonne réponse
+Ajouter des titres dans modales singup et LogIn
+Ajouter une modale d'acceuil / avec joli visuel coloré de type inscrivez vous (ne plus afficher)
+Faire que la session persiste au delà du F5 (on se retrouvé connecté sauf si bien sûr, le serveur a restart)
+
 
 
 *********Later:

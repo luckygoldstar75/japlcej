@@ -2,8 +2,8 @@ import React from 'react';
 import {japlcejAPI, routesURLs} from './config-routes.js';
 import GameCurrentCharacter from './GameCurrentCharacter.js'
 import GameCurrentResult from './GameCurrentResult.js'
+import AudioSuggestion from './AudioSuggestion.js'
 import {  withTranslation } from "react-i18next";
-
 
 class _GameListenThenSelectCharacter extends React.Component {
 	constructor(props) {
@@ -17,12 +17,14 @@ class _GameListenThenSelectCharacter extends React.Component {
 				answer : null },
 			level: this.props.level,
 			apiAlive:true,
-			answerExpected : true
+			answerExpected : true,
+			selectedSuggestionIndex : undefined
 		};
 
 		this.auSuivant = this.auSuivant.bind(this);
 		this.valider = this.valider.bind(this);
 		this.getSuggestedAnswersAudio = this.getSuggestedAnswersAudio.bind(this);
+		this.setSelectedSuggestionIndex = this.setSelectedSuggestionIndex.bind(this);
 	}
 
 	_auSuivant() {
@@ -56,8 +58,8 @@ class _GameListenThenSelectCharacter extends React.Component {
 				console.debug("response fetched : " + respjson);
 				that.setState({lastResultIsFalse : undefined, apiAlive : true,
 					currentCharacter : {id : respjson.id, character : respjson.value,
-						suggestedAnswers: respjson.suggestedAnswers}, answerExpected:true});
-				document.getElementById("suggestionsSelect").removeAttribute("disabled");
+						suggestedAnswers: respjson.suggestedAnswers}, answerExpected:true,
+					selectedSuggestionIndex : 0	});
 		})
 		.catch((error) => {console.error('Error: when attempting to fetch new chinese character : URL :'
 				+ routesURLs.GUESS + " : ", error);
@@ -77,13 +79,13 @@ class _GameListenThenSelectCharacter extends React.Component {
 
 	valider() {
 		var that = this;
-		var inputValue = document.getElementById("suggestionsSelect")
-			.options[document.getElementById("suggestionsSelect").selectedIndex].value;
 
 		if (this.state.currentCharacter == null) {
 			console.log("currentCharacter is empty : valider impossible. Nothing done");
 			return;
 		};
+
+		var inputValue = this.state.currentCharacter.suggestedAnswers[this.state.selectedSuggestionIndex];
 
 		//post client's pinyin guess answer
 		 fetch(japlcejAPI + routesURLs.GUESS + "/" + this.state.currentCharacter.id,
@@ -106,22 +108,27 @@ class _GameListenThenSelectCharacter extends React.Component {
 			if (respjson != null) {
 				var _currentCharacter = that.state.currentCharacter;
 				_currentCharacter.answer = respjson.answer;
-				that.setState({currentCharacter : _currentCharacter});
+
+
 				if(respjson.isGood) {
-					that.setState({lastResultIsFalse : false,
+					that.setState(
+						{currentCharacter : _currentCharacter,
+						lastResultIsFalse : false,
 						nbSuccess : that.state.nbSuccess+1,
 						nbTries : that.state.nbTries+1,
-						answerExpected : false
+						answerExpected : false,
+						answer: respjson.answer.value
 						});
 				}
 				else {
-					that.setState({lastResultIsFalse : true,
+					that.setState(
+						{currentCharacter : _currentCharacter,
+						lastResultIsFalse : true,
 						nbTries : that.state.nbTries+1,
-						answerExpected : false});
+						answerExpected : false,
+						answer: respjson.answer.value
+					});
 				}
-
-				document.getElementById("suggestionsSelect").disabled="true";
-				document.getElementById("suggestionsSelect").value=respjson.answer.value;
 			}
 		})
 		.catch(error => console.error('Error: when attempting to post guess character : URL :' +
@@ -135,14 +142,29 @@ class _GameListenThenSelectCharacter extends React.Component {
 			if (this.state.currentCharacter != null) {options = this.state.currentCharacter.suggestedAnswers};
 
 			if (options != null && options.length > 0) {
-				return options.map((suggestedAnswer, index) => <th scope="col" class="speaker">	🔊	{suggestedAnswer}</th>);
+				return options.map((suggestedAnswer, index) =>
+						<th scope="col" className="audioSuggestionCell" key={"audio_"+index}>
+							<AudioSuggestion fileKey={suggestedAnswer} setSelectedSuggestionIndex={this.setSelectedSuggestionIndex}
+							 				isSelected={index === this.state.selectedSuggestionIndex}
+											isGoodAnswer={this.state.answer === suggestedAnswer}
+											isActive={this.state.answerExpected === true}
+											messageHook={this.props.messageHook} index={index} />
+						</th>);
 			}
+	}
+
+	setSelectedSuggestionIndex(_index) {
+		if (_index !== null && _index !== undefined && typeof _index === "number" && !isNaN(_index) &&  _index >= 0
+					&& this.state.currentCharacter !==null && this.state.currentCharacter !== undefined
+					&& this.state.currentCharacter.suggestedAnswers !==null && this.state.currentCharacter.suggestedAnswers !== undefined
+					&& _index < this.state.currentCharacter.suggestedAnswers.length && this.state.selectedSuggestionIndex !== _index) {
+				this.setState({selectedSuggestionIndex : _index});
+		}
 	}
 
   render() {
 	const { t } = this.props;
 
-	 var myCharacterAnswer = (this.state.currentCharacter.answer == null)? "😀" : this.state.currentCharacter.answer.value;
 	 var lastResultCharacter="✓";
 	 var lastResultCharacterStyle = 'lastResultCharacter_none';
 
@@ -151,6 +173,8 @@ class _GameListenThenSelectCharacter extends React.Component {
 		 		else {lastResultCharacterStyle = 'lastResultCharacter_good' ; lastResultCharacter="✓"}
 	}
 
+	if (this.state.currentCharacter.id === null) {return null};
+
     return ( <div className="GuessCharacterGame">
 				<GameCurrentResult nbSuccess={this.state.nbSuccess} nbTries={this.state.nbTries} />
 				<div style={{display: 'flex', flexDirection: 'row', flexFlow : 'flex-wrap', justifyContent: 'center'}}>
@@ -158,6 +182,7 @@ class _GameListenThenSelectCharacter extends React.Component {
 						<div id="lastResult" className={lastResultCharacterStyle}>{lastResultCharacter}</div>
 				</div>
 
+				<div style={{display: 'flex', flexDirection: 'row', flexFlow : 'flex-wrap', justifyContent: 'center'}}>
 				<table id="suggestionsAudio" autoFocus required>
 					<tbody>
 					<tr id="listSuggestions">
@@ -165,6 +190,7 @@ class _GameListenThenSelectCharacter extends React.Component {
 					</tr>
 					</tbody>
 				</table>
+				</div>
 
 				<div id="actionButtons" className="guessCharacterInput">
 					<button type="button" className="actionbutton" id="Valider" autoFocus onClick={this.valider}
