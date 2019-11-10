@@ -1,8 +1,8 @@
 import React from 'react';
 import {japlcejAPI, routesURLs} from './config-routes.js';
-import GameCurrentCharacter from './GameCurrentCharacter.js'
-import GameCurrentResult from './GameCurrentResult.js'
-import AudioSuggestion from './AudioSuggestion.js'
+import GameCurrentCharacter from './GameCurrentCharacter.js';
+import GameCurrentResult from './GameCurrentResult.js';
+import AudioSuggestion from './AudioSuggestion.js';
 import {  withTranslation } from "react-i18next";
 
 class _GameListenThenSelectCharacter extends React.Component {
@@ -142,14 +142,15 @@ class _GameListenThenSelectCharacter extends React.Component {
 			if (this.state.currentCharacter != null) {options = this.state.currentCharacter.suggestedAnswers};
 
 			if (options != null && options.length > 0) {
-				return options.map((suggestedAnswer, index) =>
-						<th scope="col" className="audioSuggestionCell" key={"audio_"+index}>
-							<AudioSuggestion fileKey={suggestedAnswer} setSelectedSuggestionIndex={this.setSelectedSuggestionIndex}
-							 				isSelected={index === this.state.selectedSuggestionIndex}
-											isGoodAnswer={this.state.answer === suggestedAnswer}
+				return options.map((_suggestedAnswer, _index) =>
+						<th scope="col" className="audioSuggestionCell" key={"audio_".concat(_index)}>
+							<AudioSuggestion fileKey={_suggestedAnswer} setSelectedSuggestionIndex={this.setSelectedSuggestionIndex}
+							 				isSelected={_index === this.state.selectedSuggestionIndex}
+											isGoodAnswer={this.state.answer === _suggestedAnswer}
 											isActive={this.state.answerExpected === true}
-											messageHook={this.props.messageHook} index={index} />
-						</th>);
+											messageHook={this.props.messageHook} index={_index} />
+						</th>
+					);
 			}
 	}
 
