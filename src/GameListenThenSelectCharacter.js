@@ -137,21 +137,28 @@ class _GameListenThenSelectCharacter extends React.Component {
 	}
 
 	getSuggestedAnswersAudio() {
+			if (typeof this.getSuggestedAnswersAudio.counter == 'undefined') {
+				this.getSuggestedAnswersAudio.counter = 0;
+			}
 			var options = null;
+			var _that=this;
 
 			if (this.state.currentCharacter != null) {options = this.state.currentCharacter.suggestedAnswers};
 
 			if (options != null && options.length > 0) {
-				return options.map((_suggestedAnswer, _index) =>
-						<th scope="col" className="audioSuggestionCell" key={"audio_".concat(_index)}>
-							<AudioSuggestion fileKey={_suggestedAnswer} setSelectedSuggestionIndex={this.setSelectedSuggestionIndex}
-							 				isSelected={_index === this.state.selectedSuggestionIndex}
-											isGoodAnswer={this.state.answer === _suggestedAnswer}
-											isActive={this.state.answerExpected === true}
-											messageHook={this.props.messageHook} index={_index} />
+				var resultingOptions =  options.map((_suggestedAnswer, _index) =>
+						<th scope="col" className="audioSuggestionCell" key={"audio_".concat(_index)} answer={_suggestedAnswer}>
+							<AudioSuggestion key={"audiosuggestion_".concat(this.getSuggestedAnswersAudio.counter++)} fileKey={_suggestedAnswer} setSelectedSuggestionIndex={_that.setSelectedSuggestionIndex}
+							 				isSelected={_index === _that.state.selectedSuggestionIndex}
+											isGoodAnswer={_that.state.answer === _suggestedAnswer}
+											isActive={_that.state.answerExpected === true}
+											messageHook={_that.props.messageHook} index={_index} />
 						</th>
 					);
+
+				return resultingOptions;
 			}
+			else return null;
 	}
 
 	setSelectedSuggestionIndex(_index) {
