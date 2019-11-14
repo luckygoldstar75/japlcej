@@ -5,18 +5,30 @@ class _AudioSuggestion extends React.Component {
 
 constructor(props) {
   super(props); //this.props.level  this.props.gameName this.props.progression.percentageGood this.props.progression.percentageDone
-  this.listenToSuggestion=this.listenToSuggestion.bind(this);
+  this.playAudioSuggestion=this.playAudioSuggestion.bind(this);
+  this.playAudio=this.playAudio.bind(this);
   this.suggestionAudioId = "suggestionAudio_"+ props.index;
   this.words = props.fileKey.split('_');
 }
 
-listenToSuggestion() {
+playAudioSuggestion() {
   this.props.setSelectedSuggestionIndex(this.props.index);
 
-  for (var i =0; i< this.words.length; i++) {
+  if (this.words !== null && this.words !== undefined &&
+    this.words instanceof Array && this.words.length >= 1) {
+      this.playAudio(0);
+  }
+}
+
+playAudio(i) {
     var audioBitId = this.suggestionAudioId.concat("_", i);
+    var _that = this;
+
     document.getElementById(audioBitId).pause();
     document.getElementById(audioBitId).load();
+    if(i < this.words.length -1) {
+      document.getElementById(audioBitId).addEventListener("ended", function() {_that.playAudio(++i);});
+    }
     var promise = document.getElementById(audioBitId).play();
 
     if (promise !== undefined) {
@@ -28,9 +40,8 @@ listenToSuggestion() {
     });
   }
 }
-}
 
-fromWordToStringAudioFilename(_word) {
+static fromWordToStringAudioFilename(_word) {
   if (_word === null || _word === undefined) {return null}
   else {
     var stringAudioFileName = _word.replace(/[^A-Za-z0-9]/g, '').toLowerCase();
@@ -41,8 +52,8 @@ fromWordToStringAudioFilename(_word) {
 buildAudioSourceBits(_suggestionAudioId) {
 return this.words.map((word, index) =>
   <audio id={_suggestionAudioId.concat("_", index)} key={_suggestionAudioId.concat("_", index)} >
-    <source src={"/pronunciations/" + this.fromWordToStringAudioFilename(word) + ".mp3"} type="audio/mpeg" />
-    <source src={"/pronunciations/" + this.fromWordToStringAudioFilename(word) + ".ogg"} type="audio/ogg" />
+    <source src={"/pronunciations/" + _AudioSuggestion.fromWordToStringAudioFilename(word) + ".mp3"} type="audio/mpeg" />
+    <source src={"/pronunciations/" + _AudioSuggestion.fromWordToStringAudioFilename(word) + ".ogg"} type="audio/ogg" />
      {/* (this.props.index === 0)?
              this.props.messageHook({severity : "error" , message : t("Browser_too_old")})
              : "🔊" */}
@@ -64,7 +75,7 @@ render() {
    <div className="audioSuggestion">
    {this.buildAudioSourceBits(suggestionAudioId)}
     <div>
-     <button onClick={this.listenToSuggestion} onMouseOver={this.listenToSuggestion}
+     <button onClick={this.playAudioSuggestion} onMouseOver={this.playAudioSuggestion}
             className={audioSuggestionSpeakerStyle} disabled={!this.props.isGoodAnswer&&!this.props.isActive}>🔊</button>
     </div>
     </div>
