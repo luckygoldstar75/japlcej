@@ -26,8 +26,8 @@ playAudio(i) {
 
     document.getElementById(audioBitId).pause();
     document.getElementById(audioBitId).load();
-    if(i < this.words.length -1) {
-      document.getElementById(audioBitId).addEventListener("ended", function() {_that.playAudio(++i);});
+    if(i < (this.words.length -1)) {
+      document.getElementById(audioBitId).addEventListener("ended", function() {_that.playAudio.bind(_that,++i);});
     }
     var promise = document.getElementById(audioBitId).play();
 

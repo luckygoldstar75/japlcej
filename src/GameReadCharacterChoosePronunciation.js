@@ -5,7 +5,7 @@ import GameCurrentResult from './GameCurrentResult.js';
 import AudioSuggestion from './AudioSuggestion.js';
 import {  withTranslation } from "react-i18next";
 
-class _GameListenThenSelectCharacter extends React.Component {
+class _GameReadCharacterChoosePronunciation extends React.Component {
 	constructor(props) {
 		super(props);
 
@@ -40,7 +40,7 @@ class _GameListenThenSelectCharacter extends React.Component {
 	auSuivant() {
 		var that = this;
 		 //fetch new Character to guess
-		 fetch(japlcejAPI + routesURLs.GUESS + "/listenThenSelectCharacter/" + this.state.level,
+		 fetch(japlcejAPI + routesURLs.GUESS + "/readCharacterChoosePronunciation/" + this.state.level,
 			{method: "GET",
 			 headers: {
 				'Content-Type': 'application/json',
@@ -215,5 +215,5 @@ class _GameListenThenSelectCharacter extends React.Component {
 		this.auSuivant();
   }
 };
-const GameListenThenSelectCharacter = withTranslation()(_GameListenThenSelectCharacter)
-export default GameListenThenSelectCharacter ;
+const GameReadCharacterChoosePronunciation = withTranslation()(_GameReadCharacterChoosePronunciation)
+export default GameReadCharacterChoosePronunciation ;

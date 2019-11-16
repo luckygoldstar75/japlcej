@@ -2,12 +2,12 @@ import React from 'react';
 import AppMessage from './AppMessage'
 import GameReadCharacterWritePinyin from './GameReadCharacterWritePinyin';
 import GameReadCharacterSelectFrench from './GameReadCharacterSelectFrench';
-import GameListenThenSelectCharacter from './GameListenThenSelectCharacter';
+import GameReadCharacterChoosePronunciation from './GameReadCharacterChoosePronunciation';
 
 import GameCard from './GameCard';
 import { withTranslation  } from "react-i18next";
 
-class Game extends React.Component {
+class _Game extends React.Component {
   render() {
 		const { t } = this.props;
 
@@ -16,13 +16,15 @@ class Game extends React.Component {
 					return ( <GameReadCharacterWritePinyin level={this.props.level} />	);
 				case 'readCharacterSelectFrench':
 						return ( <GameReadCharacterSelectFrench level={this.props.level}  />	);
-				case 'listenThenSelectCharacter':
-								return ( <GameListenThenSelectCharacter level={this.props.level} messageHook={this.props.messageHook} />	);
+				case 'readCharacterChoosePronunciation':
+								return ( <GameReadCharacterChoosePronunciation level={this.props.level} messageHook={this.props.messageHook} />	);
 				default:
 					return ( <AppMessage severity='error' message={t("Game_not_available_oups")} onClose={this.props.goBackToGameSelection} />	);
 	  }
   }
 }
+
+const Game = withTranslation()(_Game);
 
 class _GameSection extends React.Component {
 	constructor(props) {
@@ -71,8 +73,8 @@ class _GameSection extends React.Component {
 								gameTextAbstract={t("GameTextAbstract_readCharacterSelectFrench")} quitGame={this.unselectGame}
 						onClick={this.selectGame} userLoggedIn={this.props.userLoggedIn}/>
 
-						<GameCard isAvailable={true} decorationCharacter="♬♪" gameName="listenThenSelectCharacter"
-									gameTextAbstract={t("GameTextAbstract_ListenThenSelectCharacter")} quitGame={this.unselectGame}
+						<GameCard isAvailable={true} decorationCharacter="♬♪" gameName="readCharacterChoosePronunciation"
+									gameTextAbstract={t("GameTextAbstract_readCharacterChoosePronunciation")} quitGame={this.unselectGame}
 							onClick={this.selectGame} userLoggedIn={this.props.userLoggedIn} messageHook={this.props.messageHook} />
 
 					 <GameCard isAvailable={true} decorationCharacter="ab" gameName="readCharacterWritePinyin"
@@ -80,7 +82,7 @@ class _GameSection extends React.Component {
 							onClick={this.selectGame} userLoggedIn={this.props.userLoggedIn} />
 
 					 <GameCard isAvailable={false} decorationCharacter={t("GameDecorationCharacter_gameNotAvailable")}
-											gameName="readCharacterChoosePronunciation" gameTextAbstract={t("GameTextAbstract_readCharacterChoosePronunciation")} />
+											gameName="listenThenSelectCharacter" gameTextAbstract={t("GameTextAbstract_listenThenSelectCharacter")} />
 				{/*
 				*/}
 				</div>
@@ -91,7 +93,7 @@ class _GameSection extends React.Component {
 				return (
 					<div className="GameSection">
 						<div id="gameSelector">
-							 <div>{t("GameTextAbstract_ListenThenSelectCharacter")}</div>
+							 <div>{t("GameTextAbstract_listenThenSelectCharacter")}</div>
 							 <div className="gameReturnButton" onClick={this.unselectGame}>
 	 					     ⇦<div className="">Return</div>
 	 					  </div>

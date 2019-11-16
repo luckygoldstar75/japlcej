@@ -19,8 +19,8 @@ done Compléter la liste 1 et 2 des mots par HSK1 : mettre traditionnel et simpl
 done Déployer  en prod
 faire tester à Oscar + feedback Oscar, Caro et Nono
 Affichage vachement lent du niveau confirmed
-corriger pb refresh suggestion lists GameListenThenSelectChracter
-corriger pb de rendering son si plusieurs mots : chainer vraiment sans overlap + enlever maj et ponctuations (pause de 1/2s pour , par ex)  + passer par des composants intermédiaires
+done corriger pb refresh suggestion lists GameListenThenSelectChracter
+done corriger pb de rendering son si plusieurs mots : chainer vraiment sans overlap + enlever maj et ponctuations (pause de 1/2s pour , par ex)  + passer par des composants intermédiaires
 
 Prio 2 :
 Mettre les libellés de niveau en francais dans la picklist de GameCard (sans impacter les appels de service)
