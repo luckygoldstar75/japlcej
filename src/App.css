@@ -199,8 +199,8 @@
   max-width:95%
 }
 
-.audioSuggestion {
-
+.audioSuggestion, .characterSuggestion {
+    font-size: 200%
 }
 
 .audioSuggestionCell {
@@ -212,17 +212,19 @@
   background-color:SteelBlue;
   border-radius: 5px;
   margin: 3px;
-  padding: 3px
+  padding: 3px;
+  font-size: 200%
 }
 
-.audioSuggestionSpeakerSelected {
+.audioSuggestionSpeakerSelected, .characterSuggestionSelected  {
   border : goldenrod;
   border-width : 4px;
   border-style : solid;
   color: black;
   background-color:white;
+  font-size: 200%
 }
-.audioSuggestionSpeakerShowGoodAnswer {
+.audioSuggestionSpeakerShowGoodAnswer, .characterSuggestionShowGoodAnswer {
   border : green;
   border-width : 4px;
   border-style : solid;

@@ -18,6 +18,7 @@ class GameCurrentPronunciationForGuess extends React.Component {
 		flexDirection:'row',
 		flexFlow : 'flex-wrap',
 		justifyContent: 'center',
+		color : 'SteelBlue',
 		fontSize:'300%',
 		}
 	  return (
@@ -26,7 +27,7 @@ class GameCurrentPronunciationForGuess extends React.Component {
 	     <div>
 	      <button onClick={AudioSourceBitsBuilder.playAudio.bind(this, this.pronunciationElementId,  0)}
 								onMouseOver={AudioSourceBitsBuilder.playAudio.bind(this, this.pronunciationElementId, 0)}
-	          className="audioPronunciationSpeaker">🔊</button>
+	          style={characterTobeGuessedStyle}>🔊</button>
 	     </div>
 	     </div>
 	   );
