@@ -27,7 +27,7 @@ playAudio(i) {
     document.getElementById(audioBitId).pause();
     document.getElementById(audioBitId).load();
     if(i < (this.words.length -1)) {
-      document.getElementById(audioBitId).addEventListener("ended", function() {_that.playAudio.bind(_that,++i);});
+      document.getElementById(audioBitId).addEventListener("ended", function() {_that.playAudio.bind(_that,++i)();});
     }
     var promise = document.getElementById(audioBitId).play();
 
@@ -49,9 +49,9 @@ static fromWordToStringAudioFilename(_word) {
   }
 }
 
-buildAudioSourceBits(_suggestionAudioId) {
-return this.words.map((word, index) =>
-  <audio id={_suggestionAudioId.concat("_", index)} key={_suggestionAudioId.concat("_", index)} >
+static buildAudioSourceBits(_audioId, _words) {
+return _words.map((word, index) =>
+  <audio id={_audioId.concat("_", index)} key={_audioId.concat("_", index)} >
     <source src={"/pronunciations/" + _AudioSuggestion.fromWordToStringAudioFilename(word) + ".mp3"} type="audio/mpeg" />
     <source src={"/pronunciations/" + _AudioSuggestion.fromWordToStringAudioFilename(word) + ".ogg"} type="audio/ogg" />
      {/* (this.props.index === 0)?
@@ -73,7 +73,7 @@ render() {
 
  return (
    <div className="audioSuggestion">
-   {this.buildAudioSourceBits(suggestionAudioId)}
+   {_AudioSuggestion.buildAudioSourceBits(suggestionAudioId, this.words)}
     <div>
      <button onClick={this.playAudioSuggestion} onMouseOver={this.playAudioSuggestion}
             className={audioSuggestionSpeakerStyle} disabled={!this.props.isGoodAnswer&&!this.props.isActive}>🔊</button>

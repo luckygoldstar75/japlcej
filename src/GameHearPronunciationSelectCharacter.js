@@ -2,10 +2,12 @@ import React from 'react';
 import {japlcejAPI, routesURLs} from './config-routes.js';
 import GameCurrentCharacter from './GameCurrentCharacter.js';
 import GameCurrentResult from './GameCurrentResult.js';
-import AudioSuggestion from './AudioSuggestion.js';
+import CharacterSuggestion from './CharacterSuggestion.js';
+import GameCurrentPronunciationForGuess from './GameCurrentPronunciationForGuess';
+
 import {  withTranslation } from "react-i18next";
 
-class _GameReadCharacterChoosePronunciation extends React.Component {
+class _GameHearCharacterChoosePronunciation extends React.Component {
 	constructor(props) {
 		super(props);
 
@@ -23,7 +25,7 @@ class _GameReadCharacterChoosePronunciation extends React.Component {
 
 		this.auSuivant = this.auSuivant.bind(this);
 		this.valider = this.valider.bind(this);
-		this.getSuggestedAnswersAudio = this.getSuggestedAnswersAudio.bind(this);
+		this.getSuggestedAnswers = this.getSuggestedAnswers.bind(this);
 		this.setSelectedSuggestionIndex = this.setSelectedSuggestionIndex.bind(this);
 	}
 
@@ -40,7 +42,7 @@ class _GameReadCharacterChoosePronunciation extends React.Component {
 	auSuivant() {
 		var that = this;
 		 //fetch new Character to guess
-		 fetch(japlcejAPI + routesURLs.GUESS + "/readCharacterChoosePronunciation/" + this.state.level,
+		 fetch(japlcejAPI + routesURLs.GUESS + "/hearPronunciationSelectCharacter/" + this.state.level,
 			{method: "GET",
 			 headers: {
 				'Content-Type': 'application/json',
@@ -57,7 +59,7 @@ class _GameReadCharacterChoosePronunciation extends React.Component {
 		.then((respjson) => {
 				console.debug("response fetched : " + respjson);
 				that.setState({lastResultIsFalse : undefined, apiAlive : true,
-					currentCharacter : {id : respjson.id, character : respjson.value,
+					currentCharacter : {id : respjson.id, audio : respjson.value,
 						suggestedAnswers: respjson.suggestedAnswers}, answerExpected:true,
 					selectedSuggestionIndex : 0	});
 		})
@@ -85,7 +87,7 @@ class _GameReadCharacterChoosePronunciation extends React.Component {
 			return;
 		};
 
-		var inputValue = this.state.currentCharacter.suggestedAnswers[this.state.selectedSuggestionIndex];
+		var inputValue = this.state.currentCharacter.suggestedAnswers[this.state.selectedSuggestionIndex].audio;
 
 		//post client's pinyin guess answer
 		 fetch(japlcejAPI + routesURLs.GUESS + "/" + this.state.currentCharacter.id,
@@ -136,9 +138,9 @@ class _GameReadCharacterChoosePronunciation extends React.Component {
 		;
 	}
 
-	getSuggestedAnswersAudio() {
-			if (typeof this.getSuggestedAnswersAudio.counter == 'undefined') {
-				this.getSuggestedAnswersAudio.counter = 0;
+	getSuggestedAnswers() {
+			if (typeof this.getSuggestedAnswers.counter == 'undefined') {
+				this.getSuggestedAnswers.counter = 0;
 			}
 			var options = null;
 			var _that=this;
@@ -147,13 +149,13 @@ class _GameReadCharacterChoosePronunciation extends React.Component {
 
 			if (options != null && options.length > 0) {
 				var resultingOptions =  options.map((_suggestedAnswer, _index) =>
-						<th scope="col" className="audioSuggestionCell" key={"audio_".concat(_index)} answer={_suggestedAnswer}>
-							<AudioSuggestion key={"audiosuggestion_".concat(this.getSuggestedAnswersAudio.counter++)}
-											fileKey={_suggestedAnswer} setSelectedSuggestionIndex={_that.setSelectedSuggestionIndex}
+						<th scope="col" className="characterSuggestionCell" key={"audio_".concat(_index)}>
+							<CharacterSuggestion key={"characterSuggtraditionalestion_".concat(this.getSuggestedAnswers.counter++)}
+											character={_suggestedAnswer} setSelectedSuggestionIndex={_that.setSelectedSuggestionIndex.bind(_that, _index)}
 							 				isSelected={_index === _that.state.selectedSuggestionIndex}
 											isGoodAnswer={_that.state.answer === _suggestedAnswer}
 											isActive={_that.state.answerExpected === true}
-											messageHook={_that.props.messageHook} index={_index} />
+ 							/>
 						</th>
 					);
 
@@ -187,15 +189,15 @@ class _GameReadCharacterChoosePronunciation extends React.Component {
     return ( <div className="GuessCharacterGame">
 				<GameCurrentResult nbSuccess={this.state.nbSuccess} nbTries={this.state.nbTries} />
 				<div style={{display: 'flex', flexDirection: 'row', flexFlow : 'flex-wrap', justifyContent: 'center'}}>
-						<GameCurrentCharacter currentCharacter={this.state.currentCharacter}  />
+						<GameCurrentPronunciationForGuess words={this.state.currentCharacter.audio} />
 						<div id="lastResult" className={lastResultCharacterStyle}>{lastResultCharacter}</div>
 				</div>
 
 				<div style={{display: 'flex', flexDirection: 'row', flexFlow : 'flex-wrap', justifyContent: 'center'}}>
-				<table id="suggestionsAudio" autoFocus required>
+				<table id="suggestionsCharacters" autoFocus required>
 					<tbody>
 					<tr id="listSuggestions">
-						{this.getSuggestedAnswersAudio()}
+						{this.getSuggestedAnswers()}
 					</tr>
 					</tbody>
 				</table>
@@ -216,5 +218,5 @@ class _GameReadCharacterChoosePronunciation extends React.Component {
 		this.auSuivant();
   }
 };
-const GameReadCharacterChoosePronunciation = withTranslation()(_GameReadCharacterChoosePronunciation)
-export default GameReadCharacterChoosePronunciation ;
+const GameHearPronunciationSelectCharacter = withTranslation()(_GameHearCharacterChoosePronunciation)
+export default GameHearPronunciationSelectCharacter ;

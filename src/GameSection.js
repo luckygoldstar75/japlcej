@@ -3,6 +3,8 @@ import AppMessage from './AppMessage'
 import GameReadCharacterWritePinyin from './GameReadCharacterWritePinyin';
 import GameReadCharacterSelectFrench from './GameReadCharacterSelectFrench';
 import GameReadCharacterChoosePronunciation from './GameReadCharacterChoosePronunciation';
+import GameHearPronunciationSelectCharacter from './GameHearPronunciationSelectCharacter';
+
 
 import GameCard from './GameCard';
 import { withTranslation  } from "react-i18next";
@@ -17,7 +19,9 @@ class _Game extends React.Component {
 				case 'readCharacterSelectFrench':
 						return ( <GameReadCharacterSelectFrench level={this.props.level}  />	);
 				case 'readCharacterChoosePronunciation':
-								return ( <GameReadCharacterChoosePronunciation level={this.props.level} messageHook={this.props.messageHook} />	);
+						return ( <GameReadCharacterChoosePronunciation level={this.props.level} messageHook={this.props.messageHook} />	);
+        case 'hearPronunciationSelectCharacter':
+            return ( <GameHearPronunciationSelectCharacter level={this.props.level} messageHook={this.props.messageHook} />	);
 				default:
 					return ( <AppMessage severity='error' message={t("Game_not_available_oups")} onClose={this.props.goBackToGameSelection} />	);
 	  }
@@ -73,9 +77,13 @@ class _GameSection extends React.Component {
 								gameTextAbstract={t("GameTextAbstract_readCharacterSelectFrench")} quitGame={this.unselectGame}
 						onClick={this.selectGame} userLoggedIn={this.props.userLoggedIn}/>
 
-						<GameCard isAvailable={true} decorationCharacter="♬♪" gameName="readCharacterChoosePronunciation"
+						<GameCard isAvailable={true} decorationCharacter="👁" gameName="readCharacterChoosePronunciation"
 									gameTextAbstract={t("GameTextAbstract_readCharacterChoosePronunciation")} quitGame={this.unselectGame}
 							onClick={this.selectGame} userLoggedIn={this.props.userLoggedIn} messageHook={this.props.messageHook} />
+
+            <GameCard isAvailable={true} decorationCharacter="♬♪" gameName="hearPronunciationSelectCharacter"
+                    gameTextAbstract={t("GameTextAbstract_hearPronunciationSelectCharacter")} quitGame={this.unselectGame}
+                onClick={this.selectGame} userLoggedIn={this.props.userLoggedIn} messageHook={this.props.messageHook} />
 
 					 <GameCard isAvailable={true} decorationCharacter="ab" gameName="readCharacterWritePinyin"
 					 		gameTextAbstract={t("GameTextAbstract_readCharacterWritePinyin")} quitGame={this.unselectGame}
