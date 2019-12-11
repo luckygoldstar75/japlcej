@@ -156,7 +156,7 @@ class _LogInOutButton extends React.Component {
     return (
     <div id="loginZone" className="loginZone">
     <button
-        className="loginbtn" title="Log Out"
+        className="loginbtn" title={t("Login_Button_Title")}
         onClick={() => this.onClickLogInOutButton()}>{(this.state.userLoggedIn)? t("Login_out") : t("Login_in")}
     </button>
 
@@ -169,7 +169,6 @@ class _LogInOutButton extends React.Component {
 const LogInOutButton = withTranslation()(_LogInOutButton);
 
 class MenuBar extends React.Component {
-
   render() {
     return (<div className="MenuBar">
     <Hamburger />
@@ -185,7 +184,6 @@ class _App extends Component {
   this.onSignUpSuccess = this.onSignUpSuccess.bind(this);
   this.messageHook = this.messageHook.bind(this);
   this.hideMessage = this.hideMessage.bind(this);
-
 
   this.state = {currentUser: null, userChanged : false, lastSession : null ,
 		avatarUrl:null, pseudo : null, userSignedUp: false,
@@ -253,8 +251,8 @@ class _App extends Component {
             <div id="App-title" className="App-title">{t("App_title")}</div>
             <div id="toolbar" className="App-toolbar">
             <div id="signuploginbuttons" style={loginSignupButtonsStyle} >
-              <UserInfo userChanged={this.state.userChanged} lastSession={this.state.lastSession} avatarUrl={this.state.avatarUrl} pseudo={this.state.pseudo}/>
-
+              <UserInfo userChanged={this.state.userChanged} lastSession={this.state.lastSession}
+                    avatarUrl={this.state.avatarUrl} pseudo={this.state.pseudo} welcomeMessageHook={this.infoSlideInMessage}/>
               <LogInOutButton showModalLogin={(history.location.pathname === '/login')} onLoginSuccess={this.onLoginSuccess}
                              onLogoutSuccess={this.onLogoutSuccess} userLoggedIn={this.state.userLoggedIn} />
               <SignUpButton showModalSignup={(history.location.pathname==="/signup")}  onSignUpSuccess={this.onSignupSuccess} userSignedUp={this.state.userSignedUp} />
@@ -264,7 +262,7 @@ class _App extends Component {
              <MenuBar />
             </div>
             </div>
-          </header>
+        </header>
        </div>
 
        <AppMessage severity={this.state.message.severity} message={this.state.message.message} onClose={this.hideMessage}/>

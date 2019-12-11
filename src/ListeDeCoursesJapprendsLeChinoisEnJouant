@@ -16,9 +16,9 @@ done commiter sur github
 done Mettre mode norobot, no index sur le index.htm
 done Faire le  mode de jeu : je vois le caractère chinois, je dois trouver le bon mot français
 done Compléter la liste 1 et 2 des mots par HSK1 : mettre traditionnel et simplifié !
-done Déployer  en prod
-faire tester à Oscar + feedback Oscar, Caro et Nono
-Affichage vachement lent du niveau confirmed
+Déployer en prod latest version
+A faire faire tester à Oscar + feedback Oscar, Caro et Nono : Envoyer mail d'invitation
+Afficher le message d'acceuil sous forme de sliding info bar
 done corriger pb refresh suggestion lists GameListenThenSelectChracter
 done corriger pb de rendering son si plusieurs mots : chainer vraiment sans overlap + enlever maj et ponctuations (pause de 1/2s pour , par ex)  + passer par des composants intermédiaires
 
@@ -27,20 +27,21 @@ Mettre les libellés de niveau en francais dans la picklist de GameCard (sans im
 Faire un test integ avec stub et moch et sinon.js : niveau unit et niveau integ mock de handler de route hapijs /anti regression
 Faire une test selenium de login par ex
 done: Adapter le level available dans Gamescore / passer au niveau supérieur : dropdown list de choix de niveau + par défaut sur le dernier atteint + adapter l'image cheval devient lapin !
-Dans readChracterSelectFrench ca vaudrait le coup d'afficher le résultat pinyin? prononciation ?
+done Dans readChracterSelectFrench ca vaudrait le coup d'afficher le résultat pinyin? prononciation ?
 ??? Faire que l'on puisse un peu jouer en mode invité sans login ?? ou bien gérer ce cas en redirigeant vers signup
 En cours : Extraire toutes les chaines de caractères pour i18n parties client et serveur
 passer repositories en mode privé github!
-En cours : Mettre les sons et les lire
+done En cours : Mettre les sons et les lire
     1/ Corriger ano qui présente toujours les mêmes suggestions
     2/ Une fois la réponse donnée / lire à haute voix la bonne réponse
-Ajouter des titres dans modales singup et LogIn
+done Ajouter des titres dans modales singup et LogIn
 Ajouter une modale d'acceuil / avec joli visuel coloré de type inscrivez vous (ne plus afficher)
 Faire que la session persiste au delà du F5 (on se retrouvé connecté sauf si bien sûr, le serveur a restart)
 
 
 
 *********Later:
+
 donner possibilité de choisir entre mode chinois traditionnel et simplifié : bouton curseur  option
 Rendre dépendant de la validité du cookie + is logged in le statut interne de l'application React isLoggedIn .
 Faire le  mode de jeu : je vois le mot français, je dois trouver le bon caractère chinois
@@ -56,7 +57,10 @@ done mettre à jour nodejs/npm
 ?? Faire que le résultat ne soit pas affiché au fur et à mesure. 12/20 etc ... trop scolaire11111
 
 +Définir la stratégie pour que l'on gagne des points (plus tu joues , plus tu gagnes de points)
-+Permettre que les points fassent monter de niveau kung fu
++Permettre que les points fassent monter de niveau kung fu + mettre à jour ranking global
++calculer ranking : à la volée
++gérer avatar : permettre choix au signup ou après
++permettre saisie pseudo pseudo au signup ou après
 
 +Afficher le leaderboard (classement)
 Faire le  mode de jeu : je vois le pinyin, je dois trouver le bon caractère
@@ -76,4 +80,6 @@ Faire une anim genre nuage ebullition potion magique avec un son pour le changem
 
 A l'activation en prod:
 Enlever mode norobot, no index sur le index.htm
+Enelever limitation mail verified Amazon pour envoyer des emails à tout le monde au delà white liste
 Mettre en place les alertes : factu / sécu sur AWS
+Affichage vachement lent du niveau confirmed?

@@ -195,14 +195,19 @@ class ModalLogin extends React.Component {
           <div className="backdrop" style={backdropStyle}>
           <div className="modal" style={modalStyle}>
         		  <AppMessage severity={this.state.message.severity} message={this.state.message.text} onClose={this.hideMessage}/>
-        			{t('Login_invitation')}<br/>
+        			<div className="Modal_Title">{t('Login_invitation')}<br/></div>
             <form onSubmit={this.handleSubmit}>
-            	<label>{t('Login_email')}
-            	<input type="email" name="email" value={this.state.email} placeholder={t("Login_your_email")} required  size="35" onChange={this.emailChange}/>
+            	<div className="Modal_Label">
+                <label>
+                {t('Login_email')}            	 
+                <input type="email" name="email" value={this.state.email} placeholder={t("Login_your_email")} required  size="35" onChange={this.emailChange}/>
+               </label>
+              </div>
+            	<div className="Modal_Label"><label>{t('Login_password')}
+            	  <input type="password" name="password" placeholder={t("Login_your_password")} required  size="15" maxLength="40"
+                padding="10px" onChange={this.passwordChange}/>
             	</label>
-            	<label>{t('Login_password')}
-            	<input type="password" name="password" placeholder={t("Login_your_password")} required  size="15" maxLength="40" onChange={this.passwordChange}/>
-            	</label>
+              </div>
             	<input type="submit" value={t('Button_submit')} />
             </form>
             <div className="footer">
@@ -223,10 +228,12 @@ class ModalLogin extends React.Component {
       <div className="modal" style={modalStyle}>
           <AppMessage severity={this.state.message.severity} message={this.state.message.text} onClose={this.hideMessage}/>
     <form onSubmit={this.handleForgottenPasswordSubmit}>
-			{t("Forgotten_password_resend_welcome")}<br/>
-			<label>{t('Login_email')}
-			<input type="email" name="email" placeholder={t("Login_your_email")} required  size="35" onChange={this.emailPasswordForgottenChange}/>
-			</label>
+			<div className="Modal_Title">{t("Forgotten_password_resend_welcome")}<br/></div>
+			<div className="Modal_Label">
+        <label>{t('Login_email')}
+			     <input type="email" name="email" placeholder={t("Login_your_email")} required  size="35" onChange={this.emailPasswordForgottenChange}/>
+			  </label>
+      </div>
 			<input type="submit" value={t('Button_submit')} />
 		</form>
     <div className="footer">

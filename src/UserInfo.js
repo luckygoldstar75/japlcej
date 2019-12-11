@@ -47,11 +47,11 @@ class _WelcomeMessage extends React.Component {
         + _nbDaysSinceLastSession + (_nbDaysSinceLastSession)>1?t("WelcomeMessage_days"):t("WelcomeMessage_day");
 	        }
 	}
-	if (this.props.pseudo !== null) {
+	if (this.props.pseudo !== null && this.props.pseudo !== undefined) {
 		return (
-			<div id="greeting">
+			<div id="snackbar">
 				<div id="persoGreeting">
-					<h1>Hello, {this.props.pseudo}. {welcomeString}</h1>
+					<h1>Hello{this.props.pseudo === ""? "":",".concat(this.props.pseudo)}. {welcomeString}</h1>
 				</div>
 			</div>
 		);
@@ -59,6 +59,16 @@ class _WelcomeMessage extends React.Component {
    else {
 	return null;
    }
+  }
+
+  componentDidMount() {
+      var x = document.getElementById("snackbar");
+      // Add the "show" class to DIV
+      if (x !==null && x!== undefined) {
+        x.className = "show";
+        // After 3 seconds, remove the show class from DIV
+        setTimeout(function(){ x.className = x.className.replace("show", ""); }, 3000);
+      }
   }
 };
 const WelcomeMessage=withTranslation()(_WelcomeMessage);

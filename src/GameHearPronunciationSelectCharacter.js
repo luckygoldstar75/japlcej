@@ -153,7 +153,7 @@ class _GameHearCharacterChoosePronunciation extends React.Component {
 							<CharacterSuggestion key={"characterSuggtraditionalestion_".concat(this.getSuggestedAnswers.counter++)}
 											character={_suggestedAnswer} setSelectedSuggestionIndex={_that.setSelectedSuggestionIndex.bind(_that, _index)}
 							 				isSelected={_index === _that.state.selectedSuggestionIndex}
-											isGoodAnswer={_that.state.answer === _suggestedAnswer}
+											isGoodAnswer={_that.state.answer === _suggestedAnswer.audio}
 											isActive={_that.state.answerExpected === true}
  							/>
 						</th>

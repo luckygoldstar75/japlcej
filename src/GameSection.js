@@ -71,7 +71,7 @@ class _GameSection extends React.Component {
 		if (!this.state.gameSelected) {
     return (
 			<div className="GameSection">
-			<div id="GameSectionTitle">Choose your game!</div>
+			<div id="GameSectionTitle">{t("GameSection_ChooseGame_Title")}</div>
 			  <div id="gameSelector">
 					<GameCard isAvailable={true} decorationCharacter={t("CharacterMaison")} gameName="readCharacterSelectFrench"
 								gameTextAbstract={t("GameTextAbstract_readCharacterSelectFrench")} quitGame={this.unselectGame}
@@ -103,7 +103,7 @@ class _GameSection extends React.Component {
 						<div id="gameSelector">
 							 <div>{t("GameTextAbstract_listenThenSelectCharacter")}</div>
 							 <div className="gameReturnButton" onClick={this.unselectGame}>
-	 					     ⇦<div className="">Return</div>
+	 					     ⇦<div className="">{t("Game_button_back")}</div>
 	 					  </div>
 						</div>
 						<Game type={this.state.gameSelected} level={this.state.gameLevel} messageHook={this.props.messageHook} />

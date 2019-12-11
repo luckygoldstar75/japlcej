@@ -77,10 +77,12 @@ class ModalSignupReemissionLink extends React.Component {
        <div className="modal" style={ModalSignupCommons.modalStyle}>
   		 <AppMessage severity={this.state.message.severity} message={this.state.message.text} onClose={this.hideMessage}/>
         <form onSubmit={this.handleSubmitReemissionSignupRequest}>
-  			  {t('SignUp_welcome_reemission_link')}<br/>
-  			 <label>{t('Signup_email')}
+  			  <div className="Modal_Title">{t('SignUp_welcome_reemission_link')}<br/><br/></div>
+         <div className="Modal_Label">
+         <label>{t('SignUp_email')}
   			 <input type="email" name="email" placeholder="youremail@here" required  size="35" onChange={this.emailChanged}/>
    			</label>
+          </div>
   			 <input type="submit" value={t('Button_submit')} />
   		  </form>
          <div className="footer">

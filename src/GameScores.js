@@ -1,6 +1,7 @@
 import React from 'react';
+import { withTranslation  } from "react-i18next";
 
-class GameScores extends React.Component {
+class _GameScores extends React.Component {
 	constructor(props) {
 	super(props); //this.props.level  this.props.gameName this.props.progression.percentageGood this.props.progression.percentageDone
 	this.thresholdPercent= new Map([ ["gold", 99], ["red", 90], ["blue", 75], ["grey", 0]]);
@@ -17,7 +18,7 @@ class GameScores extends React.Component {
  }
 
   giveImgForLevel(level) {
-      var _level=Object.keys(GameScores.getNbTriesThresholdBeforeNextLevel()).indexOf(level);
+      var _level=Object.keys(_GameScores.getNbTriesThresholdBeforeNextLevel()).indexOf(level);
       if(isNaN(_level)||_level<0) {_level=0};
       return ("/pics/level" + _level +".jpg");
   }
@@ -45,6 +46,8 @@ class GameScores extends React.Component {
 
 
  render() {
+	 const { t } = this.props;
+
  		if (!this.props.userLoggedIn) {
        return null;
      }
@@ -52,7 +55,7 @@ class GameScores extends React.Component {
  				return ( //draft
  					<div className="GameScores">
  						<div className="progression">
-
+							<div className="Game_Progression_Label">{t("Game_Progression_Label")}</div>
  						 	<progress min="0" max="100" value={this.props.percentageDone}
                        className={this.giveStyleForProgressionBarAccordingToPercentageGood(this.props.percentageGood)}>
                 </progress>
@@ -66,4 +69,6 @@ class GameScores extends React.Component {
 
 }
 
+const GameScores = withTranslation()(_GameScores);
+GameScores.getNbTriesThresholdBeforeNextLevel  = _GameScores.getNbTriesThresholdBeforeNextLevel;
 export default GameScores;

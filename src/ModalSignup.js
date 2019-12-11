@@ -107,19 +107,24 @@ class ModalSignup extends React.Component {
 		 <AppMessage severity={this.state.message.severity} message={this.state.message.text} onClose={this.hideMessage}/>
 
      <form onSubmit={this.handleSubmitSignup}>
-			{t("SignUp_welcome")} <br/>
-			<label>{t('SignUp_email')}
+			<div className="Modal_Title">{t("SignUp_welcome")} <br/><br/></div>
+      <div className ="Modal_Label">
+      <label>{t('SignUp_email')}
 			<input type="email" name="email" placeholder={t("Login_your_email")} required  size="35" onChange={this.emailChanged}/>
 			</label>
+      </div>
+      <div className ="Modal_Label">
 			<label>{t('SignUp_password')}
 			<input type="password" id="password" placeholder={t("Login_your_password")} required  size="15" minLength="8"
                     maxLength="40" onChange={this.passwordChanged}/>
 			</label>
+      </div>
+      <div className ="Modal_Label">
       <label>{t('SignUp_confirmation_password')}
 			<input type="password" id="confirmationPassword" placeholder={t("Login_your_password")} required  size="15" minLength="8"
                   maxLength="40" onChange={this.confirmationPasswordChanged}/>
 			</label>
-
+      </div>
 			<input type="submit" value={t('Button_submit')} />
 		</form>
 
